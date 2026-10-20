@@ -15,7 +15,9 @@
 3. **One consistent but uncorrected trend goes the opposite way to the hypothesis:** SO coupling is slightly
    *higher* during snoring than in matched clean breathing (Δ ≈ +0.04; positive in 31/32 sensitivity cells, p < .05
    in ~31 %; primary p = 0.019 / 0.070 for the two metrics, FDR 0.23 / 0.43). It is not explained by more
-   breathing-locked EEG during snoring (bias-controlled EEG–ABDOMEN coherence 0.15 vs 0.13, p = 0.14).
+   breathing-locked EEG during snoring (bias-controlled EEG–ABDOMEN coherence 0.15 vs 0.13, p = 0.14); the effect size
+   is similar in the half of subjects with the lowest EEG–breathing coherence (Δ +0.04 / +0.055, N = 16 / 14, n.s.)
+   and does not scale with the coherence increase during snoring (ρ = −0.10, p = 0.59).
    A weaker opposite trend: **large SOs lose coupling during hypopneas** (group-reference Δ = −0.06,
    95 % CI −0.16 to 0.01, p = 0.08; negative in 31/32 cells).
 4. **Obstructive, central and mixed apneas cannot be analysed as group tests** (≥ 10 events per side in only 0–5
