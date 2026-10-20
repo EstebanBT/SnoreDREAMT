@@ -25,7 +25,7 @@
 | Item | Result |
 |---|---|
 | Post-event window from data | SO rate 1.6× and arousal rate 13× clean within 0–4 s after event end, back to baseline by ~8–10 s → kept **15 s** recovery window (`figures/step3_event_locked_rates.png`). At event onsets SO/spindle rates drop to ~0.5×. |
-| Snoring per breath | SNORE 20–45 Hz RMS ≥ quiet reference + 10 dB (reference = min(10th pct of event-free NREM breaths, median of wake breaths)), phasic (louder/quieter half-cycle ≥ 2), ≥ 3 consecutive breaths. In clear snorers snoring breaths carry 1.6–4× more PTAF flutter (r 0.6–0.96 where PTAF is not clipped); tonic noise (S052) is rejected by the phasic criterion. |
+| Snoring per breath | SNORE 20–45 Hz RMS ≥ quiet reference + 10 dB (reference = min(10th pct of event-free NREM breaths, median of wake breaths)), phasic (louder/quieter half-cycle ≥ 2), ≥ 3 consecutive breaths. In clear snorers snoring breaths carry 1.6–4× more PTAF flutter (r 0.6–0.96 where PTAF is not clipped); tonic noise (S052) is rejected by the phasic criterion. Visual check (`figures/step3_snoring_validation.png`): labelled breaths show clear inspiratory bursts; the detector is conservative — quieter burst trains below +10 dB stay unlabelled (they end up in "clean"). |
 | Condition labels | priority OA > CA > mixed > hypopnea > recovery (15 s) > pre-event (5 s, excluded) > arousal (±5 s, excluded) > snoring > clean; N2 primary, N2+N3 secondary; ABDOMEN must be valid. |
 | Feasibility (≥ 5 min in N2) | clean 96, snoring 52, hypopnea 58, recovery 52, obstructive 12, central 7, mixed 2 subjects (`derivatives/step3/conditions_summary.csv`). |
 | Matched controls | clean samples of the same stage within ±10 min of each condition run, equal duration, no reuse; runs with < 50 % match dropped. |
