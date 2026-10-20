@@ -1,0 +1,173 @@
+{
+  "papers": [
+    {
+      "key": "AlvarezEstevez_2019",
+      "original_filename": "1-s2.0-S1389945718303198-main.pdf",
+      "title": "Large-scale validation of an automatic EEG arousal detection algorithm using different heterogeneous databases",
+      "authors": [
+        "Diego Alvarez-Estevez",
+        "Isaac Fernández-Varela"
+      ],
+      "journal": "Sleep Medicine 57:6-14",
+      "doi": "10.1016/j.sleep.2019.01.025",
+      "type": "methods",
+      "pdf": "AlvarezEstevez_2019.pdf",
+      "fulltext_md": "notes/AlvarezEstevez_2019.fulltext.md",
+      "summary_md": "notes/AlvarezEstevez_2019.md",
+      "tags": [
+        "EEG arousal",
+        "automatic scoring",
+        "polysomnography",
+        "validation",
+        "SHHS",
+        "chin EMG",
+        "open-source"
+      ],
+      "one_line": "Single-EEG + chin-EMG automatic arousal detector validated on 2768 PSGs (κ 0.56–0.60 vs clinical, ≈ human inter-scorer); algorithm details are in Alvarez-Estevez 2017 and github.com/bigsasi/arousals-detection."
+    },
+    {
+      "key": "BullonTarraso_2026",
+      "original_filename": "BullonTarraso_2026.pdf",
+      "title": "The breathing cycle gates memory reactivation during human NREM sleep",
+      "authors": [
+        "Esteban Bullón Tarrasó",
+        "Tobias Staudigl",
+        "Thomas Schreiner"
+      ],
+      "journal": "manuscript",
+      "type": "empirical",
+      "pdf": "BullonTarraso_2026.pdf",
+      "fulltext_md": "notes/BullonTarraso_2026.fulltext.md",
+      "summary_md": "notes/BullonTarraso_2026.md",
+      "tags": [
+        "respiration",
+        "slow oscillations",
+        "spindles",
+        "SO-spindle coupling",
+        "respiratory phase",
+        "closed-loop TMR",
+        "memory reactivation",
+        "MVPA decoding",
+        "NREM sleep",
+        "thermistor"
+      ],
+      "one_line": "Respiration-locked closed-loop TMR (N = 25 healthy, non-SDB adults) shows cues at the SO-spindle-favoured respiratory phase improve associative memory and tighten spindle nesting in SO up-states versus antiphase cues, which delay reactivation ~2 s to a later SO-spindle complex at a similar respiratory phase; also replicates endogenous respiration-SO/spindle phase coupling (SOs ~-82 deg, spindles ~+48 deg re inhalation peak)."
+    },
+    {
+      "key": "FernandezVarela_2017",
+      "original_filename": "1-s2.0-S0925231217307506-main.pdf",
+      "title": "Combining machine learning models for the automatic detection of EEG arousals",
+      "authors": [
+        "Isaac Fernández-Varela",
+        "Elena Hernández-Pereira",
+        "Diego Álvarez-Estévez",
+        "Vicente Moret-Bonillo"
+      ],
+      "journal": "Neurocomputing 268:100-108",
+      "type": "methods",
+      "pdf": "FernandezVarela_2017.pdf",
+      "fulltext_md": "notes/FernandezVarela_2017.fulltext.md",
+      "summary_md": "notes/FernandezVarela_2017.md",
+      "tags": [
+        "EEG arousal",
+        "automatic scoring",
+        "machine learning",
+        "SVM",
+        "Hjorth parameters",
+        "SHHS",
+        "chin EMG"
+      ],
+      "one_line": "Signal-processing candidates (θ/α/>16 Hz power vs 10 s baseline ×1.5, chin EMG p2p vs 30 s baseline ×2, ≥3 s) + supervised classifiers on SHHS (sens ~0.8, spec ~0.88); ML stage needs labelled arousals, so only the front-end is usable on DREAMT."
+    },
+    {
+      "key": "FernandezVarela_2017b",
+      "original_filename": "1-s2.0-S0010482517301336-main.pdf",
+      "title": "A simple and robust method for the automatic scoring of EEG arousals in polysomnographic recordings",
+      "authors": [
+        "Isaac Fernandez-Varela",
+        "Diego Alvarez-Estevez",
+        "Elena Hernandez-Pereira",
+        "Vicente Moret-Bonillo"
+      ],
+      "journal": "Computers in Biology and Medicine 87:77-86",
+      "type": "methods",
+      "pdf": "FernandezVarela_2017b.pdf",
+      "fulltext_md": "notes/FernandezVarela_2017b.fulltext.md",
+      "summary_md": "notes/FernandezVarela_2017b.md",
+      "tags": [
+        "EEG arousal",
+        "automatic scoring",
+        "rule-based",
+        "adaptive ECG artifact removal",
+        "chin EMG",
+        "sleep spindles"
+      ],
+      "one_line": "Rule-based single-EEG + chin-EMG + ECG arousal detector (alpha >2.5× / beta >2× 10-s baseline, EEG/EMG pattern extension, AASM-based false-positive removal); κ 0.775 on 22 clinical PSGs. The algorithm to port for DREAMT."
+    },
+    {
+      "key": "Schreiner_2023",
+      "original_filename": "s41467-023-43450-5.pdf",
+      "title": "Respiration modulates sleep oscillations and memory reactivation in humans",
+      "authors": [
+        "Thomas Schreiner",
+        "Marit Petzka",
+        "Tobias Staudigl",
+        "Bernhard P. Staresina"
+      ],
+      "journal": "Nature Communications",
+      "doi": "10.1038/s41467-023-43450-5",
+      "type": "empirical",
+      "pdf": "Schreiner_2023.pdf",
+      "fulltext_md": "notes/Schreiner_2023.fulltext.md",
+      "summary_md": "notes/Schreiner_2023.md",
+      "tags": [
+        "respiration",
+        "slow oscillations",
+        "spindles",
+        "SO-spindle coupling",
+        "memory reactivation",
+        "NREM sleep",
+        "EEG",
+        "nap",
+        "phase-amplitude coupling",
+        "BreathMetrics"
+      ],
+      "one_line": "In 20 healthy nappers, SOs, fast spindles and SO-spindle complexes cluster around the inhalation peak (thermistor, 0° = inhalation), and stronger respiration–SO_spindle coupling predicts memory reactivation."
+    },
+    {
+      "key": "Wang_2024",
+      "original_filename": "wang24a.pdf",
+      "title": "Addressing wearable sleep tracking inequity: a new dataset and novel methods for a population with sleep disorders",
+      "authors": [
+        "Will Ke Wang",
+        "Jiamu Yang",
+        "Leeor Hershkovich",
+        "Hayoung Jeong",
+        "Bill Chen",
+        "Karnika Singh",
+        "Ali R Roghanizad",
+        "Md Mobashir Hasan Shandhi",
+        "Andrew R Spector",
+        "Jessilyn Dunn"
+      ],
+      "journal": "Proceedings of Machine Learning Research 248 (CHIL 2024)",
+      "type": "dataset",
+      "pdf": "Wang_2024.pdf",
+      "fulltext_md": "notes/Wang_2024.fulltext.md",
+      "summary_md": "notes/Wang_2024.md",
+      "tags": [
+        "DREAMT",
+        "dataset",
+        "polysomnography",
+        "sleep disorders",
+        "obstructive sleep apnea",
+        "snoring",
+        "apnea-hypopnea annotations",
+        "sleep staging",
+        "wearables",
+        "Empatica E4"
+      ],
+      "one_line": "Introduces DREAMT: concurrent Empatica E4 and clinical PSG from 100 Duke sleep-clinic patients (mean AHI 22.1/h, 40 reported snorers) plus a GPBoost+LSTM wake detector; PSG acquisition and scoring details are sparse."
+    }
+  ]
+}

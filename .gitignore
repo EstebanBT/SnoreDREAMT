@@ -1,0 +1,42 @@
+# environment
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# sandbox placeholders (bind-mounted /dev/null, not real files)
+.bash_profile
+.bashrc
+.profile
+.zprofile
+.zshrc
+.gitconfig
+.gitmodules
+.ripgreprc
+.mcp.json
+.idea
+.vscode
+literature/.claude/
+literature/notes/.claude/
+.claude/.cc-writes/
+
+# large derived data (regenerable from the raw DREAMT files)
+derivatives/cache/
+derivatives/**/*.npz
+derivatives/**/*.parquet
+
+# literature PDFs (copyrighted); notes and index are tracked
+literature/*.pdf
+third_party/
+.snakemake/
+*.egg-info/
+
+# logs and regenerable QC output
+*.log
+figures/qc_polarity/
+validation/matlab_parity/*.mat
+.claude/*
+!.claude/skills/
+derivatives/events/
+derivatives/resp/
+derivatives/arousals/*.py

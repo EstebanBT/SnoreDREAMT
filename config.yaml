@@ -1,0 +1,130 @@
+# All analysis parameters. Each step names ONE primary analysis; everything else is a sensitivity analysis.
+paths:
+  data: /media/longterm1/esteban/DREAMT/data_100Hz
+  participants: /media/longterm1/esteban/DREAMT/participant_info.csv
+  derivatives: /home/esteban/Documents/SnoreDREAMT/derivatives
+  figures: /home/esteban/Documents/SnoreDREAMT/figures
+
+fs: 100
+
+# short wildcard names used in Snakemake file paths -> channel names in the data
+channel_alias:
+  F4: F4-M1
+  C4: C4-M1
+  O2: O2-M1
+  T3CZ: T3 - CZ
+  CZT4: CZ - T4
+event_channels: [F4, C4]         # channels on which SOs / spindles / complexes are detected
+check_stages: [0, 1, 5]          # stages where detection is re-run with N2 thresholds (specificity check)
+exclude_subjects: [S097, S077]   # S097: EEG + resp flat; S077: zeros / 1e18 values
+
+channels:
+  eeg: [F4-M1, C4-M1, O2-M1, Fp1-O2, T3 - CZ, CZ - T4]
+  eog: [E1, E2]
+  emg: [CHIN, LAT, RAT]
+  resp: [FLOW, PTAF, THORAX, ABDOMEN]
+  other: [ECG, SNORE, SAO2]
+
+stages:   # slythm / hypnogram codes
+  W: 0
+  N1: 1
+  N2: 2
+  N3: 3
+  R: 5
+  P: -1
+  Missing: -1
+
+quality:
+  epoch_s: 30            # respiratory channel validity resolution
+  eeg_win_s: 5           # EEG artifact resolution
+  eeg_pad_s: 1
+  flat_std: 1.0e-3       # µV-scaled units; std below this = flat
+  saturation_frac: 0.01  # fraction of samples at the channel's absolute max
+  low_amp_frac: 0.10     # resp epoch std < 10 % of subject's NREM median = invalid
+  robust_z: 5.0          # EEG window outlier threshold (log std, <0.5 Hz power, 20-40 Hz power)
+
+# Step 1 — slythm port, primary = replicateSchreinerCoupling.m settings
+detect:
+  so:
+    channel: F4-M1
+    bpfreq: [0.3, 1.5]
+    filt_order: [3, 5]        # Butterworth HP, LP (FieldTrip ft_preproc_* 'but')
+    criterion_len: [0.8, 2.0]
+    criterion_param: both     # |trough| and peak-to-peak
+    criterion_center: median
+    criterion_var: scaleCenter
+    criterion_scale: 2.5
+    stages: [2, 3]
+    min_stage_minutes: 10     # per-stage threshold only if stage has >= 10 min, else N2 threshold
+  spindle:
+    channel: C4-M1
+    bpfreq: [12.0, 16.0]
+    filt_order: [6, 6]
+    envelope_win_s: 0.2
+    criterion_len: [0.5, 3.0]
+    criterion_center: median
+    criterion_var: scaleCenter
+    criterion_scale: 2.0          # user decision 2026-10-19 (slythm default 1.5 = sensitivity analysis)
+    spectral_peak:                # not in slythm: sigma power > alpha and > beta within the event
+      sigma: [12, 16]
+      below: [8, 11]
+      above: [18, 25]
+    stages: [2, 3]
+  spindle_slythm:                 # sensitivity analysis: exactly the user's MATLAB settings
+    channel: C4-M1
+    bpfreq: [12.0, 16.0]
+    filt_order: [6, 6]
+    envelope_win_s: 0.2
+    criterion_len: [0.5, 3.0]
+    criterion_center: median
+    criterion_var: scaleCenter
+    criterion_scale: 1.5
+    stages: [2, 3]
+  complex:
+    max_lag_s: 1.5            # spindle within (0, 1.5] s after SO trough
+
+ecg:
+  band: [5.0, 25.0]
+  min_rr_s: 0.33
+
+# Step 2 — respiration
+resp:
+  lowpass_hz: 1.0
+  highpass_hz: 0.05
+  snore_band: [20, 45]
+  strong_z: 5.0                # polarity anchor strong enough to decide alone
+  phase_channels: [FLOW, ABDOMEN]
+  min_breath_s: 1.5            # max 40 breaths / min
+  prominence_frac: 0.15        # of the subject's median clean breath amplitude
+  min_amp_frac: 0.25           # cycle phase undefined for breaths smaller than this (apnea / failure)
+  max_cycle_s: 15
+  max_cycle_rel: 2.5           # ... or longer than 2.5 x the subject's median clean breath period
+  hilbert_half_width: 0.05     # Hz, peak +- 0.05 (Schreiner 2023; user's recommendation 2026-10-20)
+
+# Step 2b — arousals (FernandezVarela_2017b / AlvarezEstevez_2019 port, snoredreamt/arousals.py)
+arousals:
+  eeg: C4-M1
+  emg: CHIN
+  variants:
+    primary: {}                          # faithful port (detects ~0.38x clinical ArI)
+    liberal: {power_beta_threshold: 1.5} # sensitivity (~0.47x clinical ArI)
+  exclude_pad_s: [5.0, 5.0]              # excluded from analysis windows: [start - 5 s, end + 5 s]
+
+# Step 2 — clean ("event-free") NREM used for the replication
+clean:
+  stages: [2, 3]
+  pre_event_s: 5.0       # excluded before each apnea/hypopnea onset
+  post_event_s: 15.0     # excluded after each event end (checked against the event-locked PETH)
+
+# Step 2 — coupling measures
+coupling:
+  n_null: 500            # random-time surrogates per subject x event x variant
+  n_bins: 18
+  peth_half_s: 1.5       # Schreiner 2023: inhalation peak +- 1.5 s, 50 ms bins
+  peth_bin_s: 0.05
+  locked_half_s: 6.0     # event-locked breathing average
+  min_events: 20         # subjects need >= this many events for a preferred phase
+  equalize:              # phase equalisation (uniform occupancy) per phase method
+    hilbert: false       # narrow-band (+-0.05 Hz) phase is ~sinusoidal; occupancy checked instead
+    hilbertgated: false
+    cycle: true          # linear interpolation over-represents the longer expiration
