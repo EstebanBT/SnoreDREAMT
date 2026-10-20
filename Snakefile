@@ -18,6 +18,9 @@ rule all:
         f"{DER}/step1/detector_summary.csv",
         f"{DER}/step2/resp_summary.csv",
         f"{DER}/step2/group_stats.csv",
+        f"{DER}/step3/group_stats.csv",
+        f"{DER}/step3/conditions_summary.csv",
+        f"{DER}/step3/event_locked_rates.parquet",
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
 
 
@@ -79,6 +82,75 @@ rule resp_phase:
         breaths = f"{DER}/resp/{{sid}}_breaths.parquet",
         info = f"{DER}/resp/{{sid}}_resp_info.json",
     script: "scripts/rules/resp_phase.py"
+
+
+# ---------------------------------------------------------------- Step 3: breathing conditions
+rule event_locked_rates:
+    """SO / spindle / arousal rates around apnea/hypopnea onsets and ends -> post-event exclusion window."""
+    input:
+        sos = expand(f"{DER}/events/{{sid}}/sos_F4.parquet", sid=SUBJECTS),
+        spindles = expand(f"{DER}/events/{{sid}}/spindles_C4.parquet", sid=SUBJECTS),
+        arousals = expand(f"{DER}/arousals/{{sid}}_primary.parquet", sid=SUBJECTS),
+    params: subjects = SUBJECTS
+    output:
+        table = f"{DER}/step3/event_locked_rates.parquet",
+        fig = f"{config['paths']['figures']}/step3_event_locked_rates.png",
+    script: "scripts/rules/event_locked_rates.py"
+
+
+rule conditions:
+    """Per-sample breathing-condition labels (+ per-breath snoring) using arousal variant {arv} for exclusion."""
+    input:
+        cache = f"{DER}/cache/{{sid}}.npz",
+        quality = f"{DER}/quality/{{sid}}.npz",
+        breaths = f"{DER}/resp/{{sid}}_breaths.parquet",
+        arousals = f"{DER}/arousals/{{sid}}_{{arv}}.parquet",
+    output:
+        labels = f"{DER}/step3/{{sid}}/conditions_{{arv}}.npz",
+        breaths = f"{DER}/step3/{{sid}}/snore_breaths_{{arv}}.parquet",
+        info = f"{DER}/step3/{{sid}}/conditions_{{arv}}.json",
+    script: "scripts/rules/conditions.py"
+
+
+rule coupling_step3:
+    """Coupling per breathing condition vs matched clean controls (projected coupling on the subject's clean mu)."""
+    input:
+        labels = f"{DER}/step3/{{sid}}/conditions_{{arv}}.npz",
+        phase = f"{DER}/resp/{{sid}}_phase.npz",
+        sos = f"{DER}/events/{{sid}}/sos_F4.parquet",
+        spindles = f"{DER}/events/{{sid}}/spindles_C4.parquet",
+        complexes = f"{DER}/events/{{sid}}/complexes_F4.parquet",
+    output:
+        table = f"{DER}/step3/{{sid}}/coupling_{{arv}}.parquet",
+        events = f"{DER}/step3/{{sid}}/event_phases_{{arv}}.parquet",
+    script: "scripts/rules/coupling_step3.py"
+
+
+rule step3_group:
+    """Group statistics + figures for coupling per breathing condition (primary + sensitivity grid)."""
+    input:
+        primary = expand(f"{DER}/step3/{{sid}}/coupling_primary.parquet", sid=SUBJECTS),
+        liberal = expand(f"{DER}/step3/{{sid}}/coupling_liberal.parquet", sid=SUBJECTS),
+        events_primary = expand(f"{DER}/step3/{{sid}}/event_phases_primary.parquet", sid=SUBJECTS),
+        step2 = expand(f"{DER}/step2/{{sid}}/summary.parquet", sid=SUBJECTS),
+        resp_summary = f"{DER}/step2/resp_summary.csv",
+    output:
+        table = f"{DER}/step3/group_stats.csv",
+        mixed = f"{DER}/step3/mixed_model.csv",
+        wide = f"{DER}/step3/subject_level.parquet",
+        forest = f"{config['paths']['figures']}/step3_forest.png",
+        paired = f"{config['paths']['figures']}/step3_paired.png",
+        grid = f"{config['paths']['figures']}/step3_sensitivity_grid.png",
+    script: "scripts/rules/step3_group.py"
+
+
+rule conditions_summary:
+    """Feasibility: minutes per condition and stage per subject (primary arousal variant)."""
+    input: info = expand(f"{DER}/step3/{{sid}}/conditions_primary.json", sid=SUBJECTS)
+    output:
+        table = f"{DER}/step3/conditions_summary.csv",
+        fig = f"{config['paths']['figures']}/step3_condition_minutes.png",
+    script: "scripts/rules/conditions_summary.py"
 
 
 # ---------------------------------------------------------------- Step 2b: arousals

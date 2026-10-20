@@ -1,0 +1,32 @@
+{
+ "sid": "S062",
+ "arousal_variant": "liberal",
+ "minutes": {
+  "clean_N2": 12.550833333333333,
+  "clean_N3": 0.0,
+  "snoring_N2": 0.12266666666666667,
+  "snoring_N3": 0.0,
+  "hypopnea_N2": 127.98466666666667,
+  "hypopnea_N3": 0.0,
+  "obstructive_N2": 0.0,
+  "obstructive_N3": 0.0,
+  "central_N2": 0.0,
+  "central_N3": 0.0,
+  "mixed_N2": 0.0,
+  "mixed_N3": 0.0,
+  "recovery_N2": 67.60116666666667,
+  "recovery_N3": 0.0,
+  "pre_event_N2": 6.757000000000001,
+  "pre_event_N3": 0.0,
+  "arousal_window_N2": 2.333666666666667,
+  "arousal_window_N3": 0.0
+ },
+ "n_events": {
+  "ev_oa": 2,
+  "ev_ca": 0,
+  "ev_hyp": 529,
+  "ev_mixed": 0
+ },
+ "snore_breath_frac_eventfree_nrem": 0.05919540229885058,
+ "quiet_ref": 2.487805920474771
+}

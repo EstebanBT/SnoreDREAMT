@@ -128,3 +128,19 @@ coupling:
     hilbert: false       # narrow-band (+-0.05 Hz) phase is ~sinusoidal; occupancy checked instead
     hilbertgated: false
     cycle: true          # linear interpolation over-represents the longer expiration
+
+# Step 3 — breathing conditions
+snoring:
+  band: [20, 45]
+  min_db: 10.0           # breath snore RMS >= quiet reference + 10 dB
+  min_phasic: 2.0        # louder / quieter half-cycle RMS
+  min_run: 3             # consecutive snoring breaths
+condition_codes: {clean: 0, snoring: 1, hypopnea: 2, obstructive: 3, central: 4, mixed: 5, recovery: 6}
+step3:
+  stage_sets: {N2: [2], N2N3: [2, 3]}
+  variants: [ABDOMEN_hilbertgated, ABDOMEN_cycle, FLOW_hilbertgated, ABDOMEN_hilbert]   # primary first
+  match_window_min: 10
+  min_match_frac: 0.5
+  min_condition_s: 60          # at least 1 min of a condition in the stage set
+  min_ref_events: 20           # clean reference events needed for mu_ref
+  min_events: 10               # per side (condition / control) for a subject to enter a group test
