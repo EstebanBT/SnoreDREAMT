@@ -35,3 +35,16 @@ def test_mtest_and_medtest():
     assert not cs.circ_mtest(a, 0.6)[0]
     assert cs.circ_medtest(a, 0.0) < 0.01
     assert cs.circ_medtest(a, 0.6) > 0.05
+
+
+def test_corrcl_and_k_groups():
+    rng = np.random.default_rng(3)
+    x = rng.normal(size=200)
+    a = np.angle(np.exp(1j * (0.8 * x + rng.vonmises(0, 4, 200))))     # phase depends on x
+    rho, p = cs.circ_corrcl(a, x)
+    assert rho > 0.5 and p < 1e-6
+    rho0, p0 = cs.circ_corrcl(rng.uniform(-np.pi, np.pi, 200), x)
+    assert p0 > 0.001
+    g = [rng.vonmises(m, 3, 60) for m in (0, 0, 1.0)]
+    assert cs.circ_cmtest_k(g)[0] < 1e-3 and cs.circ_wwtest_k(g)[0] < 1e-3
+    assert np.isclose(cs.circ_cmtest(g[0], g[1])[0], cs.circ_cmtest_k(g[:2])[0])

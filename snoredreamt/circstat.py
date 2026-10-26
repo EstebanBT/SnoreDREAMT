@@ -88,15 +88,15 @@ def _ww_assumption_ok(rw, n_mean):
     return False
 
 
-def circ_wwtest(alpha1, alpha2):
-    """Two-sample Watson-Williams test for equal mean directions. Returns (pval, F, assumption_ok)."""
-    alpha = np.concatenate([np.asarray(alpha1, float).ravel(), np.asarray(alpha2, float).ravel()])
-    idx = np.concatenate([np.ones(len(alpha1)), 2 * np.ones(len(alpha2))])
-    w = np.ones_like(alpha)
-    s, n = 2, w.sum()
-    pn = np.array([np.sum(idx == u) for u in (1, 2)], float)
-    pr = np.array([circ_r(alpha[idx == u]) for u in (1, 2)])
-    r = circ_r(alpha, w)
+def circ_wwtest_k(groups):
+    """k-sample Watson-Williams test for equal mean directions (CircStat circ_wwtest(alpha, idx)).
+    Returns (pval, F, assumption_ok)."""
+    alpha = np.concatenate([np.asarray(g, float).ravel() for g in groups])
+    idx = np.concatenate([np.full(len(g), i) for i, g in enumerate(groups)])
+    s, n = len(groups), float(len(alpha))
+    pn = np.array([np.sum(idx == u) for u in range(s)], float)
+    pr = np.array([circ_r(alpha[idx == u]) for u in range(s)])
+    r = circ_r(alpha)
     rw = np.sum(pn * pr) / n
     ok = _ww_assumption_ok(rw, pn.mean())
     kk = circ_kappa(R=rw)
@@ -107,19 +107,40 @@ def circ_wwtest(alpha1, alpha2):
     return 1 - stats.f.cdf(F, s - 1, n - s), F, ok
 
 
-def circ_cmtest(alpha1, alpha2):
-    """Two-sample common median test (non-parametric). Returns (pval, grand median, P statistic)."""
-    alpha = np.concatenate([np.asarray(alpha1, float).ravel(), np.asarray(alpha2, float).ravel()])
-    idx = np.concatenate([np.ones(len(alpha1)), 2 * np.ones(len(alpha2))])
-    N = len(idx)
+def circ_wwtest(alpha1, alpha2):
+    """Two-sample Watson-Williams test for equal mean directions. Returns (pval, F, assumption_ok)."""
+    return circ_wwtest_k([alpha1, alpha2])
+
+
+def circ_cmtest_k(groups):
+    """k-sample common median test (CircStat circ_cmtest(alpha, idx)). Returns (pval, grand median, P)."""
+    alpha = np.concatenate([np.asarray(g, float).ravel() for g in groups])
+    idx = np.concatenate([np.full(len(g), i) for i, g in enumerate(groups)])
+    s, N = len(groups), len(idx)
     med = circ_median(alpha)
-    n = np.array([np.sum(idx == u) for u in (1, 2)], float)
-    m = np.array([np.sum(circ_dist(alpha[idx == u], med) < 0) for u in (1, 2)], float)
+    n = np.array([np.sum(idx == u) for u in range(s)], float)
+    m = np.array([np.sum(circ_dist(alpha[idx == u], med) < 0) for u in range(s)], float)
     if np.any(n < 10):
         warnings.warn('Test not applicable. Sample size in at least one group to small.')
     M = m.sum()
     P = (N ** 2 / (M * (N - M))) * np.sum(m ** 2 / n) - N * M / (N - M)
-    return 1 - stats.chi2.cdf(P, 1), med, P
+    return 1 - stats.chi2.cdf(P, s - 1), med, P
+
+
+def circ_cmtest(alpha1, alpha2):
+    """Two-sample common median test (non-parametric). Returns (pval, grand median, P statistic)."""
+    return circ_cmtest_k([alpha1, alpha2])
+
+
+def circ_corrcl(alpha, x):
+    """Circular-linear correlation (CircStat circ_corrcl). Returns (rho, pval)."""
+    alpha, x = np.asarray(alpha, float).ravel(), np.asarray(x, float).ravel()
+    n = len(alpha)
+    rxs = np.corrcoef(x, np.sin(alpha))[0, 1]
+    rxc = np.corrcoef(x, np.cos(alpha))[0, 1]
+    rcs = np.corrcoef(np.sin(alpha), np.cos(alpha))[0, 1]
+    rho = np.sqrt((rxc ** 2 + rxs ** 2 - 2 * rxc * rxs * rcs) / (1 - rcs ** 2))
+    return rho, 1 - stats.chi2.cdf(n * rho ** 2, 2)
 
 
 def circ_confmean(alpha, xi=0.05, w=None, d=0.0):

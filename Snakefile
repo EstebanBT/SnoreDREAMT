@@ -25,6 +25,7 @@ rule all:
         f"{DER}/step4/glmm_ahi.csv",
         expand(f"{DER}/step5/{{ss}}/group_phase_shifts.csv", ss=["N2", "N2N3"]),
         expand(f"{DER}/step5/{{ss}}/circstat_group.csv", ss=["N2", "N2N3"]),
+        expand(f"{DER}/step6/{{ss}}/glmm_ahi.csv", ss=["N2", "N2N3"]),
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
 
 
@@ -251,6 +252,33 @@ rule step4_glmm:
     input: f"{DER}/step4/glmm_data.csv"
     output: f"{DER}/step4/glmm_ahi.csv"
     shell: "Rscript scripts/rules/step4_glmm.R {input} {output}"
+
+
+# ---------------------------------------------------------------- Step 6: phase effects vs severity
+rule step6_phase_severity:
+    """Step 6: within-subject phase changes (6a) and clean preferred phase (6b) vs AHI and severity markers."""
+    input:
+        severity = expand(f"{DER}/step4/{{sid}}_severity.json", sid=SUBJECTS),
+        circstat_subjects = f"{DER}/step5/{{ss}}/circstat_subjects.csv",
+        events = expand(f"{DER}/step3b/{{sid}}/events.parquet", sid=SUBJECTS),
+        clean_signal = f"{DER}/step3b/{{ss}}/clean_signal.csv",
+        resp_summary = f"{DER}/step2/resp_summary.csv",
+        bins = f"{DER}/step3b/{{ss}}/phase_bins.csv",
+    output:
+        table_6a = f"{DER}/step6/{{ss}}/6a_phase_change_vs_severity.csv",
+        table_6b = f"{DER}/step6/{{ss}}/6b_clean_phase_vs_severity.csv",
+        glmm_data = f"{DER}/step6/{{ss}}/glmm_data.csv",
+        fig = f"{config['paths']['figures']}/step6_{{ss}}.png",
+    wildcard_constraints: ss = "N2|N2N3"
+    script: "scripts/rules/step6_phase_severity.py"
+
+
+rule step6_glmm:
+    """Step 6 population level: AHI as moderator of clean modulation and of condition-related rotation/change."""
+    input: f"{DER}/step6/{{ss}}/glmm_data.csv"
+    output: f"{DER}/step6/{{ss}}/glmm_ahi.csv"
+    wildcard_constraints: ss = "N2|N2N3"
+    shell: "Rscript scripts/rules/step6_glmm.R {input} {output}"
 
 
 rule conditions_summary:

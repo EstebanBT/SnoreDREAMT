@@ -9,7 +9,7 @@ Full approved plan: `~/.claude/plans/fuzzy-shimmying-breeze.md`. Reports: `notes
 | 3 (3b–3d) | Coupling **strength** per breathing condition (apneas, hypopneas, snoring) | done |
 | 4 | Coupling strength vs AHI and data-derived severity markers | done |
 | 5 | Coupling **preferred phase** per breathing condition: any change? consistent rotation? | done (`notes/STEP5_REPORT.md`) |
-| 6 | Phase changes vs AHI and severity markers | planned |
+| 6 | Phase changes vs AHI and severity markers | done (`notes/STEP6_REPORT.md`) |
 
 ## Step 5 — Does the preferred phase change?
 Same conditions, event families (large SOs × BEST phase, consensus spindles × ABDOMEN gated, pooled complexes ×
