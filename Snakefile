@@ -23,6 +23,7 @@ rule all:
         f"{DER}/step3/event_locked_rates.parquet",
         expand(f"{DER}/step3b/{{ss}}/glmm.csv", ss=["N2", "N2N3"]),
         f"{DER}/step4/glmm_ahi.csv",
+        expand(f"{DER}/step5/{{ss}}/group_phase_shifts.csv", ss=["N2", "N2N3"]),
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
 
 
@@ -188,6 +189,20 @@ rule step3b_glmm:
     output: f"{DER}/step3b/{{ss}}/glmm.csv"
     wildcard_constraints: ss = "N2|N2N3"
     shell: "Rscript scripts/rules/step3b_glmm.R {input} {output}"
+
+
+# ---------------------------------------------------------------- Step 5: preferred-phase changes
+rule step5_phase:
+    """Step 5: any phase change (5a, parametric occupancy-aware null) and consistent rotation (5b) per condition."""
+    input:
+        bins = f"{DER}/step3b/{{ss}}/phase_bins.csv",
+        glmm = f"{DER}/step3b/{{ss}}/glmm.csv",
+    output:
+        subjects = f"{DER}/step5/{{ss}}/subject_phase_shifts.csv",
+        table = f"{DER}/step5/{{ss}}/group_phase_shifts.csv",
+        fig = f"{config['paths']['figures']}/step5_phase_{{ss}}.png",
+    wildcard_constraints: ss = "N2|N2N3"
+    script: "scripts/rules/step5_phase.py"
 
 
 # ---------------------------------------------------------------- Step 4: severity

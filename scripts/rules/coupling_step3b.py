@@ -185,6 +185,10 @@ E = pd.concat(ev_rows)
 E.to_parquet(out.events)
 
 cond_masks = {'clean': lab == codes['clean'], 'resp_event': np.isin(lab, P['pooled_event_codes'])}
+# Step 5 control: clean breathing split into alternating 10-min blocks (two disjoint pseudo-conditions)
+block = (np.arange(n) // (600 * fs)) % 2
+cond_masks['clean_odd'] = (lab == codes['clean']) & (block == 1)
+cond_masks['clean_even'] = (lab == codes['clean']) & (block == 0)
 for name, code in codes.items():
     if name != 'clean':
         cond_masks[name] = lab == code
