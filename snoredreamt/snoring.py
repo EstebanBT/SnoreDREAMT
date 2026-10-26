@@ -39,6 +39,37 @@ def breath_features(snore, peaks, troughs, fs, band=(20, 45), ptaf=None):
     return df
 
 
+def burst_references(sid, cfg, labels_variant='primary', stage=2, min_breaths=50, default_relpos=None):
+    """Snore-burst peaks of snoring breaths and phase-matched pseudo-burst moments of quiet clean breaths.
+
+    burst: sample of the snore-envelope maximum within each snoring breath (label 1, given stage);
+    pseudo: in quiet clean breaths (label 0), the same relative position within the breath as the subject's median
+    burst position (or `default_relpos` when the subject has too few snoring breaths). Returns None if neither is
+    available. Used to test for and to exclude snore-evoked events with a phase-matched window.
+    """
+    from snoredreamt import resp
+    from snoredreamt.io import load_subject
+    der = cfg['paths']['derivatives']
+    fs = cfg['fs']
+    lab = np.load(f'{der}/step3/{sid}/conditions_{labels_variant}.npz')['labels']
+    st = np.load(f'{der}/step3/{sid}/conditions_{labels_variant}.npz')['stage']
+    br = pd.read_parquet(f'{der}/step3/{sid}/snore_breaths_{labels_variant}.parquet')
+    br = br[st[br.start.to_numpy()] == stage]
+    sn = br[br.snore & (lab[br.start.to_numpy()] == 1)]
+    qu = br[~br.snore & (lab[br.start.to_numpy()] == 0)]
+    burst, relpos = np.array([], dtype=np.int64), default_relpos
+    if len(sn) >= min_breaths:
+        d = load_subject(sid, cfg)
+        sos = signal.butter(4, cfg['snoring']['band'], btype='band', fs=fs, output='sos')
+        env = resp.lowpass(np.abs(signal.sosfiltfilt(sos, d['SNORE'].astype(float))), fs, 5.0)
+        burst = np.array([a + np.argmax(env[a:b]) for a, b in zip(sn.start, sn.end)], dtype=np.int64)
+        relpos = float(np.median((burst - sn.start.to_numpy()) / (sn.end - sn.start).to_numpy()))
+    if relpos is None or len(qu) < min_breaths:
+        return None if len(burst) == 0 else {'burst': burst, 'pseudo': np.array([], dtype=np.int64), 'relpos': relpos}
+    pseudo = (qu.start + relpos * (qu.end - qu.start)).round().astype(np.int64).to_numpy()
+    return {'burst': burst, 'pseudo': pseudo, 'relpos': relpos}
+
+
 def label_snoring(br, stage, quiet_mask, wake_mask, min_db=10.0, min_phasic=2.0, min_run=3):
     """Add columns snore_db, snore_breath, snore (episode-level, >= min_run consecutive breaths)."""
     q = br.snore_rms[quiet_mask[br.start.to_numpy()]].to_numpy()

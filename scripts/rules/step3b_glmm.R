@@ -8,6 +8,7 @@
 # beta_cg = modulation depth in clean breathing; gamma = cond:cg = change during the condition.
 # Relative change = gamma / beta_cg, with a 95 % interval and P(loss > 50 %) from 20000 draws of the
 # (approximately normal) sampling distribution of the fixed effects.
+# Run for both exclusion levels: 'none' and 'evoked' (snore-evoked windows removed from events AND occupancy).
 # Usage: Rscript step3b_glmm.R <phase_bins_N2.csv> <out.csv>
 suppressPackageStartupMessages({library(lme4); library(MASS)})
 args <- commandArgs(trailingOnly = TRUE)
@@ -15,9 +16,9 @@ d <- read.csv(args[1])
 d <- d[d$primary == "True" & d$polarity_ok == "True" & d$occupancy_min > 0, ]
 set.seed(1)
 res <- list()
-for (es in unique(d$event_set)) {
+for (excl in unique(d$exclusion)) for (es in unique(d$event_set)) {
   for (cond in c("resp_event", "snoring", "hypopnea", "recovery")) {
-    x <- d[d$event_set == es & d$condition %in% c("clean", cond), ]
+    x <- d[d$exclusion == excl & d$event_set == es & d$condition %in% c("clean", cond), ]
     # subjects need both conditions and some events in the condition
     tab <- aggregate(count ~ sid + condition, x, sum)
     ok <- intersect(tab$sid[tab$condition == "clean" & tab$count >= 20], tab$sid[tab$condition == cond & tab$count >= 5])
@@ -36,7 +37,7 @@ for (es in unique(d$event_set)) {
     draws <- mvrnorm(20000, fe, V)
     rel <- draws[, "cg:cond"] / draws[, "cg"]
     res[[length(res) + 1]] <- data.frame(
-      event_set = es, variant = unique(x$variant), condition = cond, n_subjects = length(ok),
+      exclusion = excl, event_set = es, variant = unique(x$variant), condition = cond, n_subjects = length(ok),
       n_events_condition = sum(x$count[x$cond == 1]), n_events_clean = sum(x$count[x$cond == 0]),
       beta_cg = fe["cg"], beta_cg_se = se["cg"], beta_cg_p = 2 * pnorm(-abs(fe["cg"] / se["cg"])),
       gamma_cg = fe["cg:cond"], gamma_cg_se = se["cg:cond"],

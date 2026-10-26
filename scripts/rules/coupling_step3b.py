@@ -57,7 +57,20 @@ for ch in P['consensus']['spindle']['others']:
 cover = np.cumsum(cover[:-1]) > 0
 cc = np.concatenate([[0], np.cumsum(cover)])
 sp_cons = (cc[sp.end.to_numpy() + 1] - cc[sp.start.to_numpy()]) > 0
+# complexes (re-built with the new pieces): F4 SO trough followed by a consensus C4 spindle envelope peak within
+# (0, complex_max_lag_s]; three SO sources (all, large, consensus); phase time point = SO trough
+spk = np.sort(sp.env_peak.to_numpy()[sp_cons].astype(np.int64))
+def has_spindle_after(t):
+    i = np.searchsorted(spk, t, side='right')
+    ok = i < len(spk)
+    lag = np.full(len(t), np.inf)
+    lag[ok] = spk[i[ok]] - t[ok]
+    return lag <= P['complex_max_lag_s'] * fs
+cx = has_spindle_after(so.trough.to_numpy())
 sets = {
+    'complex': (so.trough.to_numpy()[cx], amp[cx]),
+    'complex_large': (so.trough.to_numpy()[cx & large], amp[cx & large]),
+    'complex_cons': (so.trough.to_numpy()[cx & so_cons], amp[cx & so_cons]),
     'SO': (so.trough.to_numpy(), amp),
     'SO_large': (so.trough.to_numpy()[large], amp[large]),
     'SO_cons': (so.trough.to_numpy()[so_cons], amp[so_cons]),
@@ -97,6 +110,41 @@ def breath_of(t):
     return np.where(ok, i, -1)
 
 
+# ------------------------------------------------------------------ snore-burst references (phase-matched exclusion)
+from snoredreamt.snoring import burst_references  # noqa: E402
+refs = {'burst': [], 'pseudo': []}
+for stg in [2, 3]:
+    r_ = burst_references(sid, cfg, stage=stg, default_relpos=P['default_burst_relpos'])
+    if r_ is not None:
+        refs['burst'].append(r_['burst'])
+        refs['pseudo'].append(r_['pseudo'])
+ref_all = np.sort(np.concatenate(refs['burst'] + refs['pseudo'])) if any(len(x) for x in refs['burst'] + refs['pseudo']) \
+    else np.array([], dtype=np.int64)
+
+
+def family(name):
+    return 'complex' if name.startswith('complex') else ('SO' if name.startswith('SO') else 'spindle')
+
+
+def evoked_flag(t, fam):
+    lo, hi = P['evoked_windows_s'][fam]
+    if len(ref_all) == 0:
+        return np.zeros(len(t), bool)
+    i = np.searchsorted(ref_all, t, side='right') - 1
+    lag = np.where(i >= 0, (t - ref_all[np.clip(i, 0, None)]) / fs, np.inf)
+    # the window can reach back past the most recent reference only if it is shorter than a breath: check 2 refs
+    lag2 = np.where(i >= 1, (t - ref_all[np.clip(i - 1, 0, None)]) / fs, np.inf)
+    return ((lag >= lo) & (lag < hi)) | ((lag2 >= lo) & (lag2 < hi))
+
+
+evoked_mask = {}
+for fam, (lo, hi) in P['evoked_windows_s'].items():
+    m = np.zeros(n + 1, np.int32)
+    if len(ref_all):
+        np.add.at(m, np.clip(ref_all + int(lo * fs), 0, n), 1)
+        np.add.at(m, np.clip(ref_all + int(hi * fs), 0, n), -1)
+    evoked_mask[fam] = np.cumsum(m[:-1]) > 0
+
 # ------------------------------------------------------------------ outputs
 ev_rows = []
 for name, (t, a) in sets.items():
@@ -111,6 +159,7 @@ for name, (t, a) in sets.items():
         df[f'phase_{var}'] = phi[t]
     for col in ['snore_db', 'flow_log2', 'effort_log2']:
         df[col] = np.where(bi >= 0, br[col].to_numpy()[np.clip(bi, 0, len(br) - 1)], np.nan)
+    df['evoked_window'] = evoked_flag(t, family(name))
     ev_rows.append(df)
 E = pd.concat(ev_rows)
 E.to_parquet(out.events)
@@ -128,19 +177,24 @@ for sname, stages in P['stage_sets'].items():
         if m.sum() < 30 * fs:
             continue
         for var, phi in PH.items():
-            ok = m & np.isfinite(phi)
-            occ = np.histogram(phi[ok], edges)[0] / fs / 60
-            for name in sets:
-                g = E[(E.event_set == name) & np.isin(E.stage, stages)]
-                tt = g['sample'].to_numpy()
-                a = phi[tt[ok[tt]]]
-                cnt = np.histogram(a, edges)[0]
-                bin_rows.append(pd.DataFrame({'sid': sid, 'stage_set': sname, 'condition': cname, 'variant': var,
-                                              'event_set': name, 'bin': np.arange(P['n_bins']),
-                                              'bin_center': (edges[:-1] + edges[1:]) / 2, 'count': cnt,
-                                              'occupancy_min': occ}))
+            for excl in ['none', 'evoked']:
+                for name in sets:
+                    ok = m & np.isfinite(phi)
+                    if excl == 'evoked':
+                        ok = ok & ~evoked_mask[family(name)]
+                    occ = np.histogram(phi[ok], edges)[0] / fs / 60
+                    g = E[(E.event_set == name) & np.isin(E.stage, stages)]
+                    tt = g['sample'].to_numpy()
+                    a = phi[tt[ok[tt]]]
+                    cnt = np.histogram(a, edges)[0]
+                    bin_rows.append(pd.DataFrame({'sid': sid, 'stage_set': sname, 'condition': cname, 'variant': var,
+                                                  'event_set': name, 'exclusion': excl, 'bin': np.arange(P['n_bins']),
+                                                  'bin_center': (edges[:-1] + edges[1:]) / 2, 'count': cnt,
+                                                  'occupancy_min': occ}))
 pd.concat(bin_rows).to_parquet(out.bins)
 with open(out.info, 'w') as f:
     json.dump({'sid': sid, 'flow_abd_offset_rad': float(offset), 'flow_abd_offset_consistency_R': float(offset_r),
                'n_events': {k: int(len(v[0])) for k, v in sets.items()},
+               'n_burst_refs': int(sum(len(x) for x in refs['burst'])),
+               'n_pseudo_refs': int(sum(len(x) for x in refs['pseudo'])),
                'best_phase_from_flow_frac_nrem': float(np.isfinite(fl[np.isin(st, [2, 3])]).mean())}, f, indent=1)

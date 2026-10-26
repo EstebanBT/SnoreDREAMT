@@ -47,3 +47,6 @@ Approved plan: `~/.claude/plans/fuzzy-shimmying-breeze.md` (Step 3 section). Dec
 - [x] 4  hierarchical Poisson model on phase-bin counts with occupancy offset + ROPE bounds
 - 2026-10-26: Step 3b done (see STEP3_REPORT.md, section Step 3b): complete loss excluded for pooled events
   (large SOs, consensus spindles); snoring SO increase partly snore-evoked K-complexes.
+- 2026-10-26: Step 3c — snore-evoked SOs/spindles excluded (phase-matched, occupancy-normalised): snoring now
+  shows ~-70 % coupling for SOs and spindles (one-sided p 0.03-0.05); apneas/hypopneas no loss. Complexes rebuilt:
+  still weak (V p = 0.011, Rayleigh p = 0.056), limited by event count.

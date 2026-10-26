@@ -154,6 +154,7 @@ rule coupling_step3b:
         cache = f"{DER}/cache/{{sid}}.npz",
         events = expand(f"{DER}/events/{{{{sid}}}}/{{kind}}_{{ch}}.parquet", kind=["sos", "spindles"],
                         ch=config["event_channels"]),
+        snore_breaths = f"{DER}/step3/{{sid}}/snore_breaths_primary.parquet",
     output:
         events = f"{DER}/step3b/{{sid}}/events.parquet",
         bins = f"{DER}/step3b/{{sid}}/phase_bins.parquet",
@@ -171,6 +172,8 @@ rule step3b_group:
         clean_signal = f"{DER}/step3b/clean_signal.csv",
         contrasts = f"{DER}/step3b/contrasts.csv",
         dose = f"{DER}/step3b/dose_response.csv",
+        snoring_diag = f"{DER}/step3b/snoring_diagnostics.csv",
+        contrasts_occ = f"{DER}/step3b/contrasts_occupancy.csv",
         bins_export = f"{DER}/step3b/phase_bins_N2.csv",
         fig = f"{config['paths']['figures']}/step3b_power.png",
     script: "scripts/rules/step3b_group.py"

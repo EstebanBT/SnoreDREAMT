@@ -144,3 +144,50 @@ Bullón Tarrasó et al. (sounds evoke K-complex-like SOs).
 - Whole-night clean controls (instead of ±10 min matched) gain events but are exposed to time-of-night / sleep-depth
   differences; the matched analysis from Step 3 remains as a sensitivity check.
 - Some GLMM fits are singular (random-slope variance ≈ 0 for spindles), i.e. effectively fixed modulation.
+
+---
+
+# Step 3c — snore-evoked events excluded; complexes rebuilt (2026-10-26)
+Scripts/rules: `scripts/snore_evoked_events.py`, `snoring.burst_references`, `coupling_step3b` (complex sets,
+evoked flags and masks), `step3b_group` (occupancy-normalised contrasts `contrasts_occupancy.csv`), `step3b_glmm`
+(both exclusion levels). Figures: `step3b_snore_evoked_events.png`, `step3b_power.png`.
+
+## Snore-evoked events
+Event rates around snore-burst peaks vs the same breath position in quiet clean breaths (N = 38, 0.5 s windows):
+**large SOs** excess 0.5–1.5 s after the burst (peak 0.75–1.25 s, p = 1e-4); **consensus spindles** onsets excess
+0.25–1.0 s (p = 0.01–0.05; envelope peaks 0.5–1.25 s). Snore bursts therefore evoke K-complex/spindle responses.
+Exclusion windows: SO and complex troughs 0.5–1.5 s, spindle onsets 0.25–1.0 s after each burst peak in snoring
+breaths **and** after phase-matched pseudo-bursts in quiet clean breaths; excluded time is removed from phase
+occupancy too.
+
+**Method note:** excluding a fixed breath-phase window makes phase occupancy non-uniform, which biases any per-event
+mean-cos metric (clean coupling turned negative). With exclusion, only occupancy-normalised measures are valid:
+subject coupling from rate-weighted resultants (`contrasts_occupancy.csv`) and the Poisson GLMM.
+
+## Results with snore-evoked events excluded (occupancy-normalised; N2; Δ = condition − clean)
+| | all events | evoked excluded | GLMM rel. change (excluded) |
+|---|---|---|---|
+| Large SOs, snoring | +0.022 [−0.023, 0.070] | **−0.044 [−0.108, 0.021], p_loss = 0.050** | **−68 % [−170, +5], p_loss = 0.031**, P(loss > 50 %) = 0.70 |
+| Consensus spindles, snoring | −0.006 [−0.058, 0.044] | −0.029 [−0.089, 0.027], p_loss = 0.14 | **−71 % [−149, +17], p_loss = 0.047**, P(loss > 50 %) = 0.71 |
+| Large SOs, respiratory events | +0.031 | +0.029 [−0.025, 0.080] | +34 % [−53, +195], P(complete loss) = 0.003 |
+| Spindles, respiratory events | +0.031 | +0.035 [−0.011, 0.080] | +80 % [−42, +317], P(complete loss) = 0.001 |
+| Hypopnea / recovery | no loss | no loss | P(complete loss) ≤ 0.003 |
+
+(clean levels ≈ 0.05 for large SOs, ≈ 0.02 for spindles; two-sided GLMM p for snoring 0.063 (SO) and 0.094 (spindle).)
+
+**Interpretation:** the apparent *increase* of SO coupling during snoring was produced by snore-evoked
+K-complexes timed by the inspiratory burst. Once those are removed, **both SO and spindle coupling to respiration
+are reduced during snoring by roughly two thirds** (one-sided p ≈ 0.03–0.05; two-sided trend), whereas
+**apneas/hypopneas show no loss** (complete loss excluded). This is the most direct evidence so far for the
+original hypothesis, but it is trend-level and depends on an exclusion window chosen from the same data — it needs
+confirmation (e.g. pre-specified windows, other datasets, sensitivity to window bounds).
+
+## Complexes rebuilt (F4 SO trough → consensus C4 spindle envelope peak within 1.5 s)
+Median 38 complexes per subject over the night (IQR 14–72); consensus/large variants fewer. Clean-N2 group phase
+tests (`derivatives/step3b/clean_group_phase_tests.csv`): best variant (all SOs, BEST phase, ≥ 10 complexes/subject,
+N = 66) group mean +18°, R = 0.21, **Rayleigh p = 0.056, V-test(0°) p = 0.011**; large/consensus complexes are
+weaker (R ≤ 0.18, p ≥ 0.2) because they leave even fewer events (median 28–34). For comparison: large SOs
+R = 0.43 (p < 1e-6), consensus spindles R = 0.34 (p = 2e-4). Condition contrasts for complexes include only 9–26
+subjects and are uninformative (snoring −0.04 to −0.06, n.s.). **The complex problem is mainly event count:**
+coupled SO–spindle complexes are rare in this cohort's N2-dominated sleep, so subject preferred phases are too
+noisy; the group V-test is significant but the Rayleigh is not.

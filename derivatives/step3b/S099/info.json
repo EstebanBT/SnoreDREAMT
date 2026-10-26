@@ -3,6 +3,9 @@
  "flow_abd_offset_rad": 1.018310072203122,
  "flow_abd_offset_consistency_R": 0.9563163672465029,
  "n_events": {
+  "complex": 91,
+  "complex_large": 55,
+  "complex_cons": 61,
   "SO": 739,
   "SO_large": 370,
   "SO_cons": 473,
@@ -10,5 +13,7 @@
   "spindle": 895,
   "spindle_cons": 803
  },
+ "n_burst_refs": 351,
+ "n_pseudo_refs": 1634,
  "best_phase_from_flow_frac_nrem": 0.9531381909547739
 }

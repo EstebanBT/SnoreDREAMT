@@ -156,3 +156,9 @@ step3b:
   stage_sets: {N2: [2], N2N3: [2, 3]}
   n_bins: 12
   min_events: 5
+  complex_max_lag_s: 1.5          # consensus C4 spindle envelope peak within (0, 1.5] s after the F4 SO trough
+  evoked_windows_s:               # phase-matched exclusion after snore-burst peaks (and quiet pseudo-bursts),
+    SO: [0.5, 1.5]                #   windows from scripts/snore_evoked_events.py (excess p < .05)
+    complex: [0.5, 1.5]
+    spindle: [0.25, 1.0]
+  default_burst_relpos: 0.45      # pseudo-burst position for subjects with too few snoring breaths
