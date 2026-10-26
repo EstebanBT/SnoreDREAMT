@@ -1,0 +1,73 @@
+family,measure,marker,n,rho,p,event_set,variant,p_fdr
+SO,projected coupling,AHI,89,-0.004584715761926054,0.965987790158425,SO_large,BEST_hilbertgated,0.997703852770342
+SO,projected coupling,OAHI,89,0.00404498562124954,0.9699898568600547,SO_large,BEST_hilbertgated,0.997703852770342
+SO,projected coupling,ODI3,89,0.15489510936090814,0.14723052475258394,SO_large,BEST_hilbertgated,0.5142007201452667
+SO,projected coupling,T90,89,0.1424979665747554,0.18281804960761622,SO_large,BEST_hilbertgated,0.5722999813803639
+SO,projected coupling,hypoxic burden,89,0.0005277494041538986,0.9960836835153221,SO_large,BEST_hilbertgated,0.9988484597750873
+SO,projected coupling,mean event duration,88,0.07340354337642213,0.4967207833767471,SO_large,BEST_hilbertgated,0.8317185210029253
+SO,projected coupling,snore index,89,0.061740790533556196,0.565442644234295,SO_large,BEST_hilbertgated,0.8662100081887073
+SO,projected coupling,mean SaO2,89,-0.15629894450119172,0.14355424671039943,SO_large,BEST_hilbertgated,0.5142007201452667
+SO,projected coupling,arousal index (clinical),89,0.035618474607679015,0.7403582454362794,SO_large,BEST_hilbertgated,0.904433521298016
+SO,projected coupling,arousal index (detected),89,0.22070139598229488,0.03767607618705333,SO_large,BEST_hilbertgated,0.45211291424463995
+SO,projected coupling,age,89,0.035095783486647214,0.7440362123905846,SO_large,BEST_hilbertgated,0.904433521298016
+SO,projected coupling,BMI,89,0.026067978546783634,0.8084009048497742,SO_large,BEST_hilbertgated,0.9387881475674797
+SO,modulation strength (PPC),AHI,91,0.18975430545492006,0.07162048180519666,SO_large,BEST_hilbertgated,0.5142007201452667
+SO,modulation strength (PPC),OAHI,91,0.15492665188164279,0.1425543086106553,SO_large,BEST_hilbertgated,0.5142007201452667
+SO,modulation strength (PPC),ODI3,91,0.3036960650448704,0.0034282094446282762,SO_large,BEST_hilbertgated,0.2468310800132359
+SO,modulation strength (PPC),T90,91,0.1539882205258069,0.14501837327534503,SO_large,BEST_hilbertgated,0.5142007201452667
+SO,modulation strength (PPC),hypoxic burden,91,0.19689440993788823,0.06139437168466216,SO_large,BEST_hilbertgated,0.5142007201452667
+SO,modulation strength (PPC),mean event duration,90,-0.04159361238012923,0.6970953692520665,SO_large,BEST_hilbertgated,0.8936591127076146
+SO,modulation strength (PPC),snore index,91,0.2595745751955728,0.012966045082026537,SO_large,BEST_hilbertgated,0.4043587711442317
+SO,modulation strength (PPC),mean SaO2,91,-0.07862716993151775,0.4587936463723645,SO_large,BEST_hilbertgated,0.8056864033856158
+SO,modulation strength (PPC),arousal index (clinical),91,0.17766856215873253,0.09201682455446468,SO_large,BEST_hilbertgated,0.5142007201452667
+SO,modulation strength (PPC),arousal index (detected),91,0.2495301799649626,0.017064088957497704,SO_large,BEST_hilbertgated,0.4043587711442317
+SO,modulation strength (PPC),age,91,-0.03987163357144571,0.7074801308935281,SO_large,BEST_hilbertgated,0.8936591127076146
+SO,modulation strength (PPC),BMI,91,0.12991787255840787,0.2196667455128616,SO_large,BEST_hilbertgated,0.6083079106510014
+complex,projected coupling,AHI,70,0.020492892121285453,0.8662793842028015,complex_pooled_large,ABDOMEN_hilbertgated,0.9639983008993389
+complex,projected coupling,OAHI,70,0.05027602347006691,0.6793670120941925,complex_pooled_large,ABDOMEN_hilbertgated,0.8893531794687611
+complex,projected coupling,ODI3,70,0.18208540010669733,0.13138869344319123,complex_pooled_large,ABDOMEN_hilbertgated,0.5142007201452667
+complex,projected coupling,T90,70,0.17096245711530458,0.15705046450318141,complex_pooled_large,ABDOMEN_hilbertgated,0.5142007201452667
+complex,projected coupling,hypoxic burden,70,0.09904645262881637,0.4146318357618848,complex_pooled_large,ABDOMEN_hilbertgated,0.7856182151277816
+complex,projected coupling,mean event duration,69,0.11435878699305811,0.34945055278986337,complex_pooled_large,ABDOMEN_hilbertgated,0.727954632952512
+complex,projected coupling,snore index,70,-0.0001756634289836795,0.9988484597750873,complex_pooled_large,ABDOMEN_hilbertgated,0.9988484597750873
+complex,projected coupling,mean SaO2,70,-0.21343714460677107,0.0760475234478433,complex_pooled_large,ABDOMEN_hilbertgated,0.5142007201452667
+complex,projected coupling,arousal index (clinical),70,0.05900998254596886,0.6275014948443922,complex_pooled_large,ABDOMEN_hilbertgated,0.8882386641361353
+complex,projected coupling,arousal index (detected),70,-0.05747528650161841,0.6364947995482529,complex_pooled_large,ABDOMEN_hilbertgated,0.8882386641361353
+complex,projected coupling,age,70,0.11248458127087123,0.35386683546302666,complex_pooled_large,ABDOMEN_hilbertgated,0.727954632952512
+complex,projected coupling,BMI,70,0.03817658714270343,0.7536946010816801,complex_pooled_large,ABDOMEN_hilbertgated,0.904433521298016
+complex,modulation strength (PPC),AHI,88,0.18447309138313475,0.08532931749947832,complex_pooled_large,ABDOMEN_hilbertgated,0.5142007201452667
+complex,modulation strength (PPC),OAHI,88,0.1603751612138627,0.13553640765444847,complex_pooled_large,ABDOMEN_hilbertgated,0.5142007201452667
+complex,modulation strength (PPC),ODI3,88,0.24039414072536164,0.024067771934584124,complex_pooled_large,ABDOMEN_hilbertgated,0.4043587711442317
+complex,modulation strength (PPC),T90,88,0.1167871985983269,0.2785379675016287,complex_pooled_large,ABDOMEN_hilbertgated,0.7162087901395784
+complex,modulation strength (PPC),hypoxic burden,88,0.23419393469761546,0.028080470218349425,complex_pooled_large,ABDOMEN_hilbertgated,0.4043587711442317
+complex,modulation strength (PPC),mean event duration,87,0.04875337172851206,0.6538423499890996,complex_pooled_large,ABDOMEN_hilbertgated,0.8882386641361353
+complex,modulation strength (PPC),snore index,88,-0.011110768670746358,0.9181684378317041,complex_pooled_large,ABDOMEN_hilbertgated,0.9755182429377071
+complex,modulation strength (PPC),mean SaO2,88,-0.10510373005529923,0.3297758457173178,complex_pooled_large,ABDOMEN_hilbertgated,0.727954632952512
+complex,modulation strength (PPC),arousal index (clinical),88,0.08222390171024935,0.4463042700794039,complex_pooled_large,ABDOMEN_hilbertgated,0.803347686142927
+complex,modulation strength (PPC),arousal index (detected),88,0.022066852171462793,0.838298458619279,complex_pooled_large,ABDOMEN_hilbertgated,0.958055381279176
+complex,modulation strength (PPC),age,88,-0.10092239956851763,0.34948384775121855,complex_pooled_large,ABDOMEN_hilbertgated,0.727954632952512
+complex,modulation strength (PPC),BMI,88,0.017659798742902723,0.8702762438674587,complex_pooled_large,ABDOMEN_hilbertgated,0.9639983008993389
+spindle,projected coupling,AHI,72,-0.1511308834060015,0.20507033549793238,spindle_cons,ABDOMEN_hilbertgated,0.6078540594387415
+spindle,projected coupling,OAHI,72,-0.149175561345679,0.21106043730511856,spindle_cons,ABDOMEN_hilbertgated,0.6078540594387415
+spindle,projected coupling,ODI3,72,-0.02937511556397228,0.8064977687644956,spindle_cons,ABDOMEN_hilbertgated,0.9387881475674797
+spindle,projected coupling,T90,72,0.16849401932801175,0.15711688671105375,spindle_cons,ABDOMEN_hilbertgated,0.5142007201452667
+spindle,projected coupling,hypoxic burden,72,-0.09970174691417191,0.4046923534264192,spindle_cons,ABDOMEN_hilbertgated,0.7856182151277816
+spindle,projected coupling,mean event duration,70,-0.11468812877263582,0.3444563859755734,spindle_cons,ABDOMEN_hilbertgated,0.727954632952512
+spindle,projected coupling,snore index,72,0.07114953100745422,0.5525715091041812,spindle_cons,ABDOMEN_hilbertgated,0.8648945359891532
+spindle,projected coupling,mean SaO2,72,-0.09283555212553864,0.43796960524943707,spindle_cons,ABDOMEN_hilbertgated,0.803347686142927
+spindle,projected coupling,arousal index (clinical),72,-0.14040568233596273,0.23944754932195023,spindle_cons,ABDOMEN_hilbertgated,0.6385267981918673
+spindle,projected coupling,arousal index (detected),72,-0.0733809248183163,0.5401493746468669,spindle_cons,ABDOMEN_hilbertgated,0.8642389994349869
+spindle,projected coupling,age,72,0.12680981743461925,0.2884729849173302,spindle_cons,ABDOMEN_hilbertgated,0.7162087901395784
+spindle,projected coupling,BMI,72,0.05762895204317301,0.630630477627704,spindle_cons,ABDOMEN_hilbertgated,0.8882386641361353
+spindle,modulation strength (PPC),AHI,91,-0.010498505305164248,0.9213227849967233,spindle_cons,ABDOMEN_hilbertgated,0.9755182429377071
+spindle,modulation strength (PPC),OAHI,91,-0.06769926270712102,0.5237247587864386,spindle_cons,ABDOMEN_hilbertgated,0.857004150741445
+spindle,modulation strength (PPC),ODI3,91,0.09514291743552653,0.3696675507823912,spindle_cons,ABDOMEN_hilbertgated,0.7393351015647824
+spindle,modulation strength (PPC),T90,91,0.15168653731707266,0.151197610141204,spindle_cons,ABDOMEN_hilbertgated,0.5142007201452667
+spindle,modulation strength (PPC),hypoxic burden,91,0.04857480719423434,0.6474995761642661,spindle_cons,ABDOMEN_hilbertgated,0.8882386641361353
+spindle,modulation strength (PPC),mean event duration,89,-0.07555328566564522,0.48162029211253354,spindle_cons,ABDOMEN_hilbertgated,0.8256347864786289
+spindle,modulation strength (PPC),snore index,91,-0.10638014289367917,0.3155595170091693,spindle_cons,ABDOMEN_hilbertgated,0.727954632952512
+spindle,modulation strength (PPC),mean SaO2,91,-0.19025322503583375,0.07086398047213899,spindle_cons,ABDOMEN_hilbertgated,0.5142007201452667
+spindle,modulation strength (PPC),arousal index (clinical),91,-0.057073661072755015,0.5910189850098253,spindle_cons,ABDOMEN_hilbertgated,0.886528477514738
+spindle,modulation strength (PPC),arousal index (detected),91,0.013154960981047941,0.9015045878507015,spindle_cons,ABDOMEN_hilbertgated,0.9755182429377071
+spindle,modulation strength (PPC),age,91,0.15667490853453084,0.1380483127136839,spindle_cons,ABDOMEN_hilbertgated,0.5142007201452667
+spindle,modulation strength (PPC),BMI,91,0.04425360353664795,0.6770289150237432,spindle_cons,ABDOMEN_hilbertgated,0.8893531794687611

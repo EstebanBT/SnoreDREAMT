@@ -18,8 +18,7 @@ Approved plan: `~/.claude/plans/fuzzy-shimmying-breeze.md` (Step 3 section). Dec
   p = 0.15, V p = 0.03; ~60 complexes/subject, ~50 subjects with ≥ 20). Esteban is troubled by this — revisit:
   complex definition (spindle minTime vs onset, same vs different channel, 1.5 s window), stricter spindle definition
   reducing complexes, N3 scarcity, SO threshold choice (2.5× median), polarity subset, per-subject counts.
-- MATLAB parity of the slythm port not run yet (needs the MATLAB license server; Esteban to run
-  `validation/matlab_parity/run_parity.m`).
+- ~~MATLAB parity of the slythm port~~ — PASSED 2026-10-26 (identical events and thresholds).
 - Arousal detector undercounts (~0.38× clinical ArI).
 
 ## Step 3 checklist

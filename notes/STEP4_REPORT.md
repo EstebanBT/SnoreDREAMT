@@ -53,3 +53,23 @@ hypopneas, and reduced (trend) only during snoring once snore-evoked events are 
 - AHI range is wide but skewed; severe OSA subjects contribute little clean N2 (and therefore few events).
 - Hypoxic burden is a simplified version (fixed windows); the hypopnea scoring rule of DREAMT is unknown.
 - The within-subject × AHI trend depends on including snore-evoked events and is exploratory.
+
+## Follow-up: plain Spearman correlations (`scripts/step4_spearman.py`, `derivatives/step4/spearman.csv`, `figures/step4_spearman.png`)
+Two per-subject modulation measures in clean N2: projected coupling (direction on the group phase, polarity-ok
+subjects) and **direction-free modulation strength (PPC)** (all subjects; unbiased by event count).
+- **Projected coupling:** no correlation with any severity marker (|ρ| ≤ 0.22; only detected arousal index vs SOs
+  ρ = 0.22, p = 0.04).
+- **Modulation strength (PPC):** SO modulation is *stronger* in more severe patients — ODI3 ρ = 0.30 (p = 0.003),
+  snore index ρ = 0.26 (p = 0.013), detected arousal index ρ = 0.25 (p = 0.017), hypoxic burden ρ = 0.20 (p = 0.06),
+  AHI ρ = 0.19 (p = 0.07); complexes similar for ODI3 (ρ = 0.24, p = 0.02) and hypoxic burden (ρ = 0.23, p = 0.03);
+  spindles nothing. **Nothing survives FDR** over 72 correlations (min FDR p = 0.25).
+- Checks for SO PPC vs ODI3: partial ρ controlling for event count and the share of clean events < 60 s from a
+  respiratory event = 0.25 (p = 0.016); using only SOs > 60 s from any event ρ = 0.14 (p = 0.20); within subjects,
+  near-event vs far SOs do not differ in PPC (p = 0.58).
+- Reading: in more severe patients the SO–breathing modulation tends to be stronger but **not at the common preferred
+  phase** (the projected measure shows nothing), so it is not "more of the same coupling"; it may reflect residual
+  event-related responses (arousal/K-complex) in fragmented clean sleep, but this is not settled and is uncorrected.
+
+## Detector validation
+MATLAB parity of the slythm port (run by Esteban 2026-10-26, `validation/matlab_parity/`): S003 2-h segment, F4-M1 and
+C4-M1 — SOs 285/285 and 255/255, spindles 902/902 and 1165/1165, 100 % matched within ±2 samples, thresholds identical.
