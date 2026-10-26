@@ -62,3 +62,36 @@ Event-pooled rate profiles reproduce the GLMM (hypopnea +25° vs clean +7°; sno
 - Caveat: these are population (event-weighted) effects across many models (3 families × 5 conditions × 2 exclusion
   levels × 2 stage sets); the spindle hypopnea/event shifts (p ≈ 0.001–0.003) are the most robust, snoring
   (p ≈ 0.01–0.04) less so. Phase reference is the abdominal belt.
+
+---
+
+## Step 5 with CircStat tests (Esteban's suggestion; rule `step5_circstat`, `snoredreamt/circstat.py`)
+Faithful Python ports of CircStat 2012a `circ_wwtest`, `circ_cmtest`, `circ_median`, `circ_mtest`, `circ_confmean`,
+`circ_medtest`, `circ_kappa` (tests in `tests/test_circstat.py`; MATLAB parity script in
+`validation/circstat_parity/` — run `run_parity.m`, then `compare.py`). One deviation: `circ_medtest` can return
+p > 1 in MATLAB (overlapping tails when n1 = n2); capped at 1. Event phases used directly (occupancy uniform).
+Per subject: condition events vs clean N2 events, ≥ 10 per group (CircStat's requirement for the median test).
+Snore-evoked exclusion only for snoring and the control (it is phase-matched only there).
+
+**5a — how many subjects have different circular means / medians?**
+- **Watson–Williams is not usable here:** CircStat's applicability rule (average resultant ≥ 0.45 for n ≥ 11) fails
+  in 92–100 % of comparisons (within-subject coupling R ≈ 0.05–0.15), and the test is badly anti-conservative — the
+  clean-vs-clean control flags 28–67 % of subjects (the small-κ correction β = 1 + 3/(8κ) explodes as κ → 0).
+- **Common median test is calibrated** (control: 3–11 % of subjects at p < .05). Fraction of subjects with
+  different medians (N2, all events; control in brackets): SOs — events 6 %, snoring 12.5 % (p vs control 0.058),
+  hypopnea 10 %, recovery 14 % (p = 0.03) [3 %]; spindles — events 4 %, snoring 10 % (p = 0.09), hypopnea 0 %,
+  recovery 8 % [3 %]; complexes — events 13 %, snoring 0 %, hypopnea 14 %, recovery 12 % [4 %]. Snoring with
+  snore-evoked events excluded: SOs 11 % [11 %], spindles 15 % [7 %] (p = 0.11), complexes 3 % [6 %].
+  N2+N3 is equivalent. → no reliable excess of subjects with a changed median over the clean-vs-clean control.
+
+**5b — does the population distribution of per-subject mean phase differences differ from 0?**
+`circ_mtest(Δμ, 0)` never rejects (0 lies inside the 95 % CI of the population mean in every case; the CI is undefined
+for some spindle/complex conditions because the Δμ distribution is too dispersed); `circ_medtest(Δμ, 0)` p ≥ 0.17
+(median differences: p ≥ 0.07). Population mean differences: SOs +15° to +40° (CIs ≈ ±30–60°), spindles +0° to +20°,
+complexes inconsistent.
+
+**Conclusion of the CircStat analysis:** at the level of individual participants (each subject weighted equally) there
+is no evidence for a change of preferred phase in any breathing condition — consistent with the per-subject analyses
+above. The spindle rotations reported earlier come only from the event-weighted population models (GLMM / pooled
+rates), which treat each event, not each subject, as the unit of information; the two views answer different
+questions and should be reported as such.

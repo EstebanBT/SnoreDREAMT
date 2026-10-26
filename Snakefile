@@ -24,6 +24,7 @@ rule all:
         expand(f"{DER}/step3b/{{ss}}/glmm.csv", ss=["N2", "N2N3"]),
         f"{DER}/step4/glmm_ahi.csv",
         expand(f"{DER}/step5/{{ss}}/group_phase_shifts.csv", ss=["N2", "N2N3"]),
+        expand(f"{DER}/step5/{{ss}}/circstat_group.csv", ss=["N2", "N2N3"]),
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
 
 
@@ -203,6 +204,20 @@ rule step5_phase:
         fig = f"{config['paths']['figures']}/step5_phase_{{ss}}.png",
     wildcard_constraints: ss = "N2|N2N3"
     script: "scripts/rules/step5_phase.py"
+
+
+rule step5_circstat:
+    """Step 5 with CircStat tests on event phases: per-subject Watson-Williams / common-median tests (5a) and the
+    population distribution of per-subject mean phase differences vs 0 (5b)."""
+    input:
+        events = expand(f"{DER}/step3b/{{sid}}/events.parquet", sid=SUBJECTS),
+        clean_signal = f"{DER}/step3b/{{ss}}/clean_signal.csv",
+    output:
+        subjects = f"{DER}/step5/{{ss}}/circstat_subjects.csv",
+        table = f"{DER}/step5/{{ss}}/circstat_group.csv",
+        fig = f"{config['paths']['figures']}/step5_circstat_{{ss}}.png",
+    wildcard_constraints: ss = "N2|N2N3"
+    script: "scripts/rules/step5_circstat.py"
 
 
 # ---------------------------------------------------------------- Step 4: severity
