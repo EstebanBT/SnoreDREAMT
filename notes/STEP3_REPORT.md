@@ -83,3 +83,64 @@ effect.
    per subject are few (~60), and Step 2 coupling was only weak (V-test p = 0.03).
 4. Step 4 (AHI) can proceed on the Step 2 per-subject coupling (trait effect), with the caveat that subject-level
    coupling estimates are noisy.
+
+---
+
+# Step 3b — more statistical power (2026-10-26)
+Rules `coupling_step3b`, `step3b_group`, `step3b_glmm` (R/lme4); scripts `snore_evoked_so.py`;
+numbers in `derivatives/step3b/`; figures `step3b_power.png`, `step3b_snore_evoked_so.png`.
+
+## What changed
+- **More signal per event (idea 2)**: large SOs (≥ subject median |trough|), multichannel consensus events
+  (SO: F4 + C4/O2 trough within ±0.3 s; spindle: C4 overlapping another channel), and a combined phase
+  (`BEST`: FLOW gated Hilbert where a breath is detected in airflow, else ABDOMEN gated rotated by the subject's
+  FLOW–ABDOMEN offset; offset consistency median R = 0.86; FLOW supplies 96 % of N2 samples).
+  Primary per family chosen on **clean data only** (max group z among apnea-covering phase sources):
+  **SO_large × BEST** (clean coupling 0.041 per event, z = 3.4; all SOs on ABDOMEN were 0.010, z = 1.3) and
+  **spindle_cons × ABDOMEN** (0.024, z = 3.7).
+- **Fewer, bigger questions (idea 3)**: pooled respiratory events (OA + CA + mixed + hypopnea) vs whole-night clean
+  N2 (group-phase projection, no circularity), one-sided tests for loss; per-breath dose–response.
+- **Hierarchical model (idea 4)**: Poisson GLMM on event counts per phase bin with occupancy offset,
+  (1 | subject:condition) + (0 + cos + sin | subject); relative change of the phase modulation with simulation
+  intervals.
+
+## Results
+**Contrasts (event-level, subject-clustered 95 % CI; condition − clean):**
+
+| | Large SOs (clean ≈ 0.05) | Consensus spindles (clean ≈ 0.02) |
+|---|---|---|
+| pooled respiratory events | +0.020 [−0.033, 0.072], N = 54, p_loss = 0.77 | +0.017 [−0.010, 0.045], N = 48, p_loss = 0.89 |
+| snoring | +0.006 [−0.030, 0.042], N = 45 | −0.002 [−0.031, 0.026], N = 46 |
+| hypopnea | +0.023 [−0.032, 0.078], N = 51 | +0.016 [−0.014, 0.046], N = 46 |
+| recovery | +0.023 [−0.025, 0.071], N = 47 | +0.037 [−0.022, 0.095], N = 43 |
+| obstructive | −0.022 [−0.181, 0.137], N = 7 | +0.043 [−0.043, 0.129], N = 10 |
+
+**GLMM (relative change of phase modulation, 95 % interval; P(loss > 50 %)):**
+large SOs — events +27 % [−63 %, +182 %], P = 0.045; snoring +34 % [−54 %, +282 %], P = 0.028;
+hypopnea +37 % [−63 %, +226 %], P = 0.044. Consensus spindles — events +59 % [−44 %, +216 %], P = 0.019;
+snoring −27 % [−89 %, +48 %], P = 0.24; hypopnea +58 % [−58 %, +235 %], P = 0.036.
+P(complete loss) ≤ 1 % everywhere. Clean modulation itself is significant in every model (p ≤ 0.014).
+
+**Interpretation:** with the stronger event sets and phase source, **a complete loss of respiration coupling
+during respiratory events can now be excluded**, and a loss of more than ~50–60 % is unlikely (P ≈ 2–5 %), for
+both large SOs and consensus spindles. The data are compatible with no change. The one exception with real
+uncertainty is **spindles during snoring** (point estimate −27 %, interval to −89 %).
+
+**Dose–response (per within-subject SD):** louder snoring → *higher* large-SO coupling (β = +0.022, p = 1e-4;
+consistent in every SO set and phase source); airflow and effort reduction: no linear effect (the octile plot
+suggests a U shape — higher coupling at both extremes — not modelled). Spindles: no reliable loudness effect on
+ABDOMEN (β = +0.003, p = 0.53).
+
+**Confound for the snoring effect — snore-evoked SOs:** large-SO troughs are more frequent ~0.8–1.1 s after
+snore-burst peaks than at the equivalent moment of quiet breaths (excess 0.3–1.0 s, p = 0.02, N = 38), and the
+probability of a large SO per breath rises with snore loudness (logit +0.15 per 10 dB, p = 1e-5). Because bursts are
+inspiration-locked, **the snoring-related increase in SO "coupling" is at least partly auditory/arousal-evoked
+K-complexes timed by the snore**, not intrinsic respiratory pacing. This matches the concern raised in
+Bullón Tarrasó et al. (sounds evoke K-complex-like SOs).
+
+## Caveats
+- The primary event sets and phase source were chosen on clean data (not on the contrasts), but after Step 3 had
+  been seen; they should be treated as a second, confirmatory-style pass, not as pre-registered.
+- Whole-night clean controls (instead of ±10 min matched) gain events but are exposed to time-of-night / sleep-depth
+  differences; the matched analysis from Step 3 remains as a sensitivity check.
+- Some GLMM fits are singular (random-slope variance ≈ 0 for spindles), i.e. effectively fixed modulation.

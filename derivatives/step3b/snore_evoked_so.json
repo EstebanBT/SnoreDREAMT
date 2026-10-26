@@ -1,0 +1,11 @@
+{
+ "n_subjects": 38,
+ "excess_rate_0.3-1.0s_mean": 0.006287519611930162,
+ "excess_rate_0.3-1.0s_wilcoxon_p": 0.02071244606486289,
+ "snoring_rate_0.3-1.0s": 0.03291421683603163,
+ "quiet_rate_0.3-1.0s": 0.026626697224101464,
+ "so_per_breath_logit_beta_per_10dB": 0.1537298499328801,
+ "so_per_breath_p": 1.28479808148081e-05,
+ "p_so_snore_breath": 0.0909283370382132,
+ "p_so_quiet_breath": 0.07975646879756469
+}

@@ -1,0 +1,14 @@
+{
+ "sid": "S066",
+ "flow_abd_offset_rad": -2.821373051079008,
+ "flow_abd_offset_consistency_R": 0.54994795945019,
+ "n_events": {
+  "SO": 474,
+  "SO_large": 237,
+  "SO_cons": 276,
+  "SO_large_cons": 170,
+  "spindle": 654,
+  "spindle_cons": 581
+ },
+ "best_phase_from_flow_frac_nrem": 1.0
+}

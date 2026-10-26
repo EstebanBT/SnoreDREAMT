@@ -37,3 +37,13 @@ Approved plan: `~/.claude/plans/fuzzy-shimmying-breeze.md` (Step 3 section). Dec
 - 2026-10-20: Step 3 complete — see `notes/STEP3_REPORT.md`. Result: no detectable change (underpowered: baseline
   coupling per event ≈ 0.01–0.02 vs detectable change ≈ 0.065); uncorrected trend of higher SO coupling during
   snoring; fixed whole-night circularity bias; added group-phase metric (subject phases unreliable).
+
+# Step 3b: more statistical power (requested 2026-10-26, ideas 2 + 3, then 4)
+- [x] 2a large SOs (top half amplitude within subject)
+- [x] 2b multichannel consensus events (SO: F4 + C4/O2 within ±0.3 s; spindle: C4 overlapping another channel)
+- [x] 2c best respiratory phase: FLOW gated where defined, else ABDOMEN gated rotated by subject FLOW–ABD offset
+- [x] 3a pooled "respiratory event" condition (OA+CA+mixed+hypopnea) vs clean N2, one-sided
+- [x] 3b per-breath dose–response (snore dB, airflow reduction, within-subject centred)
+- [x] 4  hierarchical Poisson model on phase-bin counts with occupancy offset + ROPE bounds
+- 2026-10-26: Step 3b done (see STEP3_REPORT.md, section Step 3b): complete loss excluded for pooled events
+  (large SOs, consensus spindles); snoring SO increase partly snore-evoked K-complexes.

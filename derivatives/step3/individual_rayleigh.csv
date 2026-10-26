@@ -1,0 +1,1451 @@
+sid,event,set,n,p
+S002,SO,clean NREM (all),304,0.006210685035159027
+S002,SO,hypopnea | condition,15,0.20244004953010777
+S002,SO,hypopnea | clean subsampled to same n,15,0.12
+S002,SO,hypopnea | control,16,0.5554910683880805
+S002,spindle,clean NREM (all),209,0.008436436525837336
+S002,spindle,hypopnea | condition,14,0.11841017846128117
+S002,spindle,hypopnea | clean subsampled to same n,14,0.06
+S002,spindle,hypopnea | control,15,0.2910109984218076
+S003,SO,clean NREM (all),609,0.3074435051811384
+S003,SO,clean_split | condition,82,0.03079766210189077
+S003,SO,clean_split | clean subsampled to same n,82,0.04
+S003,SO,clean_split | control,86,0.8787645822359148
+S003,SO,hypopnea | condition,27,0.0036334372249313246
+S003,SO,hypopnea | clean subsampled to same n,27,0.06
+S003,SO,hypopnea | control,32,0.8442286970420039
+S003,SO,obstructive | control,12,0.7457469693012925
+S003,SO,recovery | condition,40,0.751462436854346
+S003,SO,recovery | clean subsampled to same n,40,0.02
+S003,SO,recovery | control,32,0.940334957803624
+S003,SO,snoring | condition,121,0.5419168006844551
+S003,SO,snoring | clean subsampled to same n,121,0.04
+S003,SO,snoring | control,110,0.8087920311381923
+S003,spindle,clean NREM (all),1680,0.3188437853352544
+S003,spindle,clean_split | condition,172,0.48768047726499786
+S003,spindle,clean_split | clean subsampled to same n,172,0.04
+S003,spindle,clean_split | control,129,0.33103516486103457
+S003,spindle,hypopnea | condition,64,0.9942128713385376
+S003,spindle,hypopnea | clean subsampled to same n,64,0.04
+S003,spindle,hypopnea | control,63,0.05509398943589493
+S003,spindle,obstructive | control,19,0.1605612476431575
+S003,spindle,recovery | condition,53,0.7334197883606628
+S003,spindle,recovery | clean subsampled to same n,53,0.02
+S003,spindle,recovery | control,57,0.10189311278226376
+S003,spindle,snoring | condition,240,0.7470402451054046
+S003,spindle,snoring | clean subsampled to same n,240,0.06
+S003,spindle,snoring | control,200,0.7576885312073878
+S004,SO,clean NREM (all),53,0.17033784899084525
+S004,SO,central | condition,10,0.42576903935016314
+S004,SO,central | clean subsampled to same n,10,0.04
+S004,SO,central | control,22,0.2921497164833708
+S004,SO,obstructive | condition,12,0.31518020541713526
+S004,SO,obstructive | clean subsampled to same n,12,0.08
+S004,SO,obstructive | control,19,0.8435564409027991
+S004,spindle,clean NREM (all),46,0.4878067639467199
+S004,spindle,obstructive | control,21,0.21810789023541788
+S005,SO,clean NREM (all),1293,0.3754599746169039
+S005,SO,hypopnea | condition,64,0.9518132897144677
+S005,SO,hypopnea | clean subsampled to same n,64,0.06
+S005,SO,hypopnea | control,87,0.7745678417679245
+S005,SO,recovery | condition,49,0.7765483991031241
+S005,SO,recovery | clean subsampled to same n,49,0.02
+S005,SO,recovery | control,46,0.935392118755106
+S005,spindle,clean NREM (all),73,0.10536726508424868
+S006,SO,clean NREM (all),1020,0.37706110969341405
+S006,SO,clean_split | condition,20,0.9859281475525253
+S006,SO,clean_split | clean subsampled to same n,20,0.04
+S006,SO,clean_split | control,21,0.8576914031385224
+S006,SO,hypopnea | condition,18,0.747586530494548
+S006,SO,hypopnea | clean subsampled to same n,18,0.08
+S006,SO,recovery | condition,19,0.3171694255886201
+S006,SO,recovery | clean subsampled to same n,19,0.06
+S006,SO,recovery | control,11,0.5602847322894903
+S006,SO,snoring | condition,52,0.2290914427721569
+S006,SO,snoring | clean subsampled to same n,52,0.1
+S006,SO,snoring | control,61,0.24531997277289042
+S006,spindle,clean NREM (all),806,0.6314914897934252
+S006,spindle,clean_split | condition,14,0.5280144188578662
+S006,spindle,clean_split | clean subsampled to same n,14,0.04
+S006,spindle,clean_split | control,14,0.3686663824040703
+S006,spindle,snoring | condition,31,0.626515890962507
+S006,spindle,snoring | clean subsampled to same n,31,0.02
+S006,spindle,snoring | control,27,0.7450238585354881
+S007,SO,clean NREM (all),254,0.3491751237938138
+S007,SO,hypopnea | control,13,0.5010207503082105
+S007,SO,recovery | control,12,0.5772738614321087
+S007,spindle,clean NREM (all),408,0.0012546901558628959
+S007,spindle,hypopnea | condition,27,0.8536301189554374
+S007,spindle,hypopnea | clean subsampled to same n,27,0.1
+S007,spindle,hypopnea | control,17,0.34397936725467154
+S008,SO,clean NREM (all),475,0.6698000870118522
+S008,SO,clean_split | condition,50,0.5087390805272073
+S008,SO,clean_split | clean subsampled to same n,50,0.06
+S008,SO,clean_split | control,47,0.9157971043093679
+S008,SO,hypopnea | condition,112,0.9358126670572654
+S008,SO,hypopnea | clean subsampled to same n,112,0.06
+S008,SO,hypopnea | control,102,0.11550540707881952
+S008,SO,recovery | condition,147,0.22409533846788066
+S008,SO,recovery | clean subsampled to same n,147,0.06
+S008,SO,recovery | control,66,0.013565711230387155
+S008,SO,snoring | condition,94,0.7503304634987223
+S008,SO,snoring | clean subsampled to same n,94,0.0
+S008,SO,snoring | control,86,0.09791330021847983
+S008,spindle,clean NREM (all),392,0.7677833662956254
+S008,spindle,clean_split | condition,42,0.9553410722984774
+S008,spindle,clean_split | clean subsampled to same n,42,0.06
+S008,spindle,clean_split | control,55,0.7261768438335983
+S008,spindle,hypopnea | condition,137,0.3565474988737423
+S008,spindle,hypopnea | clean subsampled to same n,137,0.06
+S008,spindle,hypopnea | control,161,0.7690923048854074
+S008,spindle,recovery | condition,67,0.7901487694083679
+S008,spindle,recovery | clean subsampled to same n,67,0.06
+S008,spindle,recovery | control,99,0.7482046000402224
+S008,spindle,snoring | condition,30,0.1152587676515214
+S008,spindle,snoring | clean subsampled to same n,30,0.1
+S008,spindle,snoring | control,29,0.2951544614752723
+S009,SO,clean NREM (all),500,0.4119494155448354
+S009,SO,central | control,33,0.10664680902633729
+S009,SO,clean_split | condition,40,0.5775910407888328
+S009,SO,clean_split | clean subsampled to same n,40,0.04
+S009,SO,clean_split | control,35,0.7608549938228409
+S009,SO,recovery | condition,57,0.008463036079866714
+S009,SO,recovery | clean subsampled to same n,57,0.04
+S009,SO,recovery | control,34,0.1039467556823855
+S009,spindle,clean NREM (all),310,0.11785572992073907
+S009,spindle,central | control,23,0.43018432710167476
+S009,spindle,clean_split | condition,17,0.11563935997345459
+S009,spindle,clean_split | clean subsampled to same n,17,0.16
+S009,spindle,clean_split | control,14,0.8931281135123601
+S009,spindle,hypopnea | control,12,0.9704999456794329
+S009,spindle,recovery | condition,44,0.07393278116037671
+S009,spindle,recovery | clean subsampled to same n,44,0.06
+S009,spindle,recovery | control,39,0.5845491725342665
+S010,SO,clean NREM (all),461,0.012011749500446246
+S010,SO,clean_split | condition,35,0.015282319667299364
+S010,SO,clean_split | clean subsampled to same n,35,0.1
+S010,SO,clean_split | control,42,0.12254181466276526
+S010,SO,hypopnea | condition,12,0.7931907390199917
+S010,SO,hypopnea | clean subsampled to same n,12,0.04
+S010,SO,hypopnea | control,16,0.7887836314650882
+S010,SO,snoring | condition,60,0.3141835204715255
+S010,SO,snoring | clean subsampled to same n,60,0.06
+S010,SO,snoring | control,57,0.018010761619048295
+S010,spindle,clean NREM (all),184,0.002707127866803876
+S010,spindle,clean_split | condition,25,0.46137280287823673
+S010,spindle,clean_split | clean subsampled to same n,25,0.18
+S010,spindle,clean_split | control,27,0.4787182619220449
+S010,spindle,hypopnea | condition,19,0.9131327632941313
+S010,spindle,hypopnea | clean subsampled to same n,19,0.12
+S010,spindle,hypopnea | control,13,0.8953037284817775
+S010,spindle,snoring | condition,16,0.14263039419879436
+S010,spindle,snoring | clean subsampled to same n,16,0.08
+S010,spindle,snoring | control,14,0.22757016839492378
+S011,SO,clean NREM (all),480,0.5675905195832534
+S011,spindle,clean NREM (all),804,0.5133021353445083
+S012,SO,clean NREM (all),835,0.1623212223743228
+S012,spindle,clean NREM (all),997,0.019395292224863296
+S012,spindle,central | control,14,0.4797475346463917
+S012,spindle,recovery | condition,24,0.6484594073940114
+S012,spindle,recovery | clean subsampled to same n,24,0.04
+S012,spindle,recovery | control,22,0.9862124599475262
+S013,SO,clean NREM (all),940,0.57340616364787
+S013,SO,central | control,20,0.4085665675590524
+S013,SO,clean_split | condition,22,0.8958641456723428
+S013,SO,clean_split | clean subsampled to same n,22,0.06
+S013,SO,clean_split | control,32,0.37713339864675216
+S013,SO,hypopnea | control,10,0.6686356619882166
+S013,SO,recovery | condition,34,0.3734550399086041
+S013,SO,recovery | clean subsampled to same n,34,0.04
+S013,SO,recovery | control,24,0.4585927404589288
+S013,spindle,clean NREM (all),348,0.9849281485183516
+S013,spindle,central | control,16,0.11509425780153282
+S013,spindle,clean_split | condition,11,0.3622685610217006
+S013,spindle,clean_split | clean subsampled to same n,11,0.0
+S013,spindle,clean_split | control,20,0.5857135690141442
+S013,spindle,recovery | condition,23,0.753616648302017
+S013,spindle,recovery | clean subsampled to same n,23,0.02
+S013,spindle,recovery | control,21,0.16291572559717205
+S014,SO,clean NREM (all),390,0.6340428282147589
+S014,SO,hypopnea | condition,71,0.22107623767996598
+S014,SO,hypopnea | clean subsampled to same n,71,0.04
+S014,SO,hypopnea | control,33,0.5187707588239743
+S014,SO,recovery | condition,34,0.8031070203646927
+S014,SO,recovery | clean subsampled to same n,34,0.08
+S014,SO,recovery | control,12,0.36013075464254374
+S014,spindle,clean NREM (all),779,0.18774868095037306
+S014,spindle,hypopnea | condition,90,0.1588247491877376
+S014,spindle,hypopnea | clean subsampled to same n,90,0.06
+S014,spindle,hypopnea | control,103,0.9708138963912346
+S014,spindle,recovery | condition,28,0.45462174652489934
+S014,spindle,recovery | clean subsampled to same n,28,0.02
+S014,spindle,recovery | control,33,0.6471523395356819
+S015,SO,clean NREM (all),1232,0.7843052553681679
+S015,SO,clean_split | condition,12,0.7286854633108372
+S015,SO,clean_split | clean subsampled to same n,12,0.06
+S015,SO,snoring | condition,20,0.4937721022553551
+S015,SO,snoring | clean subsampled to same n,20,0.04
+S015,SO,snoring | control,20,0.5485575217394116
+S015,spindle,clean NREM (all),2086,0.9238299486384519
+S015,spindle,clean_split | condition,11,0.7478085543382986
+S015,spindle,clean_split | clean subsampled to same n,11,0.02
+S015,spindle,clean_split | control,10,0.5358829479143963
+S016,SO,clean NREM (all),16,0.07079130069054541
+S016,spindle,clean NREM (all),32,0.9120519495108793
+S017,SO,clean NREM (all),287,0.15910644031423377
+S017,SO,central | control,12,0.06086115160770781
+S017,SO,clean_split | condition,24,0.785816973224061
+S017,SO,clean_split | clean subsampled to same n,24,0.02
+S017,SO,clean_split | control,24,0.638844660017218
+S017,SO,hypopnea | control,10,0.3933525815961628
+S017,SO,recovery | condition,31,0.37187456764546234
+S017,SO,recovery | clean subsampled to same n,31,0.04
+S017,SO,recovery | control,12,0.18773672858776616
+S017,spindle,clean NREM (all),340,0.25558536194637743
+S017,spindle,central | condition,12,0.7652843520435774
+S017,spindle,central | clean subsampled to same n,12,0.02
+S017,spindle,central | control,43,0.007446473968263901
+S017,spindle,clean_split | condition,33,0.7441681937753494
+S017,spindle,clean_split | clean subsampled to same n,33,0.12
+S017,spindle,clean_split | control,27,0.001751306813526159
+S017,spindle,hypopnea | condition,28,0.7407757034782821
+S017,spindle,hypopnea | clean subsampled to same n,28,0.08
+S017,spindle,hypopnea | control,26,0.05891334036605321
+S017,spindle,recovery | condition,43,0.5502863203796077
+S017,spindle,recovery | clean subsampled to same n,43,0.02
+S017,spindle,recovery | control,40,0.025706851054837172
+S018,SO,clean NREM (all),340,0.00010958903147411713
+S018,SO,clean_split | condition,67,0.0022438591836817187
+S018,SO,clean_split | clean subsampled to same n,67,0.32
+S018,SO,clean_split | control,53,0.10913193511491782
+S018,SO,snoring | condition,22,0.6983361499385549
+S018,SO,snoring | clean subsampled to same n,22,0.2
+S018,SO,snoring | control,34,0.0005398067786241464
+S018,spindle,clean NREM (all),1701,0.7882791707388956
+S018,spindle,clean_split | condition,340,0.6265047431566209
+S018,spindle,clean_split | clean subsampled to same n,340,0.02
+S018,spindle,clean_split | control,283,0.48750871550794883
+S018,spindle,snoring | condition,254,0.5933118875293416
+S018,spindle,snoring | clean subsampled to same n,254,0.0
+S018,spindle,snoring | control,225,0.14514022478503297
+S019,SO,clean NREM (all),267,0.5276579850344765
+S019,SO,clean_split | condition,25,0.06414363581399754
+S019,SO,clean_split | clean subsampled to same n,25,0.06
+S019,SO,clean_split | control,25,0.7811053347533979
+S019,spindle,clean NREM (all),506,0.031281244308843
+S019,spindle,clean_split | condition,41,0.5388389281876219
+S019,spindle,clean_split | clean subsampled to same n,41,0.1
+S019,spindle,clean_split | control,33,0.7339868681582166
+S019,spindle,hypopnea | condition,10,0.16623380194214096
+S019,spindle,hypopnea | clean subsampled to same n,10,0.1
+S019,spindle,hypopnea | control,13,0.196698921290294
+S020,SO,clean NREM (all),520,0.6671298521917259
+S020,SO,clean_split | condition,105,0.277461937685727
+S020,SO,clean_split | clean subsampled to same n,105,0.02
+S020,SO,clean_split | control,127,0.9078874032180982
+S020,SO,hypopnea | condition,50,0.9446377132568712
+S020,SO,hypopnea | clean subsampled to same n,50,0.02
+S020,SO,hypopnea | control,70,0.7353381994302279
+S020,SO,recovery | condition,62,0.7656271210688911
+S020,SO,recovery | clean subsampled to same n,62,0.0
+S020,SO,recovery | control,29,0.5440848174407614
+S020,SO,snoring | condition,32,0.09861917471318503
+S020,SO,snoring | clean subsampled to same n,32,0.04
+S020,SO,snoring | control,94,0.4138384247242798
+S020,spindle,clean NREM (all),716,0.43556194234677875
+S020,spindle,clean_split | condition,95,0.7317632884843924
+S020,spindle,clean_split | clean subsampled to same n,95,0.06
+S020,spindle,clean_split | control,116,0.8765270156743524
+S020,spindle,hypopnea | condition,123,0.3333658271327345
+S020,spindle,hypopnea | clean subsampled to same n,123,0.06
+S020,spindle,hypopnea | control,145,0.21999919803827
+S020,spindle,recovery | condition,47,0.4518264740926974
+S020,spindle,recovery | clean subsampled to same n,47,0.1
+S020,spindle,recovery | control,67,0.12598295103219592
+S020,spindle,snoring | condition,144,0.3906832579360972
+S020,spindle,snoring | clean subsampled to same n,144,0.02
+S020,spindle,snoring | control,94,0.23576730005427374
+S021,SO,clean NREM (all),159,0.0804409247462525
+S021,SO,clean_split | condition,22,0.10731983736288345
+S021,SO,clean_split | clean subsampled to same n,22,0.06
+S021,SO,clean_split | control,13,0.19901933098924615
+S021,spindle,clean NREM (all),53,0.37781972610316084
+S022,SO,clean NREM (all),315,1.0448233466739005e-07
+S022,SO,clean_split | condition,59,0.11452463031673366
+S022,SO,clean_split | clean subsampled to same n,59,0.64
+S022,SO,clean_split | control,69,0.04945947813026791
+S022,SO,snoring | condition,73,0.038904990983071076
+S022,SO,snoring | clean subsampled to same n,73,0.7
+S022,SO,snoring | control,73,0.21693164670693277
+S022,spindle,clean NREM (all),78,0.23467187217007657
+S022,spindle,snoring | condition,19,0.30472027643248834
+S022,spindle,snoring | clean subsampled to same n,19,0.06
+S022,spindle,snoring | control,23,0.217218280477757
+S023,SO,clean NREM (all),1079,0.018780663742965692
+S023,SO,clean_split | condition,86,0.1325309632366702
+S023,SO,clean_split | clean subsampled to same n,86,0.06
+S023,SO,clean_split | control,77,0.18464837622491267
+S023,SO,hypopnea | condition,21,0.28392840647553275
+S023,SO,hypopnea | clean subsampled to same n,21,0.06
+S023,SO,hypopnea | control,55,0.6726701627409208
+S023,SO,recovery | condition,21,0.34640932907797667
+S023,SO,recovery | clean subsampled to same n,21,0.0
+S023,SO,recovery | control,36,0.5276074439534288
+S023,SO,snoring | condition,90,0.2162084012934918
+S023,SO,snoring | clean subsampled to same n,90,0.08
+S023,SO,snoring | control,119,0.91150317782831
+S023,spindle,clean NREM (all),1979,0.12896426544723824
+S023,spindle,clean_split | condition,178,0.36642911736780703
+S023,spindle,clean_split | clean subsampled to same n,178,0.06
+S023,spindle,clean_split | control,184,0.4294289334016999
+S023,spindle,hypopnea | condition,44,0.8511188756590913
+S023,spindle,hypopnea | clean subsampled to same n,44,0.06
+S023,spindle,hypopnea | control,49,0.03160151206526921
+S023,spindle,recovery | condition,13,0.6852511817016023
+S023,spindle,recovery | clean subsampled to same n,13,0.1
+S023,spindle,recovery | control,39,0.4851758304077591
+S023,spindle,snoring | condition,172,0.0245437113919586
+S023,spindle,snoring | clean subsampled to same n,172,0.1
+S023,spindle,snoring | control,125,0.16887014294792116
+S024,SO,clean NREM (all),120,0.8893420536368347
+S024,spindle,clean NREM (all),643,0.6980166930623892
+S024,spindle,clean_split | condition,37,0.22693610991401994
+S024,spindle,clean_split | clean subsampled to same n,37,0.0
+S024,spindle,clean_split | control,35,0.516432125098082
+S024,spindle,snoring | condition,22,0.009929985425106714
+S024,spindle,snoring | clean subsampled to same n,22,0.02
+S024,spindle,snoring | control,22,0.7775962752160666
+S025,SO,clean NREM (all),455,3.402109195369189e-05
+S025,SO,clean_split | condition,13,0.046728101404258246
+S025,SO,clean_split | clean subsampled to same n,13,0.1
+S025,SO,clean_split | control,14,0.293623829428462
+S025,SO,hypopnea | control,10,0.9338382216559749
+S025,SO,recovery | condition,11,0.7573706823482524
+S025,SO,recovery | clean subsampled to same n,11,0.06
+S025,SO,snoring | condition,157,0.05846096383072856
+S025,SO,snoring | clean subsampled to same n,157,0.64
+S025,SO,snoring | control,106,4.129342317418391e-05
+S025,spindle,clean NREM (all),739,0.012818095656660753
+S025,spindle,clean_split | condition,53,0.08645560762344662
+S025,spindle,clean_split | clean subsampled to same n,53,0.02
+S025,spindle,clean_split | control,31,0.7237822416147501
+S025,spindle,hypopnea | condition,53,0.5497309302757035
+S025,spindle,hypopnea | clean subsampled to same n,53,0.06
+S025,spindle,hypopnea | control,28,0.5656171099565407
+S025,spindle,recovery | condition,17,0.016153482082158048
+S025,spindle,recovery | clean subsampled to same n,17,0.04
+S025,spindle,recovery | control,14,0.5444094455863256
+S025,spindle,snoring | condition,265,0.22526203844526219
+S025,spindle,snoring | clean subsampled to same n,265,0.2
+S025,spindle,snoring | control,226,0.05965032437624223
+S026,SO,clean NREM (all),768,0.6195970612961382
+S026,SO,clean_split | condition,172,0.786772194869089
+S026,SO,clean_split | clean subsampled to same n,172,0.02
+S026,SO,clean_split | control,122,0.4487334330530415
+S026,SO,hypopnea | condition,17,0.40235779949558775
+S026,SO,hypopnea | clean subsampled to same n,17,0.06
+S026,SO,hypopnea | control,12,0.08738479498604027
+S026,SO,recovery | condition,14,0.05923865543069748
+S026,SO,recovery | clean subsampled to same n,14,0.06
+S026,SO,snoring | condition,122,0.1539651502935481
+S026,SO,snoring | clean subsampled to same n,122,0.06
+S026,SO,snoring | control,101,0.39115689040155666
+S026,spindle,clean NREM (all),961,0.8152671644404251
+S026,spindle,clean_split | condition,172,0.2136343368819162
+S026,spindle,clean_split | clean subsampled to same n,172,0.04
+S026,spindle,clean_split | control,159,0.48548700759388297
+S026,spindle,hypopnea | condition,41,0.8492469337160461
+S026,spindle,hypopnea | clean subsampled to same n,41,0.04
+S026,spindle,hypopnea | control,38,0.8047785426117812
+S026,spindle,recovery | condition,16,0.4399424745872498
+S026,spindle,recovery | clean subsampled to same n,16,0.02
+S026,spindle,recovery | control,17,0.6251709988203151
+S026,spindle,snoring | condition,148,0.3053160130909986
+S026,spindle,snoring | clean subsampled to same n,148,0.04
+S026,spindle,snoring | control,188,0.9324191524477778
+S027,SO,clean NREM (all),366,0.7742908821353695
+S027,SO,clean_split | condition,18,0.7473830220403326
+S027,SO,clean_split | clean subsampled to same n,18,0.08
+S027,SO,clean_split | control,12,0.013667895208462235
+S027,SO,hypopnea | condition,18,0.8993097748035169
+S027,SO,hypopnea | clean subsampled to same n,18,0.04
+S027,SO,hypopnea | control,10,0.7891630995182841
+S027,SO,snoring | condition,44,0.9461646644683517
+S027,SO,snoring | clean subsampled to same n,44,0.08
+S027,SO,snoring | control,56,0.3395084279492235
+S027,spindle,clean NREM (all),99,0.5860392638491384
+S027,spindle,snoring | condition,22,0.6739280918978118
+S027,spindle,snoring | clean subsampled to same n,22,0.02
+S027,spindle,snoring | control,11,0.2964267818949782
+S028,SO,clean NREM (all),317,0.9578810002686888
+S028,SO,clean_split | condition,11,0.5726384040336487
+S028,SO,clean_split | clean subsampled to same n,11,0.04
+S028,SO,clean_split | control,15,0.9186858271130252
+S028,SO,hypopnea | condition,167,0.4005350180833076
+S028,SO,hypopnea | clean subsampled to same n,167,0.0
+S028,SO,hypopnea | control,118,0.7146033142944567
+S028,SO,recovery | condition,125,0.3864385739198429
+S028,SO,recovery | clean subsampled to same n,125,0.0
+S028,SO,recovery | control,42,0.3032409807043332
+S028,spindle,clean NREM (all),174,0.5292251898152939
+S028,spindle,hypopnea | condition,40,0.29595187909569315
+S028,spindle,hypopnea | clean subsampled to same n,40,0.02
+S028,spindle,hypopnea | control,46,0.5568939157399805
+S028,spindle,recovery | condition,24,0.896439239295298
+S028,spindle,recovery | clean subsampled to same n,24,0.08
+S028,spindle,recovery | control,17,0.3496544065931786
+S029,SO,clean NREM (all),350,0.022231541849057426
+S029,SO,clean_split | condition,10,0.8181087179912397
+S029,SO,clean_split | clean subsampled to same n,10,0.1
+S029,SO,clean_split | control,17,0.6371184218388136
+S029,SO,snoring | control,13,0.8780162435068438
+S029,spindle,clean NREM (all),218,0.004176251366762303
+S030,SO,clean NREM (all),435,0.4571992186013118
+S030,SO,clean_split | condition,45,0.8770933207913351
+S030,SO,clean_split | clean subsampled to same n,45,0.04
+S030,SO,clean_split | control,43,0.8860478616410087
+S030,SO,hypopnea | condition,60,0.05557214298697912
+S030,SO,hypopnea | clean subsampled to same n,60,0.06
+S030,SO,hypopnea | control,94,0.9203806480363039
+S030,SO,recovery | condition,36,0.031040906131088217
+S030,SO,recovery | clean subsampled to same n,36,0.06
+S030,SO,recovery | control,13,0.24120265319298045
+S030,SO,snoring | condition,18,0.1679167462401255
+S030,SO,snoring | clean subsampled to same n,18,0.02
+S030,SO,snoring | control,20,0.9264688307488314
+S030,spindle,clean NREM (all),443,0.9414833374038578
+S030,spindle,hypopnea | condition,58,0.02599077458215959
+S030,spindle,hypopnea | clean subsampled to same n,58,0.02
+S030,spindle,hypopnea | control,54,0.7299815497409242
+S030,spindle,obstructive | control,10,0.4095869047733899
+S030,spindle,recovery | condition,62,0.46274674344300754
+S030,spindle,recovery | clean subsampled to same n,62,0.08
+S030,spindle,recovery | control,23,0.748657893252145
+S030,spindle,snoring | condition,26,0.6465789447708465
+S030,spindle,snoring | clean subsampled to same n,26,0.02
+S030,spindle,snoring | control,23,0.08997015249061065
+S031,SO,clean NREM (all),688,0.00073776690713248
+S031,SO,clean_split | condition,71,0.12431156841197834
+S031,SO,clean_split | clean subsampled to same n,71,0.2
+S031,SO,clean_split | control,64,0.7399711619711873
+S031,SO,hypopnea | condition,212,0.10522909941135984
+S031,SO,hypopnea | clean subsampled to same n,212,0.46
+S031,SO,hypopnea | control,221,0.007876467040520573
+S031,SO,recovery | condition,108,0.46413885403255345
+S031,SO,recovery | clean subsampled to same n,108,0.3
+S031,SO,recovery | control,133,0.07073373455205013
+S031,SO,snoring | condition,200,0.15936892875815076
+S031,SO,snoring | clean subsampled to same n,200,0.32
+S031,SO,snoring | control,228,0.0663882626033158
+S031,spindle,clean NREM (all),1338,0.09809666910894461
+S031,spindle,clean_split | condition,94,0.028427942112494064
+S031,spindle,clean_split | clean subsampled to same n,94,0.04
+S031,spindle,clean_split | control,88,0.012059633483179951
+S031,spindle,hypopnea | condition,424,0.054839550038863115
+S031,spindle,hypopnea | clean subsampled to same n,424,0.06
+S031,spindle,hypopnea | control,396,0.0032866228162659644
+S031,spindle,recovery | condition,148,0.41209855122603206
+S031,spindle,recovery | clean subsampled to same n,148,0.02
+S031,spindle,recovery | control,240,0.08444300184001248
+S031,spindle,snoring | condition,345,0.17807224094585639
+S031,spindle,snoring | clean subsampled to same n,345,0.16
+S031,spindle,snoring | control,374,0.003956133271811717
+S032,SO,clean NREM (all),258,0.2880898957538298
+S032,SO,clean_split | condition,33,0.3160433267237817
+S032,SO,clean_split | clean subsampled to same n,33,0.04
+S032,SO,clean_split | control,31,0.9439411916482755
+S032,SO,hypopnea | condition,34,0.46376289439061336
+S032,SO,hypopnea | clean subsampled to same n,34,0.04
+S032,SO,hypopnea | control,35,0.42006247777343203
+S032,SO,obstructive | control,10,0.9373246028861723
+S032,SO,recovery | condition,46,0.9374986201997356
+S032,SO,recovery | clean subsampled to same n,46,0.08
+S032,SO,recovery | control,29,0.7293900500983259
+S032,SO,snoring | condition,38,0.1357496421236924
+S032,SO,snoring | clean subsampled to same n,38,0.02
+S032,SO,snoring | control,39,0.3684537448160966
+S032,spindle,clean NREM (all),305,0.23871995345943484
+S032,spindle,clean_split | condition,32,0.7114214209403307
+S032,spindle,clean_split | clean subsampled to same n,32,0.08
+S032,spindle,clean_split | control,34,0.859238396753412
+S032,spindle,hypopnea | condition,34,0.8305357043108071
+S032,spindle,hypopnea | clean subsampled to same n,34,0.06
+S032,spindle,hypopnea | control,21,0.313668616897218
+S032,spindle,recovery | condition,25,0.4499179897909445
+S032,spindle,recovery | clean subsampled to same n,25,0.08
+S032,spindle,recovery | control,28,0.6785617670883181
+S032,spindle,snoring | condition,15,0.2820521167566868
+S032,spindle,snoring | clean subsampled to same n,15,0.06
+S032,spindle,snoring | control,26,0.0012783818111020188
+S033,SO,clean NREM (all),1115,0.9585208867001902
+S033,SO,clean_split | condition,28,0.9439880053576937
+S033,SO,clean_split | clean subsampled to same n,28,0.04
+S033,SO,clean_split | control,35,0.510750345830191
+S033,spindle,clean NREM (all),1285,0.6487838080328225
+S033,spindle,clean_split | condition,72,0.8932916493709698
+S033,spindle,clean_split | clean subsampled to same n,72,0.06
+S033,spindle,clean_split | control,66,0.597225791752264
+S033,spindle,recovery | control,13,0.9073568331722727
+S034,SO,clean NREM (all),780,0.8181394652062095
+S034,SO,clean_split | condition,49,0.26829014111878846
+S034,SO,clean_split | clean subsampled to same n,49,0.04
+S034,SO,clean_split | control,55,0.9372107725402706
+S034,SO,hypopnea | condition,38,0.8470317233852616
+S034,SO,hypopnea | clean subsampled to same n,38,0.04
+S034,SO,hypopnea | control,30,0.1861224284582046
+S034,spindle,clean NREM (all),941,0.7976979311119902
+S034,spindle,clean_split | condition,42,0.1567113116590616
+S034,spindle,clean_split | clean subsampled to same n,42,0.06
+S034,spindle,clean_split | control,29,0.2986153857410201
+S034,spindle,hypopnea | condition,11,0.33840064607759923
+S034,spindle,hypopnea | clean subsampled to same n,11,0.06
+S034,spindle,hypopnea | control,25,0.728768246126394
+S034,spindle,recovery | control,12,0.9867517124945488
+S035,SO,clean NREM (all),426,0.9051180417465199
+S035,SO,clean_split | condition,21,0.62555679573051
+S035,SO,clean_split | clean subsampled to same n,21,0.0
+S035,SO,clean_split | control,11,0.6773205329136256
+S035,SO,hypopnea | condition,130,0.8490537287464387
+S035,SO,hypopnea | clean subsampled to same n,130,0.0
+S035,SO,hypopnea | control,187,0.7656767534629496
+S035,SO,recovery | condition,64,0.5305891472473172
+S035,SO,recovery | clean subsampled to same n,64,0.02
+S035,SO,recovery | control,54,0.03202635482814642
+S035,SO,snoring | condition,17,0.746007155590041
+S035,SO,snoring | clean subsampled to same n,17,0.06
+S035,SO,snoring | control,23,0.16993442305883072
+S035,spindle,clean NREM (all),193,0.13793521285018448
+S035,spindle,clean_split | condition,23,0.02573905311641166
+S035,spindle,clean_split | clean subsampled to same n,23,0.0
+S035,spindle,clean_split | control,16,0.48997574233542135
+S035,spindle,hypopnea | condition,76,0.031670539886874904
+S035,spindle,hypopnea | clean subsampled to same n,76,0.1
+S035,spindle,hypopnea | control,91,0.2827262965033126
+S035,spindle,recovery | condition,42,0.9489722669878707
+S035,spindle,recovery | clean subsampled to same n,42,0.08
+S035,spindle,recovery | control,38,0.16016209846474547
+S035,spindle,snoring | condition,12,0.28988268744819934
+S035,spindle,snoring | clean subsampled to same n,12,0.08
+S036,SO,clean NREM (all),1088,0.4788894591688766
+S036,SO,clean_split | condition,33,0.585649934445914
+S036,SO,clean_split | clean subsampled to same n,33,0.02
+S036,SO,clean_split | control,39,0.8131127537000721
+S036,spindle,clean NREM (all),1343,0.9604187630876007
+S036,spindle,clean_split | condition,48,0.4844920264123973
+S036,spindle,clean_split | clean subsampled to same n,48,0.0
+S036,spindle,clean_split | control,46,0.6878355084289022
+S037,SO,clean NREM (all),156,0.00652115043142498
+S037,SO,central | control,16,0.008673681508909738
+S037,SO,clean_split | control,12,0.07331404041339835
+S037,SO,mixed | control,11,0.1527316299928442
+S037,SO,recovery | condition,31,0.13430860244766119
+S037,SO,recovery | clean subsampled to same n,31,0.14
+S037,SO,recovery | control,16,0.014554223013123448
+S037,spindle,clean NREM (all),288,0.11807351606903978
+S037,spindle,central | control,13,0.9946361209107433
+S037,spindle,clean_split | condition,37,0.3983287403792065
+S037,spindle,clean_split | clean subsampled to same n,37,0.02
+S037,spindle,clean_split | control,34,0.08537678353428986
+S037,spindle,recovery | condition,32,0.0005141627971184028
+S037,spindle,recovery | clean subsampled to same n,32,0.1
+S037,spindle,recovery | control,12,0.9676667005358648
+S038,SO,clean NREM (all),308,0.09500266875891174
+S038,SO,recovery | condition,11,0.6374351393788519
+S038,SO,recovery | clean subsampled to same n,11,0.12
+S038,spindle,clean NREM (all),169,0.037505226274855856
+S038,spindle,recovery | condition,26,0.5350193350209849
+S038,spindle,recovery | clean subsampled to same n,26,0.12
+S038,spindle,recovery | control,12,0.7176798652644222
+S039,SO,clean NREM (all),134,0.13612388843492784
+S039,spindle,clean NREM (all),118,0.33978295159341676
+S040,SO,clean NREM (all),721,0.7015061550575075
+S040,SO,clean_split | condition,82,0.952706987650536
+S040,SO,clean_split | clean subsampled to same n,82,0.06
+S040,SO,clean_split | control,82,0.5997306348981178
+S040,SO,hypopnea | condition,43,0.17618683429075213
+S040,SO,hypopnea | clean subsampled to same n,43,0.0
+S040,SO,hypopnea | control,40,0.6352745409452953
+S040,SO,recovery | condition,49,0.8450313239706768
+S040,SO,recovery | clean subsampled to same n,49,0.08
+S040,SO,recovery | control,33,0.39104639753597914
+S040,SO,snoring | condition,105,0.04472214741451926
+S040,SO,snoring | clean subsampled to same n,105,0.06
+S040,SO,snoring | control,94,0.6515513502235204
+S040,spindle,clean NREM (all),2000,0.7600320105207016
+S040,spindle,clean_split | condition,203,0.4372937443814651
+S040,spindle,clean_split | clean subsampled to same n,203,0.0
+S040,spindle,clean_split | control,181,0.7283261634075294
+S040,spindle,hypopnea | condition,49,0.10874497540584094
+S040,spindle,hypopnea | clean subsampled to same n,49,0.1
+S040,spindle,hypopnea | control,61,0.8306183258312712
+S040,spindle,recovery | condition,28,0.7071723232777549
+S040,spindle,recovery | clean subsampled to same n,28,0.08
+S040,spindle,recovery | control,46,0.5274030414645554
+S040,spindle,snoring | condition,273,0.8249631122739121
+S040,spindle,snoring | clean subsampled to same n,273,0.0
+S040,spindle,snoring | control,252,0.5709635481953992
+S042,SO,clean NREM (all),1188,0.7670066041198331
+S042,SO,clean_split | condition,189,0.312055217697753
+S042,SO,clean_split | clean subsampled to same n,189,0.04
+S042,SO,clean_split | control,197,0.5225687134088206
+S042,SO,snoring | condition,225,0.40381873970739113
+S042,SO,snoring | clean subsampled to same n,225,0.06
+S042,SO,snoring | control,234,0.37466112057991263
+S042,spindle,clean NREM (all),650,0.06368701395445443
+S042,spindle,clean_split | condition,131,0.3508032687396743
+S042,spindle,clean_split | clean subsampled to same n,131,0.12
+S042,spindle,clean_split | control,138,0.6754422976438694
+S042,spindle,snoring | condition,107,0.2585749925940108
+S042,spindle,snoring | clean subsampled to same n,107,0.1
+S042,spindle,snoring | control,128,0.312452399025314
+S043,SO,clean NREM (all),589,0.4926010335424784
+S043,SO,hypopnea | condition,12,0.5886561218237476
+S043,SO,hypopnea | clean subsampled to same n,12,0.04
+S043,SO,hypopnea | control,19,0.918792177647377
+S043,spindle,clean NREM (all),442,3.362310677142723e-23
+S043,spindle,hypopnea | condition,12,0.9971538345793236
+S043,spindle,hypopnea | clean subsampled to same n,12,0.32
+S043,spindle,hypopnea | control,13,0.037992730719444
+S043,spindle,recovery | condition,11,0.261582669351525
+S043,spindle,recovery | clean subsampled to same n,11,0.22
+S044,SO,clean NREM (all),460,0.18055384321071652
+S044,SO,clean_split | condition,58,0.936802492470709
+S044,SO,clean_split | clean subsampled to same n,58,0.1
+S044,SO,clean_split | control,48,0.16176863866870486
+S044,SO,recovery | condition,10,0.18663447007369055
+S044,SO,recovery | clean subsampled to same n,10,0.04
+S044,SO,snoring | condition,99,0.018842400431901305
+S044,SO,snoring | clean subsampled to same n,99,0.06
+S044,SO,snoring | control,129,0.0668694934773451
+S044,spindle,clean NREM (all),100,0.8453441657839115
+S044,spindle,clean_split | condition,17,0.6475946801633924
+S044,spindle,clean_split | clean subsampled to same n,17,0.04
+S045,SO,clean NREM (all),960,0.4195413410143098
+S045,SO,clean_split | condition,26,0.42227010888490074
+S045,SO,clean_split | clean subsampled to same n,26,0.06
+S045,SO,clean_split | control,33,0.6918805332020939
+S045,SO,hypopnea | condition,13,0.8651917284224183
+S045,SO,hypopnea | clean subsampled to same n,13,0.08
+S045,SO,hypopnea | control,10,0.11708747153892134
+S045,SO,snoring | control,13,0.6817300163218483
+S045,spindle,clean NREM (all),611,0.10241260138244158
+S045,spindle,clean_split | condition,39,0.38210237870904307
+S045,spindle,clean_split | clean subsampled to same n,39,0.08
+S045,spindle,clean_split | control,24,0.023641090961674223
+S045,spindle,hypopnea | condition,27,0.08230460249685802
+S045,spindle,hypopnea | clean subsampled to same n,27,0.14
+S045,spindle,hypopnea | control,30,0.018602053210909873
+S045,spindle,recovery | condition,18,0.5949688360552938
+S045,spindle,recovery | clean subsampled to same n,18,0.0
+S045,spindle,snoring | condition,28,0.036031676546073435
+S045,spindle,snoring | clean subsampled to same n,28,0.02
+S045,spindle,snoring | control,36,0.3993722842510685
+S047,SO,clean NREM (all),121,0.22033220949188875
+S047,SO,hypopnea | condition,40,0.7399593739614803
+S047,SO,hypopnea | clean subsampled to same n,40,0.02
+S047,SO,hypopnea | control,55,0.2125332069346304
+S047,SO,obstructive | condition,16,0.2723111697020813
+S047,SO,obstructive | clean subsampled to same n,16,0.04
+S047,SO,obstructive | control,24,0.8477537785087056
+S047,SO,recovery | condition,47,0.012818353862352994
+S047,SO,recovery | clean subsampled to same n,47,0.06
+S047,SO,recovery | control,42,0.2783687825226077
+S047,spindle,clean NREM (all),151,0.13543069666147217
+S047,spindle,hypopnea | condition,112,0.236645451406032
+S047,spindle,hypopnea | clean subsampled to same n,112,0.08
+S047,spindle,hypopnea | control,76,0.8341645700115072
+S047,spindle,obstructive | condition,85,0.8683363853129126
+S047,spindle,obstructive | clean subsampled to same n,85,0.1
+S047,spindle,obstructive | control,40,0.9951471574766397
+S047,spindle,recovery | condition,23,0.0035879518502545103
+S047,spindle,recovery | clean subsampled to same n,23,0.08
+S047,spindle,recovery | control,73,0.9382672158784905
+S048,SO,clean NREM (all),925,0.029314052425006665
+S048,spindle,clean NREM (all),644,0.011050805084260158
+S049,SO,clean NREM (all),853,0.9257901841405286
+S049,SO,clean_split | condition,21,0.12637466631876756
+S049,SO,clean_split | clean subsampled to same n,21,0.04
+S049,SO,clean_split | control,30,0.5166996246904451
+S049,SO,snoring | control,11,0.998540804737401
+S049,spindle,clean NREM (all),1886,0.0031504289518028794
+S049,spindle,clean_split | condition,75,0.8137433935938829
+S049,spindle,clean_split | clean subsampled to same n,75,0.06
+S049,spindle,clean_split | control,64,0.4239627626375236
+S049,spindle,snoring | condition,62,0.23130378335599616
+S049,spindle,snoring | clean subsampled to same n,62,0.06
+S049,spindle,snoring | control,65,0.021852896605819953
+S050,SO,clean NREM (all),687,0.07370044974735261
+S050,SO,clean_split | condition,21,0.5070674651360831
+S050,SO,clean_split | clean subsampled to same n,21,0.04
+S050,SO,clean_split | control,28,0.9726136766858684
+S050,SO,hypopnea | condition,19,0.41445692256669747
+S050,SO,hypopnea | clean subsampled to same n,19,0.04
+S050,SO,hypopnea | control,28,0.3863415014324817
+S050,SO,snoring | condition,24,0.5424237360532791
+S050,SO,snoring | clean subsampled to same n,24,0.04
+S050,SO,snoring | control,21,0.9346168974400224
+S050,spindle,clean NREM (all),684,0.0022878674641023332
+S050,spindle,clean_split | condition,19,0.31702316290632887
+S050,spindle,clean_split | clean subsampled to same n,19,0.04
+S050,spindle,clean_split | control,24,0.05532424338410909
+S050,spindle,hypopnea | condition,30,0.18331943462962616
+S050,spindle,hypopnea | clean subsampled to same n,30,0.12
+S050,spindle,hypopnea | control,18,0.01654391647252034
+S050,spindle,snoring | condition,60,0.810857420432424
+S050,spindle,snoring | clean subsampled to same n,60,0.08
+S050,spindle,snoring | control,65,0.45209584313900847
+S051,SO,clean NREM (all),758,0.7864511317342283
+S051,SO,clean_split | condition,56,0.2792548005674164
+S051,SO,clean_split | clean subsampled to same n,56,0.04
+S051,SO,clean_split | control,73,0.6293145162712098
+S051,SO,snoring | condition,178,0.46411308547231583
+S051,SO,snoring | clean subsampled to same n,178,0.06
+S051,SO,snoring | control,202,0.6287720364692552
+S051,spindle,clean NREM (all),686,0.8171602339156809
+S051,spindle,clean_split | condition,91,0.6862139698325429
+S051,spindle,clean_split | clean subsampled to same n,91,0.02
+S051,spindle,clean_split | control,76,0.32821531398428805
+S051,spindle,snoring | condition,198,0.3218446406505918
+S051,spindle,snoring | clean subsampled to same n,198,0.04
+S051,spindle,snoring | control,130,0.14979919281956705
+S052,SO,clean NREM (all),1098,0.7782014581759766
+S052,SO,hypopnea | condition,35,0.6240221415556284
+S052,SO,hypopnea | clean subsampled to same n,35,0.06
+S052,SO,hypopnea | control,49,0.9663327081013917
+S052,SO,recovery | condition,30,0.9614869930264313
+S052,SO,recovery | clean subsampled to same n,30,0.1
+S052,spindle,clean NREM (all),1215,0.3513390099707758
+S052,spindle,hypopnea | condition,48,0.3167420614570967
+S052,spindle,hypopnea | clean subsampled to same n,48,0.02
+S052,spindle,hypopnea | control,58,0.9182422230786931
+S052,spindle,recovery | condition,24,0.48185267440693247
+S052,spindle,recovery | clean subsampled to same n,24,0.02
+S052,spindle,recovery | control,14,0.3691910628826949
+S053,SO,clean NREM (all),497,0.10003068667961358
+S053,SO,clean_split | condition,34,0.9513246393838946
+S053,SO,clean_split | clean subsampled to same n,34,0.04
+S053,SO,clean_split | control,22,0.8638589897776437
+S053,SO,hypopnea | condition,15,0.9519794743447956
+S053,SO,hypopnea | clean subsampled to same n,15,0.08
+S053,SO,hypopnea | control,20,0.770595091922178
+S053,SO,obstructive | condition,13,0.2936219877700498
+S053,SO,obstructive | clean subsampled to same n,13,0.1
+S053,SO,obstructive | control,12,0.16291898839736746
+S053,spindle,clean NREM (all),518,0.033348759937344284
+S053,spindle,clean_split | condition,32,0.9753479504192427
+S053,spindle,clean_split | clean subsampled to same n,32,0.08
+S053,spindle,clean_split | control,24,0.12671976580039135
+S053,spindle,hypopnea | condition,23,0.3689812160756577
+S053,spindle,hypopnea | clean subsampled to same n,23,0.04
+S053,spindle,hypopnea | control,30,0.04251145345697752
+S053,spindle,obstructive | condition,16,0.0670783931360164
+S053,spindle,obstructive | clean subsampled to same n,16,0.02
+S053,spindle,obstructive | control,18,0.2476877399503815
+S053,spindle,recovery | condition,14,0.019806933020440134
+S053,spindle,recovery | clean subsampled to same n,14,0.08
+S053,spindle,recovery | control,22,0.09209931490771278
+S054,SO,clean NREM (all),878,0.5059954728596404
+S054,SO,clean_split | condition,115,0.5829191967196595
+S054,SO,clean_split | clean subsampled to same n,115,0.02
+S054,SO,clean_split | control,114,0.5643111213741516
+S054,SO,hypopnea | condition,57,0.369814595126815
+S054,SO,hypopnea | clean subsampled to same n,57,0.1
+S054,SO,hypopnea | control,55,0.9606282543959803
+S054,SO,recovery | condition,58,0.9948847335416049
+S054,SO,recovery | clean subsampled to same n,58,0.0
+S054,SO,recovery | control,17,0.3078394004353005
+S054,SO,snoring | condition,104,0.9013284705103581
+S054,SO,snoring | clean subsampled to same n,104,0.06
+S054,SO,snoring | control,117,0.17107864969329434
+S054,spindle,clean NREM (all),256,0.3134771583795351
+S054,spindle,clean_split | condition,27,0.7329231540996457
+S054,spindle,clean_split | clean subsampled to same n,27,0.06
+S054,spindle,clean_split | control,18,0.4559230226269215
+S054,spindle,hypopnea | condition,25,0.8479808760647263
+S054,spindle,hypopnea | clean subsampled to same n,25,0.04
+S054,spindle,hypopnea | control,33,0.5487739670134854
+S054,spindle,recovery | condition,15,0.43526195260120953
+S054,spindle,recovery | clean subsampled to same n,15,0.1
+S054,spindle,snoring | condition,25,0.9860433591939038
+S054,spindle,snoring | clean subsampled to same n,25,0.06
+S054,spindle,snoring | control,37,0.695327550460484
+S055,SO,clean NREM (all),44,0.8794271056187258
+S055,spindle,clean NREM (all),24,0.24900596834731883
+S056,SO,clean NREM (all),374,0.002231625291285982
+S056,SO,clean_split | condition,13,0.9130345888899707
+S056,SO,clean_split | clean subsampled to same n,13,0.06
+S056,SO,clean_split | control,11,0.8153531784235863
+S056,spindle,clean NREM (all),505,8.621559489054153e-05
+S056,spindle,clean_split | condition,19,0.8909589685837366
+S056,spindle,clean_split | clean subsampled to same n,19,0.08
+S056,spindle,clean_split | control,25,0.3649038644555538
+S057,SO,clean NREM (all),756,0.43871906902244057
+S057,SO,clean_split | condition,97,0.5411675575278759
+S057,SO,clean_split | clean subsampled to same n,97,0.02
+S057,SO,clean_split | control,127,0.7763362497687682
+S057,SO,snoring | condition,178,0.5749313691720973
+S057,SO,snoring | clean subsampled to same n,178,0.0
+S057,SO,snoring | control,158,0.8195162216888987
+S057,spindle,clean NREM (all),1109,0.03730635414978547
+S057,spindle,clean_split | condition,165,0.9516143428458678
+S057,spindle,clean_split | clean subsampled to same n,165,0.12
+S057,spindle,clean_split | control,171,0.034800825309843665
+S057,spindle,snoring | condition,204,0.47381307445738174
+S057,spindle,snoring | clean subsampled to same n,204,0.18
+S057,spindle,snoring | control,154,0.49084128427103596
+S058,SO,clean NREM (all),204,0.13985293508117239
+S058,SO,hypopnea | condition,15,0.8366896410233631
+S058,SO,hypopnea | clean subsampled to same n,15,0.06
+S058,SO,hypopnea | control,15,0.8375895413338079
+S058,SO,recovery | control,11,0.5300966023387822
+S058,spindle,clean NREM (all),22,0.3111503595650678
+S061,SO,clean NREM (all),77,0.027021791826970985
+S061,SO,hypopnea | condition,67,2.8543886462713914e-05
+S061,SO,hypopnea | clean subsampled to same n,67,0.64
+S061,SO,hypopnea | control,36,0.07799436180532121
+S061,SO,obstructive | condition,10,0.45264094222869805
+S061,SO,obstructive | clean subsampled to same n,10,0.16
+S061,SO,recovery | condition,35,0.9886543869017438
+S061,SO,recovery | clean subsampled to same n,35,0.18
+S061,SO,recovery | control,15,0.6762364436337417
+S061,spindle,clean NREM (all),307,0.511388006552569
+S061,spindle,clean_split | condition,14,0.2280211293068075
+S061,spindle,clean_split | clean subsampled to same n,14,0.02
+S061,spindle,clean_split | control,15,0.7964773759539778
+S061,spindle,hypopnea | condition,157,0.9764555279283629
+S061,spindle,hypopnea | clean subsampled to same n,157,0.0
+S061,spindle,hypopnea | control,157,0.26707090752146345
+S061,spindle,mixed | condition,10,0.5261389527668046
+S061,spindle,mixed | clean subsampled to same n,10,0.06
+S061,spindle,obstructive | condition,35,0.09091282404867489
+S061,spindle,obstructive | clean subsampled to same n,35,0.06
+S061,spindle,obstructive | control,40,0.16072378066828538
+S061,spindle,recovery | condition,66,0.17503337866503035
+S061,spindle,recovery | clean subsampled to same n,66,0.02
+S061,spindle,recovery | control,64,0.04508453394600767
+S061,spindle,snoring | condition,20,0.3206803898023101
+S061,spindle,snoring | clean subsampled to same n,20,0.1
+S061,spindle,snoring | control,16,0.5979876835698498
+S062,SO,clean NREM (all),49,0.09397796658752051
+S062,spindle,clean NREM (all),15,0.09954679413499186
+S063,SO,clean NREM (all),361,0.6255639954037633
+S063,spindle,clean NREM (all),1601,0.3205596992221607
+S063,spindle,clean_split | condition,39,0.8341482569433264
+S063,spindle,clean_split | clean subsampled to same n,39,0.0
+S063,spindle,clean_split | control,24,0.368884562158073
+S063,spindle,snoring | condition,34,0.4035556932961889
+S063,spindle,snoring | clean subsampled to same n,34,0.02
+S063,spindle,snoring | control,34,0.6779814316717743
+S064,SO,clean NREM (all),787,0.023745372840416053
+S064,SO,clean_split | condition,120,0.1824479769641684
+S064,SO,clean_split | clean subsampled to same n,120,0.14
+S064,SO,clean_split | control,121,0.3591942382269873
+S064,SO,hypopnea | condition,14,0.03330693696288829
+S064,SO,hypopnea | clean subsampled to same n,14,0.14
+S064,SO,hypopnea | control,18,0.0014092194402553315
+S064,SO,recovery | condition,28,0.02581629245462692
+S064,SO,recovery | clean subsampled to same n,28,0.08
+S064,SO,recovery | control,12,0.006452375416527935
+S064,SO,snoring | condition,190,0.3629742027281849
+S064,SO,snoring | clean subsampled to same n,190,0.16
+S064,SO,snoring | control,221,0.758593038247189
+S064,spindle,clean NREM (all),310,0.36493952465041773
+S064,spindle,clean_split | condition,41,0.25193153582340616
+S064,spindle,clean_split | clean subsampled to same n,41,0.02
+S064,spindle,clean_split | control,28,0.007910934920370004
+S064,spindle,snoring | condition,89,0.854209685717474
+S064,spindle,snoring | clean subsampled to same n,89,0.02
+S064,spindle,snoring | control,51,0.48641501614111066
+S065,SO,clean NREM (all),429,0.6067030473949934
+S065,SO,clean_split | condition,34,0.6609242920725992
+S065,SO,clean_split | clean subsampled to same n,34,0.04
+S065,SO,clean_split | control,39,0.8225643661006387
+S065,SO,snoring | condition,76,0.18737973545613007
+S065,SO,snoring | clean subsampled to same n,76,0.08
+S065,SO,snoring | control,50,0.8299725856439296
+S065,spindle,clean NREM (all),865,0.12036475561789141
+S065,spindle,clean_split | condition,97,0.6806675787271572
+S065,spindle,clean_split | clean subsampled to same n,97,0.08
+S065,spindle,clean_split | control,102,0.9269571406572688
+S065,spindle,snoring | condition,112,0.06426460336730712
+S065,spindle,snoring | clean subsampled to same n,112,0.1
+S065,spindle,snoring | control,106,0.2973671741037668
+S066,SO,clean NREM (all),427,0.6954136880219601
+S066,SO,clean_split | condition,46,0.9577804190559283
+S066,SO,clean_split | clean subsampled to same n,46,0.06
+S066,SO,clean_split | control,45,0.9783795120642856
+S066,spindle,clean NREM (all),623,0.005597523010411595
+S066,spindle,clean_split | condition,34,0.40928754167093545
+S066,spindle,clean_split | clean subsampled to same n,34,0.1
+S066,spindle,clean_split | control,31,0.7097962629825411
+S067,SO,clean NREM (all),171,0.3775274542618009
+S067,SO,clean_split | condition,10,0.6147491238895142
+S067,SO,clean_split | clean subsampled to same n,10,0.08
+S067,spindle,clean NREM (all),109,0.8053889078800746
+S068,SO,clean NREM (all),329,0.027372983912879706
+S068,SO,clean_split | condition,28,0.9816424468265122
+S068,SO,clean_split | clean subsampled to same n,28,0.08
+S068,SO,clean_split | control,28,0.8367983457268103
+S068,SO,snoring | condition,71,0.054749147294209474
+S068,SO,snoring | clean subsampled to same n,71,0.14
+S068,SO,snoring | control,63,0.227507367279104
+S068,spindle,clean NREM (all),415,0.09769691029775784
+S068,spindle,clean_split | condition,57,0.36906719877686434
+S068,spindle,clean_split | clean subsampled to same n,57,0.04
+S068,spindle,clean_split | control,64,0.8875714221027682
+S068,spindle,hypopnea | condition,11,0.4945223348148001
+S068,spindle,hypopnea | clean subsampled to same n,11,0.08
+S068,spindle,recovery | condition,15,0.3677278352830608
+S068,spindle,recovery | clean subsampled to same n,15,0.1
+S068,spindle,snoring | condition,74,0.1717638724477997
+S068,spindle,snoring | clean subsampled to same n,74,0.08
+S068,spindle,snoring | control,71,0.2853925574954537
+S069,SO,clean NREM (all),421,0.013272621972661337
+S069,spindle,clean NREM (all),931,0.7149995747452085
+S069,spindle,clean_split | control,10,0.46023136054075
+S069,spindle,snoring | condition,10,0.42930754236617086
+S069,spindle,snoring | clean subsampled to same n,10,0.1
+S069,spindle,snoring | control,10,0.49001836545316174
+S070,SO,clean NREM (all),246,0.39340818828162233
+S070,SO,clean_split | condition,10,0.15596493704801287
+S070,SO,clean_split | clean subsampled to same n,10,0.06
+S070,SO,clean_split | control,10,0.6495073059558996
+S070,SO,hypopnea | condition,66,0.5297157826670932
+S070,SO,hypopnea | clean subsampled to same n,66,0.04
+S070,SO,hypopnea | control,53,0.9050982027494077
+S070,SO,recovery | condition,65,0.9590589123855262
+S070,SO,recovery | clean subsampled to same n,65,0.02
+S070,SO,recovery | control,30,0.9563230853937136
+S070,SO,snoring | condition,102,0.20151727030994418
+S070,SO,snoring | clean subsampled to same n,102,0.02
+S070,SO,snoring | control,59,0.7907284127540148
+S070,spindle,clean NREM (all),315,0.9100399109081259
+S070,spindle,clean_split | condition,29,0.7408718992866612
+S070,spindle,clean_split | clean subsampled to same n,29,0.04
+S070,spindle,clean_split | control,29,0.8647380103424872
+S070,spindle,hypopnea | condition,69,0.4234159848483515
+S070,spindle,hypopnea | clean subsampled to same n,69,0.02
+S070,spindle,hypopnea | control,81,0.7389099093580778
+S070,spindle,recovery | condition,38,0.04469321267334504
+S070,spindle,recovery | clean subsampled to same n,38,0.04
+S070,spindle,recovery | control,40,0.9838180147525851
+S070,spindle,snoring | condition,114,0.7041045235151836
+S070,spindle,snoring | clean subsampled to same n,114,0.0
+S070,spindle,snoring | control,94,0.9141896569497115
+S071,SO,clean NREM (all),277,0.00036314386248361585
+S071,SO,clean_split | condition,23,0.16638395296235703
+S071,SO,clean_split | clean subsampled to same n,23,0.08
+S071,SO,clean_split | control,19,0.09248329424513542
+S071,SO,hypopnea | condition,87,0.47311107521343204
+S071,SO,hypopnea | clean subsampled to same n,87,0.46
+S071,SO,hypopnea | control,114,0.018105178699008115
+S071,SO,recovery | condition,75,0.08249704904015825
+S071,SO,recovery | clean subsampled to same n,75,0.5
+S071,SO,recovery | control,64,0.03714789227276921
+S071,SO,snoring | condition,20,0.2898166509584567
+S071,SO,snoring | clean subsampled to same n,20,0.08
+S071,SO,snoring | control,20,0.3558414231452145
+S071,spindle,clean NREM (all),44,0.8794373165095224
+S072,SO,clean NREM (all),13,0.13489595521741102
+S072,spindle,clean NREM (all),21,0.569736933760043
+S073,SO,clean NREM (all),1345,0.008947816089994953
+S073,SO,clean_split | condition,89,0.8492519266879622
+S073,SO,clean_split | clean subsampled to same n,89,0.04
+S073,SO,clean_split | control,126,0.444536033306462
+S073,SO,hypopnea | condition,52,0.3945511128145425
+S073,SO,hypopnea | clean subsampled to same n,52,0.12
+S073,SO,hypopnea | control,122,0.6447597409888102
+S073,SO,recovery | condition,120,0.7006080200628647
+S073,SO,recovery | clean subsampled to same n,120,0.14
+S073,SO,recovery | control,71,0.585077017468989
+S073,SO,snoring | condition,186,0.047898030762622015
+S073,SO,snoring | clean subsampled to same n,186,0.12
+S073,SO,snoring | control,139,0.480079812000541
+S073,spindle,clean NREM (all),809,0.22459260382549917
+S073,spindle,clean_split | condition,88,0.8512159594382714
+S073,spindle,clean_split | clean subsampled to same n,88,0.06
+S073,spindle,clean_split | control,72,0.6801795833959282
+S073,spindle,hypopnea | condition,112,0.44427118568002183
+S073,spindle,hypopnea | clean subsampled to same n,112,0.1
+S073,spindle,hypopnea | control,72,0.9979410983649235
+S073,spindle,recovery | condition,18,0.0688414871841239
+S073,spindle,recovery | clean subsampled to same n,18,0.02
+S073,spindle,recovery | control,31,0.8484399473067885
+S073,spindle,snoring | condition,67,0.1836942229927428
+S073,spindle,snoring | clean subsampled to same n,67,0.08
+S073,spindle,snoring | control,73,0.029735199938230445
+S074,SO,clean NREM (all),331,0.4728680701789979
+S074,SO,clean_split | condition,18,0.27918908705139744
+S074,SO,clean_split | clean subsampled to same n,18,0.0
+S074,SO,clean_split | control,18,0.1378239887191011
+S074,SO,hypopnea | condition,11,0.6825148156951347
+S074,SO,hypopnea | clean subsampled to same n,11,0.02
+S074,SO,hypopnea | control,13,0.11825738030780761
+S074,SO,recovery | condition,10,0.4087661856624063
+S074,SO,recovery | clean subsampled to same n,10,0.02
+S074,SO,snoring | condition,44,0.0008731439223959151
+S074,SO,snoring | clean subsampled to same n,44,0.02
+S074,SO,snoring | control,35,0.355065567392491
+S074,spindle,clean NREM (all),2394,0.3910181814461083
+S074,spindle,clean_split | condition,408,0.5917544761116482
+S074,spindle,clean_split | clean subsampled to same n,408,0.08
+S074,spindle,clean_split | control,377,0.685927478050715
+S074,spindle,hypopnea | condition,129,0.9451356081086736
+S074,spindle,hypopnea | clean subsampled to same n,129,0.04
+S074,spindle,hypopnea | control,131,0.12519922604760278
+S074,spindle,recovery | condition,23,0.7802470945522951
+S074,spindle,recovery | clean subsampled to same n,23,0.06
+S074,spindle,recovery | control,34,0.4173846020535536
+S074,spindle,snoring | condition,374,0.0687534433891933
+S074,spindle,snoring | clean subsampled to same n,374,0.04
+S074,spindle,snoring | control,383,0.4706774293898433
+S075,SO,clean NREM (all),631,0.7680199453641097
+S075,SO,clean_split | condition,13,0.8689160980413096
+S075,SO,clean_split | clean subsampled to same n,13,0.0
+S075,SO,clean_split | control,17,0.7049775775425107
+S075,SO,snoring | condition,12,0.19394984849386726
+S075,SO,snoring | clean subsampled to same n,12,0.0
+S075,spindle,clean NREM (all),729,0.07109904442582134
+S075,spindle,clean_split | condition,24,0.8765208090921286
+S075,spindle,clean_split | clean subsampled to same n,24,0.02
+S075,spindle,clean_split | control,33,0.5610168606721974
+S075,spindle,snoring | condition,13,0.4280893454822973
+S075,spindle,snoring | clean subsampled to same n,13,0.06
+S075,spindle,snoring | control,20,0.34767252435513285
+S076,SO,clean NREM (all),317,0.3794363560527509
+S076,spindle,clean NREM (all),1003,0.04712576913036938
+S076,spindle,clean_split | condition,14,0.18925829824969487
+S076,spindle,clean_split | clean subsampled to same n,14,0.02
+S078,SO,clean NREM (all),510,0.8986197307385323
+S078,SO,clean_split | condition,38,0.05666413418528527
+S078,SO,clean_split | clean subsampled to same n,38,0.06
+S078,SO,clean_split | control,52,0.5721706875909713
+S078,SO,recovery | control,10,0.8270753842186039
+S078,SO,snoring | condition,139,0.7524950376872214
+S078,SO,snoring | clean subsampled to same n,139,0.02
+S078,SO,snoring | control,149,0.767194551892902
+S078,spindle,clean NREM (all),545,0.01908533163603805
+S078,spindle,central | control,10,0.7501805055160239
+S078,spindle,clean_split | condition,47,0.4584465885929953
+S078,spindle,clean_split | clean subsampled to same n,47,0.08
+S078,spindle,clean_split | control,51,0.12350807732998037
+S078,spindle,recovery | control,13,0.9881012348687571
+S078,spindle,snoring | condition,130,0.7362781475561572
+S078,spindle,snoring | clean subsampled to same n,130,0.18
+S078,spindle,snoring | control,89,0.4362119268735801
+S079,SO,clean NREM (all),697,0.9094109956331323
+S079,SO,hypopnea | condition,34,0.6181573490794767
+S079,SO,hypopnea | clean subsampled to same n,34,0.02
+S079,SO,hypopnea | control,29,0.9214571356069443
+S079,SO,recovery | condition,31,0.11569213390818947
+S079,SO,recovery | clean subsampled to same n,31,0.04
+S079,SO,recovery | control,24,0.9221196728203712
+S079,spindle,clean NREM (all),821,0.4204634517275976
+S079,spindle,central | control,21,0.882949607524618
+S079,spindle,clean_split | control,10,0.5868631730690973
+S079,spindle,hypopnea | condition,82,0.31975027688146457
+S079,spindle,hypopnea | clean subsampled to same n,82,0.0
+S079,spindle,hypopnea | control,136,0.7438915933523788
+S079,spindle,recovery | condition,85,0.2703614015291814
+S079,spindle,recovery | clean subsampled to same n,85,0.06
+S079,spindle,recovery | control,116,0.9991064593709589
+S079,spindle,snoring | control,11,0.12083968537805341
+S080,SO,clean NREM (all),633,0.0037230833130664762
+S080,SO,clean_split | condition,24,0.08085221699641017
+S080,SO,clean_split | clean subsampled to same n,24,0.1
+S080,SO,clean_split | control,18,0.07947652540968535
+S080,SO,hypopnea | condition,23,0.7965069997439365
+S080,SO,hypopnea | clean subsampled to same n,23,0.04
+S080,SO,hypopnea | control,15,0.9643280768596416
+S080,SO,recovery | condition,11,0.765248591108094
+S080,SO,recovery | clean subsampled to same n,11,0.04
+S080,SO,snoring | condition,33,0.6151508521796868
+S080,SO,snoring | clean subsampled to same n,33,0.04
+S080,SO,snoring | control,17,0.7230973538476969
+S080,spindle,clean NREM (all),773,0.9838709042614256
+S080,spindle,clean_split | condition,41,0.9530612305781915
+S080,spindle,clean_split | clean subsampled to same n,41,0.04
+S080,spindle,clean_split | control,39,0.27097144871765433
+S080,spindle,hypopnea | condition,21,0.7767565425602786
+S080,spindle,hypopnea | clean subsampled to same n,21,0.06
+S080,spindle,hypopnea | control,35,0.17972533843976682
+S080,spindle,recovery | control,10,0.14321983796804647
+S080,spindle,snoring | condition,38,0.5422840252708815
+S080,spindle,snoring | clean subsampled to same n,38,0.02
+S080,spindle,snoring | control,37,0.9304281037064834
+S081,SO,clean NREM (all),438,0.9429525249020179
+S081,SO,clean_split | condition,24,0.10288159984677722
+S081,SO,clean_split | clean subsampled to same n,24,0.06
+S081,SO,clean_split | control,19,0.5954964535509947
+S081,SO,hypopnea | condition,20,0.10559416233682713
+S081,SO,hypopnea | clean subsampled to same n,20,0.1
+S081,SO,hypopnea | control,22,0.5645638090920058
+S081,SO,recovery | condition,12,0.1337897320384755
+S081,SO,recovery | clean subsampled to same n,12,0.08
+S081,SO,snoring | condition,145,0.41979480054279933
+S081,SO,snoring | clean subsampled to same n,145,0.0
+S081,SO,snoring | control,113,0.3863248352146934
+S081,spindle,clean NREM (all),496,0.4098364362281555
+S081,spindle,clean_split | condition,62,0.09745983706507563
+S081,spindle,clean_split | clean subsampled to same n,62,0.04
+S081,spindle,clean_split | control,70,0.45923564568444825
+S081,spindle,hypopnea | condition,67,0.37362674311351995
+S081,spindle,hypopnea | clean subsampled to same n,67,0.04
+S081,spindle,hypopnea | control,46,0.3111149120768854
+S081,spindle,recovery | condition,13,0.0960802884782328
+S081,spindle,recovery | clean subsampled to same n,13,0.12
+S081,spindle,recovery | control,26,0.26386420843924335
+S081,spindle,snoring | condition,140,0.8570024799754681
+S081,spindle,snoring | clean subsampled to same n,140,0.1
+S081,spindle,snoring | control,180,0.967981669425835
+S082,SO,clean NREM (all),72,0.9084882841307855
+S082,spindle,clean NREM (all),169,0.09632785909120567
+S082,spindle,snoring | condition,60,0.5504683871246254
+S082,spindle,snoring | clean subsampled to same n,60,0.14
+S082,spindle,snoring | control,52,0.5769354890253221
+S083,SO,clean NREM (all),47,0.004817450947744261
+S083,SO,snoring | condition,18,0.06123095630777084
+S083,SO,snoring | clean subsampled to same n,18,0.32
+S084,SO,clean NREM (all),480,0.19314158710115314
+S084,SO,clean_split | condition,11,0.5815658580298961
+S084,SO,clean_split | clean subsampled to same n,11,0.1
+S084,SO,clean_split | control,12,0.5650795332024089
+S084,spindle,clean NREM (all),559,0.6152235386201447
+S084,spindle,clean_split | condition,36,0.5315852008760885
+S084,spindle,clean_split | clean subsampled to same n,36,0.02
+S084,spindle,clean_split | control,41,0.38102098182924304
+S085,SO,clean NREM (all),135,0.6374243974303205
+S085,SO,clean_split | condition,23,0.26620588838821313
+S085,SO,clean_split | clean subsampled to same n,23,0.02
+S085,SO,clean_split | control,23,0.4463954307403141
+S085,SO,snoring | condition,17,0.5950880362768927
+S085,SO,snoring | clean subsampled to same n,17,0.04
+S085,spindle,clean NREM (all),1370,0.4367506253735544
+S085,spindle,clean_split | condition,158,0.7539123247188843
+S085,spindle,clean_split | clean subsampled to same n,158,0.02
+S085,spindle,clean_split | control,155,0.4981103752270316
+S085,spindle,hypopnea | condition,26,0.49353015181885423
+S085,spindle,hypopnea | clean subsampled to same n,26,0.06
+S085,spindle,snoring | condition,175,0.3791680533352138
+S085,spindle,snoring | clean subsampled to same n,175,0.02
+S085,spindle,snoring | control,154,0.5269498232746824
+S086,SO,clean NREM (all),734,0.8417179632120712
+S086,SO,clean_split | condition,27,0.3750320927780687
+S086,SO,clean_split | clean subsampled to same n,27,0.04
+S086,SO,clean_split | control,20,0.8243362124400767
+S086,spindle,clean NREM (all),724,0.3026602925314471
+S086,spindle,clean_split | condition,47,0.43672542929979985
+S086,spindle,clean_split | clean subsampled to same n,47,0.08
+S086,spindle,clean_split | control,39,0.49053559428496596
+S087,SO,clean NREM (all),116,0.7891809756812883
+S087,SO,clean_split | condition,18,0.7220984438734231
+S087,SO,clean_split | clean subsampled to same n,18,0.02
+S087,spindle,clean NREM (all),169,0.04147651489599604
+S087,spindle,clean_split | condition,41,0.10644583208595791
+S087,spindle,clean_split | clean subsampled to same n,41,0.1
+S087,spindle,clean_split | control,42,0.6355215189234015
+S088,SO,clean NREM (all),178,0.33603849062089153
+S088,SO,hypopnea | condition,13,0.9118030196385705
+S088,SO,hypopnea | clean subsampled to same n,13,0.04
+S088,SO,hypopnea | control,11,0.31774887747303987
+S088,SO,recovery | condition,13,0.5907554239999553
+S088,SO,recovery | clean subsampled to same n,13,0.04
+S088,SO,recovery | control,12,0.5087550246426759
+S088,spindle,clean NREM (all),112,0.0016516595225166463
+S088,spindle,hypopnea | condition,16,0.5540709221666528
+S088,spindle,hypopnea | clean subsampled to same n,16,0.16
+S088,spindle,hypopnea | control,13,0.1015923435655404
+S088,spindle,recovery | condition,16,0.15042003341839355
+S088,spindle,recovery | clean subsampled to same n,16,0.1
+S088,spindle,recovery | control,17,0.010552673212171636
+S089,SO,clean NREM (all),417,0.6705422757916729
+S089,SO,clean_split | condition,29,0.8450796615371824
+S089,SO,clean_split | clean subsampled to same n,29,0.02
+S089,SO,clean_split | control,28,0.47365751619090773
+S089,SO,recovery | condition,38,0.5153833044734134
+S089,SO,recovery | clean subsampled to same n,38,0.04
+S089,SO,recovery | control,22,0.6951494654582013
+S089,SO,snoring | condition,155,0.38664573007040837
+S089,SO,snoring | clean subsampled to same n,155,0.02
+S089,SO,snoring | control,137,0.8473589695015439
+S089,spindle,clean NREM (all),895,1.650391876194568e-08
+S089,spindle,clean_split | condition,98,0.00010295064640468845
+S089,spindle,clean_split | clean subsampled to same n,98,0.38
+S089,spindle,clean_split | control,82,0.02404180565756833
+S089,spindle,hypopnea | condition,51,0.0013999106817032775
+S089,spindle,hypopnea | clean subsampled to same n,51,0.34
+S089,spindle,hypopnea | control,51,0.6518714348048961
+S089,spindle,obstructive | condition,24,0.6645194005348453
+S089,spindle,obstructive | clean subsampled to same n,24,0.22
+S089,spindle,obstructive | control,44,0.008224369973670785
+S089,spindle,recovery | condition,59,0.34794338061907726
+S089,spindle,recovery | clean subsampled to same n,59,0.32
+S089,spindle,recovery | control,94,0.6229625904210158
+S089,spindle,snoring | condition,273,0.010480250441999036
+S089,spindle,snoring | clean subsampled to same n,273,0.94
+S089,spindle,snoring | control,296,0.005375078790847298
+S090,SO,clean NREM (all),235,0.8167082424992292
+S090,SO,clean_split | condition,20,0.9977692880003513
+S090,SO,clean_split | clean subsampled to same n,20,0.04
+S090,SO,clean_split | control,20,0.4738511917250497
+S090,spindle,clean NREM (all),107,0.7395575030902682
+S091,SO,clean NREM (all),874,0.5944164426430575
+S091,SO,hypopnea | condition,38,0.01279604946222228
+S091,SO,hypopnea | clean subsampled to same n,38,0.08
+S091,SO,hypopnea | control,68,0.6014530681969533
+S091,SO,obstructive | control,12,0.44716352815435706
+S091,SO,recovery | condition,100,0.9942228943302309
+S091,SO,recovery | clean subsampled to same n,100,0.02
+S091,SO,recovery | control,39,0.8943995230933439
+S091,SO,snoring | condition,11,0.9907291409749486
+S091,SO,snoring | clean subsampled to same n,11,0.06
+S091,spindle,clean NREM (all),601,0.03086165956585014
+S091,spindle,hypopnea | condition,13,0.1425846901149049
+S091,spindle,hypopnea | clean subsampled to same n,13,0.02
+S091,spindle,hypopnea | control,37,0.4975468264559504
+S091,spindle,recovery | condition,20,0.37220360898621363
+S091,spindle,recovery | clean subsampled to same n,20,0.06
+S091,spindle,recovery | control,23,0.24563749982869224
+S092,SO,clean NREM (all),1139,0.1935244220109721
+S092,SO,clean_split | condition,58,0.49524249859598135
+S092,SO,clean_split | clean subsampled to same n,58,0.12
+S092,SO,clean_split | control,31,0.833238067095299
+S092,SO,hypopnea | condition,83,0.4580628046995485
+S092,SO,hypopnea | clean subsampled to same n,83,0.06
+S092,SO,hypopnea | control,140,0.2732272198182451
+S092,SO,recovery | condition,168,0.10820898524212533
+S092,SO,recovery | clean subsampled to same n,168,0.06
+S092,SO,recovery | control,87,0.3449044833112729
+S092,SO,snoring | condition,288,0.6474058979392383
+S092,SO,snoring | clean subsampled to same n,288,0.1
+S092,SO,snoring | control,312,0.22966372683604988
+S092,spindle,clean NREM (all),716,0.12787893760797903
+S092,spindle,clean_split | condition,28,0.010708894759281851
+S092,spindle,clean_split | clean subsampled to same n,28,0.08
+S092,spindle,clean_split | control,24,0.778436083134506
+S092,spindle,hypopnea | condition,58,0.38513285016644255
+S092,spindle,hypopnea | clean subsampled to same n,58,0.14
+S092,spindle,hypopnea | control,49,0.3317159765976325
+S092,spindle,recovery | condition,33,0.3067798861829503
+S092,spindle,recovery | clean subsampled to same n,33,0.0
+S092,spindle,recovery | control,35,0.5125761469815412
+S092,spindle,snoring | condition,115,0.2750771254051694
+S092,spindle,snoring | clean subsampled to same n,115,0.04
+S092,spindle,snoring | control,103,0.9540353048080064
+S093,SO,clean NREM (all),733,0.11051223669162026
+S093,SO,clean_split | condition,69,0.7133742059456567
+S093,SO,clean_split | clean subsampled to same n,69,0.04
+S093,SO,clean_split | control,48,0.9283956446207068
+S093,SO,hypopnea | condition,42,0.8017202455680357
+S093,SO,hypopnea | clean subsampled to same n,42,0.04
+S093,SO,hypopnea | control,84,0.7080173125308721
+S093,SO,recovery | condition,43,0.17035827759895847
+S093,SO,recovery | clean subsampled to same n,43,0.08
+S093,SO,recovery | control,50,0.9498036721325769
+S093,SO,snoring | condition,202,0.007835409677065168
+S093,SO,snoring | clean subsampled to same n,202,0.06
+S093,SO,snoring | control,199,0.5723654136917548
+S093,spindle,clean NREM (all),1209,2.054496355593573e-05
+S093,spindle,clean_split | condition,97,0.4335627404217119
+S093,spindle,clean_split | clean subsampled to same n,97,0.14
+S093,spindle,clean_split | control,95,0.24242454902928331
+S093,spindle,hypopnea | condition,64,0.21502903219376815
+S093,spindle,hypopnea | clean subsampled to same n,64,0.06
+S093,spindle,hypopnea | control,105,0.27449031509077393
+S093,spindle,recovery | condition,60,0.0625842954353904
+S093,spindle,recovery | clean subsampled to same n,60,0.16
+S093,spindle,recovery | control,84,0.9411988926997071
+S093,spindle,snoring | condition,317,0.0005154145164228817
+S093,spindle,snoring | clean subsampled to same n,317,0.52
+S093,spindle,snoring | control,233,0.33217809509900104
+S094,SO,clean NREM (all),314,0.0016106089216461421
+S094,SO,clean_split | control,11,0.29055382577380817
+S094,SO,hypopnea | condition,55,0.9387705044559735
+S094,SO,hypopnea | clean subsampled to same n,55,0.18
+S094,SO,hypopnea | control,68,0.9037629188613118
+S094,SO,obstructive | condition,11,0.36288307267323555
+S094,SO,obstructive | clean subsampled to same n,11,0.02
+S094,SO,obstructive | control,17,0.09038398099016151
+S094,SO,recovery | condition,102,0.1292913626083369
+S094,SO,recovery | clean subsampled to same n,102,0.3
+S094,SO,recovery | control,45,0.9040014523446777
+S094,SO,snoring | condition,111,0.0021585438908934473
+S094,SO,snoring | clean subsampled to same n,111,0.52
+S094,SO,snoring | control,66,0.2878654265843323
+S094,spindle,clean NREM (all),92,0.8964498621095214
+S094,spindle,hypopnea | condition,33,0.5004164411070001
+S094,spindle,hypopnea | clean subsampled to same n,33,0.0
+S094,spindle,hypopnea | control,48,0.6556821426544943
+S094,spindle,mixed | control,10,0.7405238094303873
+S094,spindle,obstructive | condition,18,0.08290161028821684
+S094,spindle,obstructive | clean subsampled to same n,18,0.02
+S094,spindle,obstructive | control,13,0.21486864009802042
+S094,spindle,recovery | condition,110,0.33218551597495366
+S094,spindle,recovery | control,44,0.4916134502852968
+S094,spindle,snoring | condition,24,0.519949759033166
+S094,spindle,snoring | clean subsampled to same n,24,0.08
+S094,spindle,snoring | control,33,0.6734532145194956
+S095,SO,clean NREM (all),590,0.9118333505079025
+S095,spindle,clean NREM (all),182,0.28703856644333353
+S096,SO,clean NREM (all),248,0.5320655161328225
+S096,SO,clean_split | condition,14,0.17595330065680284
+S096,SO,clean_split | clean subsampled to same n,14,0.02
+S096,SO,clean_split | control,11,0.870682581178196
+S096,SO,hypopnea | condition,75,0.5454544267502477
+S096,SO,hypopnea | clean subsampled to same n,75,0.08
+S096,SO,hypopnea | control,87,0.9598462405971161
+S096,SO,recovery | condition,37,0.26226171760096795
+S096,SO,recovery | clean subsampled to same n,37,0.02
+S096,SO,recovery | control,70,0.6467748125761037
+S096,SO,snoring | condition,27,0.7286380884265434
+S096,SO,snoring | clean subsampled to same n,27,0.0
+S096,SO,snoring | control,11,0.5427974617224905
+S096,spindle,clean NREM (all),37,0.4961408014143079
+S096,spindle,hypopnea | condition,18,0.2467213998610034
+S096,spindle,hypopnea | clean subsampled to same n,18,0.02
+S096,spindle,hypopnea | control,13,0.7541419662211843
+S096,spindle,recovery | control,12,0.37334724585435775
+S098,SO,clean NREM (all),578,0.759030117472927
+S098,SO,clean_split | condition,73,0.66693621660224
+S098,SO,clean_split | clean subsampled to same n,73,0.0
+S098,SO,clean_split | control,64,0.41956188614293505
+S098,SO,hypopnea | condition,35,0.34068679258983614
+S098,SO,hypopnea | clean subsampled to same n,35,0.0
+S098,SO,hypopnea | control,36,0.37213204101460506
+S098,SO,recovery | condition,49,0.8744316004255792
+S098,SO,recovery | clean subsampled to same n,49,0.08
+S098,SO,recovery | control,31,0.4403452054956801
+S098,SO,snoring | condition,205,0.36022052411049116
+S098,SO,snoring | clean subsampled to same n,205,0.04
+S098,SO,snoring | control,199,0.9743731070869845
+S098,spindle,clean NREM (all),978,0.00017944362367322187
+S098,spindle,clean_split | condition,139,0.5711660260541159
+S098,spindle,clean_split | clean subsampled to same n,139,0.12
+S098,spindle,clean_split | control,135,0.088417894340262
+S098,spindle,hypopnea | condition,40,0.32138254616384815
+S098,spindle,hypopnea | clean subsampled to same n,40,0.06
+S098,spindle,hypopnea | control,56,0.7329850018177737
+S098,spindle,recovery | condition,57,0.35729156460024336
+S098,spindle,recovery | clean subsampled to same n,57,0.16
+S098,spindle,recovery | control,40,0.8544031230410435
+S098,spindle,snoring | condition,274,0.0046483235145299414
+S098,spindle,snoring | clean subsampled to same n,274,0.28
+S098,spindle,snoring | control,247,0.1542101070182581
+S099,SO,clean NREM (all),579,0.6318690895363047
+S099,SO,clean_split | condition,71,0.9009044650579463
+S099,SO,clean_split | clean subsampled to same n,71,0.0
+S099,SO,clean_split | control,82,0.3910833269762324
+S099,SO,hypopnea | condition,52,0.3359445134695873
+S099,SO,hypopnea | clean subsampled to same n,52,0.08
+S099,SO,hypopnea | control,72,0.4803175529316316
+S099,SO,recovery | condition,47,0.4543104937912567
+S099,SO,recovery | clean subsampled to same n,47,0.06
+S099,SO,recovery | control,37,0.6207749993554119
+S099,SO,snoring | condition,46,0.21172091740712973
+S099,SO,snoring | clean subsampled to same n,46,0.04
+S099,SO,snoring | control,73,0.1792364490534088
+S099,spindle,clean NREM (all),618,0.4311297309379468
+S099,spindle,clean_split | condition,82,0.1170161097912118
+S099,spindle,clean_split | clean subsampled to same n,82,0.12
+S099,spindle,clean_split | control,88,0.4262338427196497
+S099,spindle,hypopnea | condition,88,0.5513390678027005
+S099,spindle,hypopnea | clean subsampled to same n,88,0.08
+S099,spindle,hypopnea | control,102,0.14898377451159028
+S099,spindle,recovery | condition,57,0.8576711203282996
+S099,spindle,recovery | clean subsampled to same n,57,0.06
+S099,spindle,recovery | control,69,0.8141157958730848
+S099,spindle,snoring | condition,48,0.2055910807059122
+S099,spindle,snoring | clean subsampled to same n,48,0.08
+S099,spindle,snoring | control,76,0.04796074538853604
+S100,SO,clean NREM (all),885,0.3684015176744749
+S100,SO,clean_split | condition,139,0.9067705035528283
+S100,SO,clean_split | clean subsampled to same n,139,0.06
+S100,SO,clean_split | control,135,0.9370201554183453
+S100,SO,hypopnea | condition,160,0.025955605421017682
+S100,SO,hypopnea | clean subsampled to same n,160,0.06
+S100,SO,hypopnea | control,160,0.030881654278377222
+S100,SO,recovery | condition,64,0.05539158147885773
+S100,SO,recovery | clean subsampled to same n,64,0.04
+S100,SO,recovery | control,40,0.5615556959426767
+S100,SO,snoring | condition,141,0.3903732227374124
+S100,SO,snoring | clean subsampled to same n,141,0.0
+S100,SO,snoring | control,143,0.35909541991352406
+S100,spindle,clean NREM (all),416,0.7771542103974222
+S100,spindle,clean_split | condition,67,0.3514535068426515
+S100,spindle,clean_split | clean subsampled to same n,67,0.02
+S100,spindle,clean_split | control,64,0.8658714861608804
+S100,spindle,hypopnea | condition,96,0.005605994979107689
+S100,spindle,hypopnea | clean subsampled to same n,96,0.0
+S100,spindle,hypopnea | control,118,0.5558791485884728
+S100,spindle,recovery | condition,13,0.5470987301925756
+S100,spindle,recovery | clean subsampled to same n,13,0.06
+S100,spindle,recovery | control,37,0.7122816258495591
+S100,spindle,snoring | condition,75,0.4987208946450505
+S100,spindle,snoring | clean subsampled to same n,75,0.08
+S100,spindle,snoring | control,70,0.6916100647074263
+S101,SO,clean NREM (all),660,0.09865220690686471
+S101,SO,clean_split | condition,92,0.26820153969995764
+S101,SO,clean_split | clean subsampled to same n,92,0.0
+S101,SO,clean_split | control,100,0.1975347237126663
+S101,SO,snoring | condition,126,0.9418340149188011
+S101,SO,snoring | clean subsampled to same n,126,0.02
+S101,SO,snoring | control,112,0.6391487333793402
+S101,spindle,clean NREM (all),1028,4.1294392825123015e-12
+S101,spindle,clean_split | condition,183,8.370590254496526e-06
+S101,spindle,clean_split | clean subsampled to same n,183,0.7
+S101,spindle,clean_split | control,176,3.199851278661301e-05
+S101,spindle,snoring | condition,146,0.013183144752343947
+S101,spindle,snoring | clean subsampled to same n,146,0.7
+S101,spindle,snoring | control,144,0.028844408559859133
+S102,SO,clean NREM (all),711,0.0200041037727455
+S102,SO,clean_split | condition,25,0.9850793014268107
+S102,SO,clean_split | clean subsampled to same n,25,0.18
+S102,SO,clean_split | control,19,0.7717569922928333
+S102,SO,hypopnea | condition,43,0.9003480410943926
+S102,SO,hypopnea | clean subsampled to same n,43,0.02
+S102,SO,hypopnea | control,64,0.9066205077253549
+S102,SO,recovery | condition,35,0.41511506456897634
+S102,SO,recovery | clean subsampled to same n,35,0.08
+S102,SO,recovery | control,30,0.4315389405773246
+S102,SO,snoring | condition,17,0.010585859144647594
+S102,SO,snoring | clean subsampled to same n,17,0.06
+S102,SO,snoring | control,19,0.7406579201918578
+S102,spindle,clean NREM (all),724,0.03512275063594849
+S102,spindle,clean_split | condition,14,0.07953845645683268
+S102,spindle,clean_split | clean subsampled to same n,14,0.08
+S102,spindle,clean_split | control,12,0.08798837875831492
+S102,spindle,hypopnea | condition,55,0.06581951071708823
+S102,spindle,hypopnea | clean subsampled to same n,55,0.12
+S102,spindle,hypopnea | control,46,0.7352531682014464
+S102,spindle,recovery | condition,20,0.9737051700925142
+S102,spindle,recovery | clean subsampled to same n,20,0.08
+S102,spindle,recovery | control,29,0.4818806427463094
+S102,spindle,snoring | condition,23,0.788344802886803
+S102,spindle,snoring | clean subsampled to same n,23,0.12
+S102,spindle,snoring | control,18,0.8754180740405589
+S103,SO,clean NREM (all),391,0.6700763921404697
+S103,SO,clean_split | condition,51,0.2249328418727246
+S103,SO,clean_split | clean subsampled to same n,51,0.04
+S103,SO,clean_split | control,46,0.6062938342600223
+S103,SO,hypopnea | condition,49,0.0285338236909735
+S103,SO,hypopnea | clean subsampled to same n,49,0.0
+S103,SO,hypopnea | control,48,0.7524950105832506
+S103,SO,recovery | condition,40,0.21580167800706457
+S103,SO,recovery | clean subsampled to same n,40,0.04
+S103,SO,recovery | control,22,0.5289579884657717
+S103,SO,snoring | condition,37,0.8813621708210676
+S103,SO,snoring | clean subsampled to same n,37,0.02
+S103,SO,snoring | control,27,0.13562245993451597
+S103,spindle,clean NREM (all),596,0.011329998402456456
+S103,spindle,clean_split | condition,100,0.0673231327197831
+S103,spindle,clean_split | clean subsampled to same n,100,0.08
+S103,spindle,clean_split | control,85,0.2259971133585056
+S103,spindle,hypopnea | condition,125,0.058542108355371617
+S103,spindle,hypopnea | clean subsampled to same n,125,0.12
+S103,spindle,hypopnea | control,142,0.7007673485631598
+S103,spindle,recovery | condition,44,0.004038042083794851
+S103,spindle,recovery | clean subsampled to same n,44,0.16
+S103,spindle,recovery | control,61,0.03802631471024245
+S103,spindle,snoring | condition,56,0.017700282583210283
+S103,spindle,snoring | clean subsampled to same n,56,0.1
+S103,spindle,snoring | control,97,0.7955500772748382

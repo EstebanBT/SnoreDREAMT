@@ -21,6 +21,7 @@ rule all:
         f"{DER}/step3/group_stats.csv",
         f"{DER}/step3/conditions_summary.csv",
         f"{DER}/step3/event_locked_rates.parquet",
+        f"{DER}/step3b/glmm.csv",
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
 
 
@@ -142,6 +143,44 @@ rule step3_group:
         paired = f"{config['paths']['figures']}/step3_paired.png",
         grid = f"{config['paths']['figures']}/step3_sensitivity_grid.png",
     script: "scripts/rules/step3_group.py"
+
+
+rule coupling_step3b:
+    """Step 3b data: event sets (large / multichannel consensus), best phase, breath predictors, phase-bin counts."""
+    input:
+        labels = f"{DER}/step3/{{sid}}/conditions_primary.npz",
+        breaths = f"{DER}/step3/{{sid}}/snore_breaths_primary.parquet",
+        phase = f"{DER}/resp/{{sid}}_phase.npz",
+        cache = f"{DER}/cache/{{sid}}.npz",
+        events = expand(f"{DER}/events/{{{{sid}}}}/{{kind}}_{{ch}}.parquet", kind=["sos", "spindles"],
+                        ch=config["event_channels"]),
+    output:
+        events = f"{DER}/step3b/{{sid}}/events.parquet",
+        bins = f"{DER}/step3b/{{sid}}/phase_bins.parquet",
+        info = f"{DER}/step3b/{{sid}}/info.json",
+    script: "scripts/rules/coupling_step3b.py"
+
+
+rule step3b_group:
+    """Step 3b: clean-signal selection of event set / phase source, pooled + single contrasts, dose-response."""
+    input:
+        events = expand(f"{DER}/step3b/{{sid}}/events.parquet", sid=SUBJECTS),
+        bins = expand(f"{DER}/step3b/{{sid}}/phase_bins.parquet", sid=SUBJECTS),
+        resp_summary = f"{DER}/step2/resp_summary.csv",
+    output:
+        clean_signal = f"{DER}/step3b/clean_signal.csv",
+        contrasts = f"{DER}/step3b/contrasts.csv",
+        dose = f"{DER}/step3b/dose_response.csv",
+        bins_export = f"{DER}/step3b/phase_bins_N2.csv",
+        fig = f"{config['paths']['figures']}/step3b_power.png",
+    script: "scripts/rules/step3b_group.py"
+
+
+rule step3b_glmm:
+    """Idea 4: hierarchical Poisson GLMM of event counts per phase bin (lme4), relative change in modulation."""
+    input: f"{DER}/step3b/phase_bins_N2.csv"
+    output: f"{DER}/step3b/glmm.csv"
+    shell: "Rscript scripts/rules/step3b_glmm.R {input} {output}"
 
 
 rule conditions_summary:

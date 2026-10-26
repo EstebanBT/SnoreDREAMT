@@ -14,7 +14,8 @@ channel_alias:
   O2: O2-M1
   T3CZ: T3 - CZ
   CZT4: CZ - T4
-event_channels: [F4, C4]         # channels on which SOs / spindles / complexes are detected
+  FP1O2: Fp1-O2
+event_channels: [F4, C4, O2, T3CZ, CZT4]   # F4/C4 primary; others for multichannel consensus (Step 3b)         # channels on which SOs / spindles / complexes are detected
 check_stages: [0, 1, 5]          # stages where detection is re-run with N2 thresholds (specificity check)
 exclude_subjects: [S097, S077]   # S097: EEG + resp flat; S077: zeros / 1e18 values
 
@@ -144,3 +145,14 @@ step3:
   min_condition_s: 60          # at least 1 min of a condition in the stage set
   min_ref_events: 20           # clean reference events needed for mu_ref
   min_events: 10               # per side (condition / control) for a subject to enter a group test
+
+# Step 3b — power improvements
+step3b:
+  consensus:
+    SO: {primary: F4, others: [C4, O2], max_lag_s: 0.3}            # mastoid-referenced channels share SO polarity
+    spindle: {primary: C4, others: [F4, O2, T3CZ, CZT4]}           # any temporal overlap
+  phase_variants: [BEST_hilbertgated, ABDOMEN_hilbertgated, FLOW_hilbertgated]   # primary first
+  pooled_event_codes: [2, 3, 4, 5]     # hypopnea, obstructive, central, mixed
+  stage_sets: {N2: [2], N2N3: [2, 3]}
+  n_bins: 12
+  min_events: 5
