@@ -1,0 +1,14 @@
+{
+ "sid": "S047",
+ "sleep_h": 5.125,
+ "odi3": 53.46341463414634,
+ "t90": 53.349593495934954,
+ "hypoxic_burden": 621.1211246667884,
+ "event_index": 74.92682926829268,
+ "mean_event_duration_s": 21.8984375,
+ "arousal_index_detected": 24.195121951219512,
+ "snore_breath_frac": 0.05749636098981077,
+ "snore_time_frac_n2": 0.013451638689048761,
+ "mean_sao2": 89.88037959055087,
+ "sao2_valid_frac": 1.0
+}

@@ -22,6 +22,7 @@ rule all:
         f"{DER}/step3/conditions_summary.csv",
         f"{DER}/step3/event_locked_rates.parquet",
         expand(f"{DER}/step3b/{{ss}}/glmm.csv", ss=["N2", "N2N3"]),
+        f"{DER}/step4/glmm_ahi.csv",
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
 
 
@@ -174,6 +175,7 @@ rule step3b_group:
         dose = f"{DER}/step3b/{{ss}}/dose_response.csv",
         snoring_diag = f"{DER}/step3b/{{ss}}/snoring_diagnostics.csv",
         contrasts_occ = f"{DER}/step3b/{{ss}}/contrasts_occupancy.csv",
+        subjects = f"{DER}/step3b/{{ss}}/subject_coupling.csv",
         bins_export = f"{DER}/step3b/{{ss}}/phase_bins.csv",
         fig = f"{config['paths']['figures']}/step3b_power_{{ss}}.png",
     wildcard_constraints: ss = "N2|N2N3"
@@ -186,6 +188,39 @@ rule step3b_glmm:
     output: f"{DER}/step3b/{{ss}}/glmm.csv"
     wildcard_constraints: ss = "N2|N2N3"
     shell: "Rscript scripts/rules/step3b_glmm.R {input} {output}"
+
+
+# ---------------------------------------------------------------- Step 4: severity
+rule severity:
+    """Severity markers from the data: ODI3, T90, hypoxic burden, event index/duration, arousal and snore indices."""
+    input:
+        cache = f"{DER}/cache/{{sid}}.npz",
+        arousals = f"{DER}/arousals/{{sid}}_primary.parquet",
+        cond_info = f"{DER}/step3/{{sid}}/conditions_primary.json",
+        labels = f"{DER}/step3/{{sid}}/conditions_primary.npz",
+    output: f"{DER}/step4/{{sid}}_severity.json"
+    script: "scripts/rules/severity.py"
+
+
+rule step4_group:
+    """Step 4: severity (AHI + data-derived markers) vs clean coupling; within-subject change vs AHI."""
+    input:
+        severity = expand(f"{DER}/step4/{{sid}}_severity.json", sid=SUBJECTS),
+        subjects = f"{DER}/step3b/N2/subject_coupling.csv",
+        bins = f"{DER}/step3b/N2/phase_bins.csv",
+    output:
+        table = f"{DER}/step4/severity_vs_coupling.csv",
+        change = f"{DER}/step4/change_vs_ahi.csv",
+        glmm_data = f"{DER}/step4/glmm_data.csv",
+        fig = f"{config['paths']['figures']}/step4_severity.png",
+    script: "scripts/rules/step4_group.py"
+
+
+rule step4_glmm:
+    """Step 4 hierarchical: AHI as moderator of the respiratory phase modulation (lme4)."""
+    input: f"{DER}/step4/glmm_data.csv"
+    output: f"{DER}/step4/glmm_ahi.csv"
+    shell: "Rscript scripts/rules/step4_glmm.R {input} {output}"
 
 
 rule conditions_summary:

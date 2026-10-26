@@ -208,7 +208,7 @@ Bn = Bn[Bn.stage_set == SS]
 # ------------------------------------------------------------------ B2. occupancy-normalised contrasts (valid with exclusion)
 # subject coupling = projection on mu_LOSO of the rate-weighted resultant: M = sum_b r_b e^{i phi_b} / sum_b r_b,
 # r_b = count_b / occupancy_b (time in bin outside excluded windows); immune to non-uniform phase occupancy.
-rowsB2 = []
+rowsB2, subj_rows = [], []
 Bx = Bn[Bn.condition.isin(['clean'] + CONDS)].copy()
 Bx['rate'] = Bx['count'] / Bx.occupancy_min.where(Bx.occupancy_min > 0)
 for (s, v, excl), g in Bx.groupby(['event_set', 'variant', 'exclusion']):
@@ -220,6 +220,8 @@ for (s, v, excl), g in Bx.groupby(['event_set', 'variant', 'exclusion']):
                              'pcw': np.real(np.nansum(x.rate * np.exp(1j * x.bin_center)) / np.nansum(x.rate)
                                             * np.exp(-1j * mu[(s, v)][x.sid.iloc[0]])) if np.nansum(x.rate) > 0 else np.nan}))
     agg = agg.reset_index()
+    subj_rows.append(agg.assign(event_set=s, variant=v, exclusion=excl, family=family(s),
+                                primary=(s, v) in PRIMARIES.values()))
     clean = agg[(agg.condition == 'clean') & (agg.n >= MIN_CLEAN[family(s)])].set_index('sid')
     for cond in CONDS:
         cc = agg[(agg.condition == cond) & (agg.n >= P['min_events'])].set_index('sid')
@@ -235,6 +237,7 @@ for (s, v, excl), g in Bx.groupby(['event_set', 'variant', 'exclusion']):
                            p_loss=stats.wilcoxon(dlt, alternative='less').pvalue,
                            p_two_sided=stats.wilcoxon(dlt).pvalue, n_events_condition=int(cc.loc[sids, 'n'].sum())))
 B2 = pd.DataFrame(rowsB2)
+pd.concat(subj_rows).to_csv(out.subjects, index=False)   # per subject x condition occupancy-normalised coupling
 B2['primary'] = [(s_, v_) in PRIMARIES.values() for s_, v_ in zip(B2.event_set, B2.variant)]
 B2.to_csv(out.contrasts_occ, index=False)
 for fam, pr in PRIMARIES.items():
