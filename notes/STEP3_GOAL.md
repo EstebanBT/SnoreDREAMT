@@ -50,3 +50,6 @@ Approved plan: `~/.claude/plans/fuzzy-shimmying-breeze.md` (Step 3 section). Dec
 - 2026-10-26: Step 3c — snore-evoked SOs/spindles excluded (phase-matched, occupancy-normalised): snoring now
   shows ~-70 % coupling for SOs and spindles (one-sided p 0.03-0.05); apneas/hypopneas no loss. Complexes rebuilt:
   still weak (V p = 0.011, Rayleigh p = 0.056), limited by event count.
+- 2026-10-26: Step 3d — complexes pooled over F4/C4/O2 SOs + 5-channel spindles, N2+N3: clean coupling now
+  significant (R 0.28, Rayleigh p = 0.004); ~70 % of complexes are chance pairings; snoring loss (evoked excluded)
+  in SOs, spindles and complexes (one-sided p 0.02-0.03).

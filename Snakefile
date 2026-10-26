@@ -21,7 +21,7 @@ rule all:
         f"{DER}/step3/group_stats.csv",
         f"{DER}/step3/conditions_summary.csv",
         f"{DER}/step3/event_locked_rates.parquet",
-        f"{DER}/step3b/glmm.csv",
+        expand(f"{DER}/step3b/{{ss}}/glmm.csv", ss=["N2", "N2N3"]),
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
 
 
@@ -163,26 +163,28 @@ rule coupling_step3b:
 
 
 rule step3b_group:
-    """Step 3b: clean-signal selection of event set / phase source, pooled + single contrasts, dose-response."""
+    """Step 3b/3c: clean-signal selection, contrasts (event-level + occupancy-normalised), dose-response; per stage set."""
     input:
         events = expand(f"{DER}/step3b/{{sid}}/events.parquet", sid=SUBJECTS),
         bins = expand(f"{DER}/step3b/{{sid}}/phase_bins.parquet", sid=SUBJECTS),
         resp_summary = f"{DER}/step2/resp_summary.csv",
     output:
-        clean_signal = f"{DER}/step3b/clean_signal.csv",
-        contrasts = f"{DER}/step3b/contrasts.csv",
-        dose = f"{DER}/step3b/dose_response.csv",
-        snoring_diag = f"{DER}/step3b/snoring_diagnostics.csv",
-        contrasts_occ = f"{DER}/step3b/contrasts_occupancy.csv",
-        bins_export = f"{DER}/step3b/phase_bins_N2.csv",
-        fig = f"{config['paths']['figures']}/step3b_power.png",
+        clean_signal = f"{DER}/step3b/{{ss}}/clean_signal.csv",
+        contrasts = f"{DER}/step3b/{{ss}}/contrasts.csv",
+        dose = f"{DER}/step3b/{{ss}}/dose_response.csv",
+        snoring_diag = f"{DER}/step3b/{{ss}}/snoring_diagnostics.csv",
+        contrasts_occ = f"{DER}/step3b/{{ss}}/contrasts_occupancy.csv",
+        bins_export = f"{DER}/step3b/{{ss}}/phase_bins.csv",
+        fig = f"{config['paths']['figures']}/step3b_power_{{ss}}.png",
+    wildcard_constraints: ss = "N2|N2N3"
     script: "scripts/rules/step3b_group.py"
 
 
 rule step3b_glmm:
     """Idea 4: hierarchical Poisson GLMM of event counts per phase bin (lme4), relative change in modulation."""
-    input: f"{DER}/step3b/phase_bins_N2.csv"
-    output: f"{DER}/step3b/glmm.csv"
+    input: f"{DER}/step3b/{{ss}}/phase_bins.csv"
+    output: f"{DER}/step3b/{{ss}}/glmm.csv"
+    wildcard_constraints: ss = "N2|N2N3"
     shell: "Rscript scripts/rules/step3b_glmm.R {input} {output}"
 
 

@@ -67,7 +67,27 @@ def has_spindle_after(t):
     lag[ok] = spk[i[ok]] - t[ok]
     return lag <= P['complex_max_lag_s'] * fs
 cx = has_spindle_after(so.trough.to_numpy())
+
+# pooled complexes: SO troughs merged across mastoid channels (cluster within merge_s; time = earliest trough,
+# amplitude = largest |trough|), followed by a spindle envelope peak on any channel within (0, complex_max_lag_s]
+PC = P['pooled_complex']
+so_all = pd.concat([load_events('sos', ch)[['trough', 'trough_amp']] for ch in PC['so_channels']]).sort_values('trough')
+tt, aa = so_all.trough.to_numpy().astype(np.int64), np.abs(so_all.trough_amp.to_numpy())
+new = np.concatenate([[True], np.diff(tt) > PC['merge_s'] * fs]) if len(tt) else np.zeros(0, bool)
+cid = np.cumsum(new) - 1
+so_pool_t = tt[new]
+so_pool_a = pd.Series(aa).groupby(cid).max().to_numpy() if len(tt) else np.zeros(0)
+spk_all = np.sort(np.concatenate([load_events('spindles', ch).env_peak.to_numpy().astype(np.int64)
+                                  for ch in PC['spindle_channels']]))
+i = np.searchsorted(spk_all, so_pool_t, side='right')
+okp = i < len(spk_all)
+lagp = np.full(len(so_pool_t), np.inf)
+lagp[okp] = spk_all[i[okp]] - so_pool_t[okp]
+cxp = lagp <= P['complex_max_lag_s'] * fs
+bigp = so_pool_a >= np.median(so_pool_a) if len(so_pool_a) else np.zeros(0, bool)
 sets = {
+    'complex_pooled': (so_pool_t[cxp], so_pool_a[cxp]),
+    'complex_pooled_large': (so_pool_t[cxp & bigp], so_pool_a[cxp & bigp]),
     'complex': (so.trough.to_numpy()[cx], amp[cx]),
     'complex_large': (so.trough.to_numpy()[cx & large], amp[cx & large]),
     'complex_cons': (so.trough.to_numpy()[cx & so_cons], amp[cx & so_cons]),

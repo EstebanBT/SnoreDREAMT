@@ -191,3 +191,38 @@ R = 0.43 (p < 1e-6), consensus spindles R = 0.34 (p = 2e-4). Condition contrasts
 subjects and are uninformative (snoring −0.04 to −0.06, n.s.). **The complex problem is mainly event count:**
 coupled SO–spindle complexes are rare in this cohort's N2-dominated sleep, so subject preferred phases are too
 noisy; the group V-test is significant but the Rayleigh is not.
+
+---
+
+# Step 3d — complexes pooled over channels and N2+N3 (2026-10-26)
+**Definition:** SO troughs from F4, C4, O2 (mastoid-referenced) merged within ±0.3 s (earliest trough, largest
+amplitude), followed within (0, 1.5] s by a spindle envelope peak on any of F4, C4, O2, T3-CZ, CZ-T4
+(`complex_pooled`; `complex_pooled_large` = pooled SO ≥ subject median amplitude). Group analysis now runs per stage
+set (`derivatives/step3b/{N2,N2N3}/`, figures `step3b_power_{N2,N2N3}.png`).
+
+**Counts:** ~10× more complexes (S094: 479 vs 49; median ~145 per subject in clean N2 vs ~45).
+
+**Clean coupling (group phase tests on subject mean phases):**
+
+| | N2 | N2+N3 |
+|---|---|---|
+| complex_pooled_large × ABDOMEN (primary) | N = 70, mean −16°, R = 0.28, Rayleigh p = 0.004, V(0°) p = 0.0008 | R = 0.27, p = 0.007, V p = 0.001 |
+| complex_pooled × ABDOMEN | N = 74, R = 0.30, p = 0.001, V p = 0.0009 | R = 0.29, p = 0.002 |
+| complex_pooled_large × BEST | N = 86, mean +47°, R = 0.27, p = 0.002 | R = 0.25, p = 0.004 |
+| old single-channel complex × BEST | N = 66, R = 0.21, p = 0.056 | R = 0.20, p = 0.077 |
+
+Complexes therefore **do** show significant respiration coupling once pooled. Adding N3 changes little (N3 is scarce).
+
+**But most complexes are coincidental:** shifting spindle times randomly (±5–15 s) still yields 16 % of pooled SOs
+followed by a spindle within 1.5 s vs 22 % observed (single-channel C4: 6 % vs 7 %), i.e. only ~25–30 % of
+"complexes" exceed chance pairing. Their preferred phase equals that of large SOs (ABDOMEN −16° vs −21°), so complex
+coupling to breathing largely inherits the SO coupling; genuine SO–spindle nesting is weak in this cohort.
+
+**Conditions (pooled large complexes, ~25–32 subjects):** no change with all events. With snore-evoked events
+excluded, **snoring −147 % [−539, +62] (N2, one-sided p = 0.032) / −144 % [−361, 0] (N2+N3, one-sided p = 0.023,
+two-sided p = 0.047)** — same direction as SOs and spindles but very imprecise. Respiratory events, hypopnea,
+recovery: no change. N2+N3 for spindles during snoring (evoked excluded): −83 % [−167, +3], one-sided p = 0.027.
+
+**Summary across event types (snore-evoked excluded, GLMM, N2+N3):** snoring reduces respiration coupling of large
+SOs (−65 %, p_loss = 0.033), consensus spindles (−83 %, p_loss = 0.027) and pooled complexes (−144 %, p_loss = 0.023);
+apneas/hypopneas do not. Consistent direction, trend-to-nominal significance, wide intervals.

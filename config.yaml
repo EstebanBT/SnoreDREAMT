@@ -156,7 +156,11 @@ step3b:
   stage_sets: {N2: [2], N2N3: [2, 3]}
   n_bins: 12
   min_events: 5
-  complex_max_lag_s: 1.5          # consensus C4 spindle envelope peak within (0, 1.5] s after the F4 SO trough
+  complex_max_lag_s: 1.5
+  pooled_complex:                 # complexes pooled over channels (2026-10-26)
+    so_channels: [F4, C4, O2]     # mastoid-referenced: consistent SO polarity; troughs merged within merge_s
+    spindle_channels: [F4, C4, O2, T3CZ, CZT4]
+    merge_s: 0.3          # consensus C4 spindle envelope peak within (0, 1.5] s after the F4 SO trough
   evoked_windows_s:               # phase-matched exclusion after snore-burst peaks (and quiet pseudo-bursts),
     SO: [0.5, 1.5]                #   windows from scripts/snore_evoked_events.py (excess p < .05)
     complex: [0.5, 1.5]

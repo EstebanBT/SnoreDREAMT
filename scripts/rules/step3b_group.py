@@ -21,14 +21,16 @@ from scipy import stats
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt  # noqa: E402
 
-from snoredreamt.coupling import circ_mean  # noqa: E402
+from snoredreamt.coupling import circ_mean, rayleigh, vtest  # noqa: E402
 
 cfg = snakemake.config  # noqa: F821
 inp, out = snakemake.input, snakemake.output  # noqa: F821
 codes = cfg['condition_codes']
 P = cfg['step3b']
 SETS = ['SO', 'SO_large', 'SO_cons', 'SO_large_cons', 'spindle', 'spindle_cons', 'complex', 'complex_large',
-        'complex_cons']
+        'complex_cons', 'complex_pooled', 'complex_pooled_large']
+SS = snakemake.wildcards.ss  # noqa: F821  stage set: N2 or N2N3
+STAGES = P['stage_sets'][SS]
 VARS = P['phase_variants']
 EXCL = ['none', 'evoked']
 CONDS = ['resp_event', 'snoring', 'hypopnea', 'recovery', 'obstructive', 'central', 'mixed']
@@ -45,7 +47,7 @@ amb = {'FLOW': set(Q.index[Q.flow_ambiguous]), 'ABDOMEN': set(Q.index[Q.abdomen_
 amb['BEST'] = amb['FLOW']
 
 E = pd.concat(pd.read_parquet(f) for f in inp.events)
-E = E[E.stage == 2]                                    # N2 primary
+E = E[E.stage.isin(STAGES)]
 inv = {v: k for k, v in codes.items()}
 E['condition'] = E.label.map(inv)
 E['pooled'] = np.where(E.label.isin(P['pooled_event_codes']), 'resp_event', None)
@@ -68,7 +70,8 @@ for s in SETS:
         sm = y.groupby(c.sid).mean()
         rowsA.append(dict(event_set=s, family=family(s), variant=v, n_subjects=len(sm),
                           median_events=cnt[m.index].median(), group_phase_deg=np.degrees(np.arctan2(sn, cs)),
-                          group_R=np.hypot(cs, sn) / len(m), mean_y=sm.mean(), sem_y=sm.sem(),
+                          group_R=np.hypot(cs, sn) / len(m), rayleigh_p=rayleigh(m.to_numpy())[0],
+                          vtest0_p=vtest(m.to_numpy(), 0.0)[0], mean_y=sm.mean(), sem_y=sm.sem(),
                           z=sm.mean() / sm.sem(), p_one_sided=stats.wilcoxon(sm, alternative='greater').pvalue,
                           event_level_mean=y.mean()))
 A = pd.DataFrame(rowsA).sort_values('z', ascending=False)
@@ -200,7 +203,7 @@ print('\nSnoring vs clean (vectors relative to group phase):\n', D.round(4).to_s
 
 # ------------------------------------------------------------------ export phase-bin data for the GLMM (idea 4)
 Bn = pd.concat(pd.read_parquet(f) for f in inp.bins)
-Bn = Bn[Bn.stage_set == 'N2']
+Bn = Bn[Bn.stage_set == SS]
 
 # ------------------------------------------------------------------ B2. occupancy-normalised contrasts (valid with exclusion)
 # subject coupling = projection on mu_LOSO of the rate-weighted resultant: M = sum_b r_b e^{i phi_b} / sum_b r_b,
