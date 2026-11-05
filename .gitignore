@@ -40,3 +40,10 @@ validation/matlab_parity/*.mat
 derivatives/events/
 derivatives/resp/
 derivatives/arousals/*.py
+
+# pixi environment and Quarto build files
+.pixi/
+reports/*_files/
+reports/.quarto/
+reports/.claude/
+reports/.mcp.json

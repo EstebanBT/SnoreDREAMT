@@ -1,0 +1,558 @@
+---
+title: "Respiration coupling of slow oscillations and spindles during apnea, hypopnea and snoring"
+subtitle: "An agentic research workflow on the DREAMT sleep-clinic cohort (Steps 0–6)"
+author: "Esteban Bullón Tarrasó"
+date: 2026-11-05
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    number-sections: true
+    embed-resources: true
+    fig-align: center
+    fig-width: 9
+    theme: cosmo
+bibliography: references.bib
+---
+
+# Summary {.unnumbered}
+
+Slow oscillations (SOs), sleep spindles and SO–spindle complexes lock to the breathing cycle in healthy sleepers
+[@Schreiner2023; @BullonTarraso2026]. In this project I asked whether this coupling survives the disordered breathing
+of a sleep-clinic cohort (DREAMT, 100 overnight PSGs; @Wang2024), whether it changes during apneas, hypopneas and
+snoring, and whether it scales with disease severity.
+
+The analysis was carried out with a coding agent (Claude Code). I set the questions, made the methodological
+decisions and checked the outputs. The agent wrote the pipeline, ran the analyses and reported back after each step.
+Section [-@sec-workflow] describes how to rerun everything. Section [-@sec-agent] describes what was delegated, what I
+decided, how outputs were verified, and the mistakes the agent made along the way.
+
+::: {.callout-note title="Main findings"}
+1. **Replication.** SOs and spindles are coupled to breathing during undisturbed (clean) NREM sleep at the group
+   level (FLOW Hilbert phase: SO R = 0.31, spindle R = 0.33, Rayleigh p ≤ 1e-4). Complexes are coupled only once SOs
+   and spindles are pooled across channels, and most complexes are chance SO–spindle pairings. Arousals and REM
+   pseudo-SOs are not coupled (negative controls).
+2. **Apneas and hypopneas do not abolish coupling.** A complete loss is excluded (P ≤ 1 %), and a loss of more than
+   ~50 % is unlikely (P ≈ 2–5 %).
+3. **Snoring.** The apparent *increase* of SO coupling during snoring is produced by snore-evoked K-complexes and
+   spindles timed by the inspiratory snore burst. Once those events are removed, coupling of SOs, spindles and
+   complexes drops by roughly two thirds (one-sided p ≈ 0.02–0.05). This is trend-level, and the exclusion windows
+   were chosen from the same data.
+4. **Preferred phase.** Pooled over all events, spindles shift within the breathing cycle without losing modulation:
+   about +45° during hypopneas and respiratory events, and about −40° to −70° during snoring. Much of the spindle
+   "loss" during snoring is therefore a phase shift. No consistent shift is detectable within individual participants,
+   who contribute too few events.
+5. **Severity.** AHI and data-derived severity markers are unrelated to either coupling strength or preferred phase in
+   clean breathing (all FDR ≥ 0.6). Coupling behaves as a **state** property of ongoing breathing, not a trait that
+   scales with disease severity.
+:::
+
+# Research question and approach
+
+## Background
+
+@Schreiner2023 showed that SOs, spindles and their complexes are modulated by the respiratory cycle in healthy
+sleepers, and @BullonTarraso2026 showed that breathing gates memory reactivation during NREM sleep. Sleep-disordered
+breathing perturbs the breathing rhythm naturally: airflow stops (apnea), drops (hypopnea) or becomes turbulent
+(snoring) while the brain stays asleep.
+
+## Questions and expected outputs
+
+- **(i) Replication:** does the coupling replicate in a clinical cohort during undisturbed breathing? Output: group
+  Rayleigh/V-tests of subject preferred phases, with negative controls.
+- **(ii) Breathing conditions (main question):** does coupling change during obstructive, central and mixed apneas,
+  hypopneas and snoring? Output: within-subject contrasts of coupling strength and preferred phase, condition vs
+  clean breathing.
+- **(iii) Severity:** does coupling relate to the apnea–hypopnea index (AHI) and other severity markers? Output:
+  per-subject regressions and correlations with FDR control.
+
+## Data
+
+DREAMT [@Wang2024]: 100 sleep-clinic patients, overnight PSG at 100 Hz with six EEG derivations, EOG, chin and leg
+EMG, FLOW, PTAF, THORAX and ABDOMEN belts, ECG, SNORE and SaO2. Respiratory events and sleep stages are expert scored;
+arousals and snoring are **not** labelled.
+
+| Data property | Handling |
+|---|---|
+| EEG stored in volts | rescaled to µV |
+| S097 (EEG and respiration flat), S077 (zeros / 1e18 values) | excluded → 98 subjects |
+| FLOW near zero for half the night (S016, S102); flat FLOW epochs in ~10 subjects | per-epoch validity masks |
+| PTAF saturates at ±3.2 mV | used only where not clipped |
+| Respiratory polarity and FLOW–belt lag differ between subjects | per-subject polarity calibration |
+| US recording (60 Hz mains) at 100 Hz | checked for a 40 Hz alias before using > 16 Hz power |
+
+: Data integrity and how it was handled {.striped}
+
+**Feasibility** (from all files, N2/N3): clean NREM ≥ 60 min in 90 subjects; hypopneas ≥ 20 events in 47; obstructive
+apneas ≥ 20 events in 13; central apnea ≥ 10 min in 6; mixed apnea (`Multiple_Events`) ≥ 10 events in 3. N3 is scarce
+(median 0.5 min; none in 49 nights), so all analyses are effectively N2. AHI is unrelated to age (ρ = 0.01) and weakly
+related to BMI (ρ = 0.21) and to the clinical arousal index (ρ = 0.44).
+
+## Approach
+
+The work ran in steps; each step ended with a written report and figures that I reviewed before the next step.
+
+| Step | Question |
+|---|---|
+| 0 | data cache, quality masks, literature notes |
+| 1 | SO, spindle and complex detection (port of my MATLAB `+slythm` detectors) |
+| 2 | respiratory phase; replication of the coupling in clean NREM; arousal detection |
+| 3 (3b–3d) | coupling **strength** per breathing condition |
+| 4 | coupling strength vs severity |
+| 5 | coupling **preferred phase** per breathing condition |
+| 6 | phase effects vs severity |
+
+: Analysis steps {.striped}
+
+Key decisions:
+
+- All breathing conditions are analysed as group tests, and Ns are reported honestly.
+- The phase for condition contrasts is the abdominal belt (ABDOMEN), using a breath-gated Hilbert phase of a narrow
+  band-pass around the subject's respiratory peak (±0.05 Hz). The Step 2 replication is shown with both FLOW and
+  ABDOMEN.
+- Arousals are detected with the rule-based method of @FernandezVarela2017, validated in @AlvarezEstevez2019.
+
+# Results and interpretation
+
+## Step 0 — Data quality and literature
+
+- **Cache.** Each subject is loaded once into float32 µV arrays with the stage vector (`P` and `Missing` excluded) and
+  event masks.
+- **Quality masks** per channel and 30 s epoch: flat, saturated, or amplitude below 10 % of the subject's typical
+  level. For EEG, additionally robust-z outliers of amplitude, < 0.5 Hz power (sweat) and 20–40 Hz power, padded ±1 s.
+  Every analysis uses a sample only if all channels it depends on are valid.
+- **ECG R-peaks** were detected for artifact checks and for the respiratory polarity calibration.
+- **Literature** was processed into structured notes with a reusable agent Skill (Section [-@sec-agent-ready]).
+
+## Step 1 — SO, spindle and complex detection
+
+The MATLAB `+slythm` detectors were ported to Python (`snoredreamt/detectors.py`).
+
+- **SOs:** F4-M1, Butterworth 0.3–1.5 Hz, negative-to-positive cycles of 0.8–2 s. Both trough and peak-to-peak must
+  exceed 2.5 × the median of in-stage, artifact-free candidates.
+- **Spindles:** C4-M1, 12–16 Hz, 0.2 s moving RMS, 0.5–3 s above 2.0 × the median envelope, plus a spectral-peak
+  criterion (sigma power above 8–11 Hz and 18–25 Hz power). The original slythm threshold (1.5 ×) is a sensitivity
+  analysis.
+- **Thresholds** are computed once per subject over all valid N2/N3, never per breathing condition.
+- **Complexes:** a spindle within (0, 1.5] s after the SO trough.
+
+**MATLAB parity** (S003, 2 h segment, F4-M1 and C4-M1): SOs 285/285 and 255/255, spindles 902/902 and 1165/1165, all
+matched within ±2 samples, with identical thresholds.
+
+| Event (channel) | N2 | N3 | REM | Wake |
+|---|---|---|---|---|
+| SOs (F4) | 3.11 | 0.67 | 0.29 | 1.04 |
+| Spindles (C4) | 3.36 | 2.20 | 0.34 | 1.26 |
+| Complexes (F4) | 0.20 | 0.02 | – | – |
+
+: Median event density (events/min) per stage. REM and wake were detected with N2 thresholds as a specificity check.
+  N3 SO densities are low because N3 is scarce and uses its own threshold where ≥ 10 min exist. {.striped}
+
+![Detector densities by stage and channel.](../figures/step1_detector_densities.png){#fig-step1}
+
+## Step 2 — Respiratory phase and replication
+
+### Respiratory phase
+
+- **Breaths** were detected on FLOW, ABDOMEN and THORAX, with prominence relative to the subject's breath amplitude.
+- **Inspiratory polarity** was calibrated per subject from anchors that must agree: inspiration shorter than
+  expiration, heart-rate rise during inspiration, and SNORE bursts. Unresolved polarity: 19 of 98 subjects for
+  ABDOMEN, 3 for FLOW. Group phase tests use polarity-unambiguous subjects; within-subject contrasts are polarity-free.
+- **Phase methods:**
+  - **Hilbert:** subject peak frequency ±0.05 Hz, two-pass Butterworth, `angle(hilbert)`. Its occupancy is uniform
+    (R ≈ 0.002).
+  - **Gated Hilbert:** the same phase, set to NaN where no breath is detected in the raw signal. This removes filter
+    ringing through apneas.
+  - **Cycle-based:** linear interpolation between detected peaks and troughs. It over-represents expiration
+    (occupancy R ≈ 0.09–0.16) and therefore needs equalisation.
+- **Clean NREM** = N2/N3, valid channels, ≥ 5 s before and ≥ 15 s after any respiratory event, not snoring, and not
+  within ±5 s of a detected arousal.
+
+![Example of the respiratory phase signals.](../figures/step2_phase_example.png){#fig-phase}
+
+### Arousal detection
+
+The Python port of the Fernández-Varela / Alvarez-Estevez detector (C4-M1 and chin EMG) was validated against the
+clinical arousal index of 98 subjects: Pearson r = 0.74, Spearman ρ = 0.65 (p < 1e-12). It is conservative, detecting
+about one third of the clinical index (slope 0.33; mean difference −24 events/h). A liberal variant is a sensitivity
+analysis.
+
+![Detected vs clinical arousal index.](../figures/arousal_validation_all.png){#fig-arousal-val width=70%}
+
+### Coupling in clean NREM
+
+Event phase is taken at the SO trough, spindle onset and complex SO trough. Group tests use the subjects' preferred
+phases: Rayleigh for non-uniformity, and a V-test against 0°, where 0° is the inspiration peak.
+
+| Event | Phase | N | Group mean | R | Rayleigh p | V-test p |
+|---|---|---|---|---|---|---|
+| SOs | FLOW Hilbert | 92 | +10° | 0.31 | 1.1e-4 | 1.6e-5 |
+| SOs | FLOW gated | 92 | +17° | 0.31 | 9.8e-5 | 2.3e-5 |
+| SOs | ABDOMEN gated | 76 | −61° | 0.25 | 0.0095 | 0.072 |
+| Spindles | FLOW Hilbert | 91 | +46° | 0.33 | 3.3e-5 | 8.6e-4 |
+| Spindles | ABDOMEN gated | 75 | 0° | 0.33 | 2.9e-4 | 3.3e-5 |
+| Complexes | FLOW Hilbert | 53 | +4° | 0.19 | 0.15 | 0.025 |
+| Complexes | ABDOMEN gated | 46 | −64° | 0.18 | 0.22 | 0.22 |
+| Arousals | FLOW Hilbert | 56 | – | 0.09 | 0.62 | 0.66 |
+| REM pseudo-SOs (control) | FLOW Hilbert | 20 | – | 0.04 | 0.96 | 0.43 |
+
+: Step 2 group coupling in clean NREM (polarity-unambiguous subjects). {.striped}
+
+About 27–31 % of subjects show individually significant SO or spindle coupling. The FLOW–ABDOMEN difference in
+preferred phase reflects the lag between airflow and belt.
+
+::: {layout-ncol=2}
+![Subject preferred phases.](../figures/step2_polar.png){#fig-polar}
+
+![Event rate per phase bin, normalised by phase occupancy.](../figures/step2_phase_rates.png){#fig-rates}
+:::
+
+![PETH of events around inspiration peaks.](../figures/step2_peth.png){#fig-peth}
+
+## Step 3 — Coupling strength per breathing condition
+
+### Conditions and controls
+
+- **Post-event window, set from the data.** SO rate is 1.6× and arousal rate 13× the clean rate within 0–4 s after an
+  event ends, and both return to baseline by ~8–10 s, so a 15 s "recovery" window was kept. At event onset, SO and
+  spindle rates drop to about 0.5×.
+- **Snoring per breath.** SNORE 20–45 Hz RMS ≥ the quiet reference + 10 dB, phasic (louder half-cycle ≥ 2× the
+  quieter one), in ≥ 3 consecutive breaths. In clear snorers, snoring breaths carry 1.6–4× more PTAF flutter.
+- **Label priority:** obstructive > central > mixed > hypopnea > recovery (15 s) > pre-event (5 s, excluded) >
+  arousal (±5 s, excluded) > snoring > clean.
+- **Feasibility (≥ 5 min in N2):** clean 96, snoring 52, hypopnea 58, recovery 52, obstructive 12, central 7, mixed 2
+  subjects. Apneas therefore stay descriptive.
+- **Matched controls:** clean samples from the same subject and stage within ±10 min, of equal duration.
+- **Metric:** projected coupling, i.e. the mean cos(θ − μ), on the subject's own clean phase and on the
+  leave-one-subject-out group phase. Subject preferred phases proved unreliable: split-half agreement within 45° was
+  30 % for SOs against 25 % chance.
+
+::: {layout-ncol=2}
+![Event-locked SO, spindle and arousal rates around respiratory events.](../figures/step3_event_locked_rates.png){#fig-locked}
+
+![Snoring detection validation.](../figures/step3_snoring_validation.png){#fig-snore}
+:::
+
+### Primary result: inconclusive
+
+No breathing condition changed coupling after FDR correction, but the design could not exclude a loss.
+Within-subject coupling is tiny (about 0.01–0.02 per event), whereas the smallest detectable change with ~40 subjects
+is about 0.065. One trend went *against* the hypothesis: SO coupling was higher during snoring (Δ ≈ +0.04,
+p = 0.02–0.07, FDR 0.23–0.43).
+
+![Step 3 forest plot (N2, ABDOMEN gated, matched controls).](../figures/step3_forest.png){#fig-forest}
+
+### Step 3b — more statistical power
+
+- **More signal per event:** large SOs (≥ the subject's median amplitude); multichannel consensus events; and a
+  combined `BEST` phase (FLOW gated where available, otherwise ABDOMEN gated rotated by the subject's FLOW–ABDOMEN
+  offset). The primary sets were chosen on clean data only: **large SOs × BEST** (clean coupling 0.041 per event) and
+  **consensus spindles × ABDOMEN** (0.024 per event).
+- **Fewer, bigger questions:** apneas and hypopneas pooled into one respiratory-event condition, and a per-breath
+  dose–response analysis.
+- **Hierarchical model:** a Poisson GLMM of event counts per phase bin with a phase-occupancy offset, random subject
+  modulation, and simulation intervals for the relative change of modulation.
+
+**Result:** a complete loss of coupling during respiratory events is excluded (P ≤ 1 %), and a loss > 50 % is
+unlikely (P ≈ 2–5 %), for both large SOs and spindles. Louder snoring was associated with *higher* SO coupling
+(β = +0.022 per SD, p = 1e-4).
+
+### Step 3c — snore-evoked events
+
+Snore bursts evoke K-complexes and spindles. Large-SO troughs show an excess 0.5–1.5 s after snore-burst peaks
+(p = 1e-4, N = 38), and spindle onsets an excess 0.25–1.0 s after them. Because bursts are inspiration-locked, these
+evoked events create apparent coupling. They were excluded in phase-matched windows after real bursts and after
+pseudo-bursts in quiet breaths. The excluded time was also removed from phase occupancy, and only
+occupancy-normalised measures were used.
+
+![Event rates around snore-burst peaks.](../figures/step3b_snore_evoked_events.png){#fig-evoked}
+
+| Snoring vs clean (N2) | All events | Snore-evoked excluded | GLMM relative change (excluded) |
+|---|---|---|---|
+| Large SOs | +0.022 [−0.023, 0.070] | −0.044 [−0.108, 0.021], p_loss = 0.050 | −68 % [−170, +5], p_loss = 0.031 |
+| Consensus spindles | −0.006 [−0.058, 0.044] | −0.029 [−0.089, 0.027], p_loss = 0.14 | −71 % [−149, +17], p_loss = 0.047 |
+
+: Effect of excluding snore-evoked events (condition − clean). {.striped}
+
+### Step 3d — complexes pooled over channels
+
+SO troughs from F4, C4 and O2 were merged within ±0.3 s, followed within 1.5 s by a spindle on any of five channels.
+This gives about 10× more complexes (median ~145 per subject in clean N2).
+
+- **Clean coupling** is now significant: large pooled complexes × ABDOMEN, N = 70, R = 0.28, Rayleigh p = 0.004,
+  V-test p = 0.0008.
+- **But only ~25–30 % of complexes exceed chance pairing.** With spindle times shifted at random, 16 % of SOs are still
+  followed by a spindle, against 22 % observed. The complexes' preferred phase equals that of large SOs.
+- **Snoring with evoked events excluded (N2+N3 GLMM):** large SOs −65 % (p_loss = 0.033), spindles −83 %
+  (p_loss = 0.027), complexes −144 % (p_loss = 0.023). Apneas and hypopneas show no change.
+
+![Step 3b–3d contrasts and GLMM estimates (N2).](../figures/step3b_power_N2.png){#fig-power}
+
+## Step 4 — Coupling strength vs severity
+
+- **Coupling per subject:** occupancy-normalised clean-N2 coupling projected on the leave-one-subject-out group phase,
+  for the three primary families.
+- **Primary test:** robust regression on z(log1p AHI), adjusted for age, sex and BMI; BH-FDR over the three families.
+- **Secondary markers, computed from the signals:** OAHI, ODI3, T90, hypoxic burden, mean event duration, snore index.
+- **GLMM:** AHI as a moderator of the phase modulation.
+
+| Family | N | β per SD log1p(AHI) | p | FDR |
+|---|---|---|---|---|
+| Large SOs | 89 | −0.003 ± 0.008 (clean mean 0.041) | 0.72 | 0.77 |
+| Pooled complexes | 70 | +0.004 ± 0.012 (clean mean 0.051) | 0.77 | 0.77 |
+| Consensus spindles | 72 | −0.005 ± 0.006 (clean mean 0.027) | 0.38 | 0.77 |
+
+: Step 4 primary test: AHI vs clean coupling. {.striped}
+
+Nothing survives FDR among the secondary markers (FDR ≥ 0.62). The GLMM bounds a severity-related spindle loss to less
+than ~50 % per SD of log AHI (−12 % [−51, +16]).
+
+A follow-up with plain Spearman correlations found that **direction-free** SO modulation strength (PPC) increases with
+ODI3 (ρ = 0.30, p = 0.003), the snore index and the detected arousal index. The projected (phase-aligned) coupling
+does not, and nothing survives FDR over 72 correlations.
+
+::: {layout-ncol=2}
+![Severity vs coupling (robust regression).](../figures/step4_severity.png){#fig-sev}
+
+![Spearman correlations of coupling with severity markers.](../figures/step4_spearman.png){#fig-spear}
+:::
+
+## Step 5 — Does the preferred phase change?
+
+Within-subject phase differences do not depend on polarity, so all subjects were used. The control condition is clean
+breathing split into alternating 10-min blocks (clean_odd vs clean_even).
+
+- **Per participant:** each subject's condition events against their clean events (≥ 10 per group). 5a (any change):
+  |Δφ| against a null calibrated with each subject's own clean-vs-clean comparison, plus the CircStat common median
+  test (`circ_cmtest`). 5b (consistent rotation): a test of mean rotation ≠ 0 on the signed per-subject Δφ, plus
+  `circ_mtest` and `circ_medtest` against 0. The CircStat functions were ported to Python (`snoredreamt/circstat.py`).
+- **Per event (population):** the GLMM orthogonal component (condition × sin term) gives a linear, unbiased test of
+  rotation.
+
+**Results:**
+
+- **Per participant:** no reliable change. The fraction of subjects with a changed median does not exceed the control,
+  and the population of per-subject mean differences does not differ from 0 (all p ≥ 0.07).
+- **Per event (GLMM, controls flat at −5° to +3°):** spindles rotate **+46° [+4, +93]** during hypopneas (p = 0.002),
+  **+43°** during pooled respiratory events (p = 0.001), and **−42° [−85, −6]** during snoring (−72° with evoked events
+  excluded; p = 0.014–0.032). These shifts survive dropping the 5–10 subjects with the most events. SOs show no
+  significant rotation.
+
+![Step 5 GLMM rotation estimates (N2).](../figures/step5_phase_N2.png){#fig-step5}
+
+![Step 5 CircStat per-subject tests (N2).](../figures/step5_circstat_N2.png){#fig-step5cs}
+
+## Step 6 — Phase effects vs severity
+
+- **6a:** the signed per-subject phase change (circular–linear correlation) and its size (Spearman and rank regression
+  adjusted for age, sex and BMI) against seven severity markers; BH-FDR over 315 tests. Smallest FDR p = 0.79 (N2)
+  and 0.99 (N2+N3).
+- **6b:** log AHI vs clean preferred phase: SOs ρ = 0.18 (p = 0.23), spindles ρ = 0.23 (p = 0.15), complexes ρ = 0.11
+  (p = 0.66). The only nominal result, an SO Watson–Williams test across AHI groups (p = 0.0045), is non-monotonic and
+  not supported by the common median test (p = 0.13).
+- **GLMM:** AHI moderates neither the clean modulation (p ≥ 0.07) nor the condition-related rotation (p ≥ 0.12).
+
+![Step 6: clean preferred phase vs AHI, and circular–linear p values of phase shifts vs severity markers (N2).](../figures/step6_N2.png){#fig-step6}
+
+## Interpretation
+
+Respiration coupling of SOs and spindles is present in the clinical cohort and behaves as a **state** feature of
+ongoing breathing. It survives apneas and hypopneas, is not related to how severe the sleep-disordered breathing is,
+and is weakened, or shifted in phase, only during snoring. The snoring result needs the most caution. Snoring
+produces sounds that evoke K-complexes and spindles at a fixed point of the breathing cycle, and these evoked events
+first masqueraded as *stronger* coupling. After removing them, the remaining coupling is weaker, but the windows used
+to remove them were estimated from the same data.
+
+# Workflow and reproduction {#sec-workflow}
+
+## Project structure
+
+| Path | Content |
+|---|---|
+| `Snakefile`, `config.yaml` | pipeline (one rule per step) and all parameters (one named primary analysis per step) |
+| `snoredreamt/` | Python library: I/O, quality masks, detectors (slythm port), respiration phase, conditions, snoring, arousals, coupling, CircStat port |
+| `scripts/rules/` | one script per Snakemake rule (Python, and R/lme4 for the GLMMs) |
+| `tests/` | unit tests (34 tests) |
+| `validation/` | MATLAB parity scripts (slythm detectors, CircStat) |
+| `notes/` | plan, progress and per-step reports |
+| `literature/` | structured notes of the key papers (PDFs not redistributed) |
+| `reports/` | this report |
+| `CLAUDE.md`, `.claude/skills/` | instructions and Skills for coding agents |
+
+: Repository layout {.striped}
+
+## Environment and data
+
+- **Environment:** pixi (`pixi.toml`, `pixi.lock`) pins Python 3.10, NumPy/SciPy/pandas/statsmodels, Snakemake 7.32,
+  R 4.5 with lme4, graphviz and Quarto.
+- **Data:** DREAMT is credentialed PhysioNet data (PhysioNet Restricted Health Data License 1.5.0). It is not copied
+  into the repository; it stays read-only where it was downloaded. Its location is set in `config.yaml`, and its
+  integrity is given by the dataset's `SHA256SUMS.txt`.
+- **Versioning:** code, configuration, reports and figures are tracked in git. Large intermediate files (cache, event
+  tables) are git-ignored and rebuilt by the pipeline.
+
+## Pipeline
+
+Inputs (raw PSG) → cache and quality masks → event detection → respiratory phase and condition labels → coupling per
+subject → group statistics and GLMMs → figures. Each box in @fig-dag is one Snakemake rule.
+
+![Pipeline DAG (`snakemake --rulegraph`). Each node is a rule; `all` collects the step outputs.](../figures/pipeline_dag.png){#fig-dag}
+
+| Step | Snakemake rules | Main outputs |
+|---|---|---|
+| 0 | `cache`, `quality` | per-subject µV cache, validity masks |
+| 1 | `detect_sos`, `detect_spindles`, `complexes`, `detector_summary` | events per channel, `derivatives/step1/` |
+| 2 | `resp_phase`, `resp_summary`, `arousals`, `coupling_step2`, `step2_group` | phase signals, polarity table, `derivatives/step2/` |
+| 3 | `event_locked_rates`, `conditions`, `conditions_summary`, `coupling_step3`, `step3_group` | `derivatives/step3/` |
+| 3b–3d | `coupling_step3b`, `step3b_group`, `step3b_glmm` | `derivatives/step3b/{N2,N2N3}/` |
+| 4 | `severity`, `step4_group`, `step4_glmm` | `derivatives/step4/` |
+| 5 | `step5_phase`, `step5_circstat` | `derivatives/step5/{N2,N2N3}/` |
+| 6 | `step6_phase_severity`, `step6_glmm` | `derivatives/step6/{N2,N2N3}/` |
+
+: Snakemake rules per step {.striped}
+
+## How to reproduce
+
+```bash
+pixi install                  # environment from pixi.lock
+pixi run test                 # 34 unit tests
+# set paths.data and paths.participants in config.yaml to your DREAMT download
+pixi run snakemake -n         # dry run: what would be built, and why
+pixi run pipeline             # snakemake -j 8
+pixi run dag                  # figures/pipeline_dag.png
+pixi run report               # renders this report
+```
+
+## Reproducibility check
+
+Before submission the pipeline was run again in the new pixi environment. This check itself followed the agentic
+cycle:
+
+- **Inspect.** The dry run listed 300 jobs instead of none.
+- **Diagnose.** The single-channel complex files for three channels added in Step 3b had never been built.
+- **Bug.** One of those jobs crashed: a channel with no detected SOs (S062, T3-CZ) is saved without the
+  `nrem_event` column, and `scripts/rules/complexes.py` assumed the column exists.
+- **Fix.** The script now handles empty event tables, and the pipeline completes (`Nothing to be done`).
+- **Result.** Step 6 and all Step 4 regression and correlation tables reproduced to ≤ 1e-4. The Step 4 GLMM
+  coefficients agree to 1e-5. The only visible difference is the simulation interval of one numerically unstable
+  ratio (SO modulation change per SD of AHI: [−218 %, +140 %] before, [−209 %, +147 %] now). That ratio's denominator
+  is near zero, and R moved from 4.5.2 to 4.5.3.
+
+# Working with the agent {#sec-agent}
+
+## Agent-ready project {#sec-agent-ready}
+
+- **`CLAUDE.md`** gives the agent the project's purpose, where to start, the commands, the data rules and the
+  conventions. It also lists *scientific guardrails* that were added after the mistakes described below, for example
+  "never invent reference values" and "every new test needs a negative control".
+- **Progress file:** `notes/PLAN.md` holds the step table and status. `notes/STEP3_GOAL.md` is the decision log for a
+  multi-day autonomous run, and each step has a report in `notes/`. They let the agent resume work across sessions,
+  and they were updated at the end of each step.
+- **Skill:** `literature-prep` renames PDFs to `FirstAuthor_Year`, converts them with docling and writes a
+  structured summary (methods parameters, results, limitations, relevance) plus a JSON index. It was used repeatedly:
+  for six papers, including the arousal-method papers, before the agent implemented that method.
+- **Pipeline conventions:** every analysis is a Snakemake rule. Parameters live only in `config.yaml`, where each step
+  names one primary analysis and everything else is labelled sensitivity.
+
+## What was delegated, what I decided, how it was checked
+
+| Delegated to the agent | Decided by me | Verified by |
+|---|---|---|
+| Porting my MATLAB detectors (`+slythm`) to Python | detector parameters; spindle threshold 2.0× plus spectral-peak criterion | MATLAB parity, run by me (100 % of events matched, identical thresholds) |
+| Porting the arousal detector from the authors' MATLAB code | which method to use (rule-based, Fernández-Varela 2017) | agreement with the clinical arousal index (ρ = 0.65) |
+| Respiratory phase, polarity calibration, condition labels, snoring detection | phase source (ABDOMEN gated Hilbert, ±0.05 Hz, my lab's standard) | example figures I inspected before each step; occupancy checks |
+| Running all statistics and writing step reports | which conditions to keep; which power strategies to try (ideas 2–4 of the agent's list) | negative controls built into every test (clean-vs-clean, REM pseudo-SOs, random-time surrogates) |
+| Proposing explanations for unexpected results | to exclude snore-evoked events; to pool N2+N3 and channels; to add Steps 5–6 | the agent's own follow-up tests, then my review of the figures |
+| Porting CircStat tests | to use CircStat (`circ_wwtest`, `circ_cmtest`) instead of the agent's custom tests | unit tests; applicability check of each test (MATLAB parity script prepared) |
+
+: Division of labour {.striped}
+
+## The agentic cycle, in detail: the snoring result
+
+1. **Specify.** Step 3 was set up as a multi-day goal with a checklist: compare coupling between each breathing
+   condition and matched clean breathing, with FDR correction.
+2. **Delegate.** The agent built the condition labels, the snoring detector, the matched controls and the group
+   tests, and reported back.
+3. **Inspect.** Contrary to the hypothesis, SO coupling was *higher* during snoring, and the agent's report showed
+   that the whole contrast was inconclusive because power was low.
+4. **Verify.** I asked for more power (Step 3b). The agent then tested whether snore bursts evoke events: large SOs
+   appeared 0.5–1.5 s after snore-burst peaks (p = 1e-4), and SO probability rose with snore loudness.
+5. **Revise.** I asked to exclude snore-evoked SOs and spindles. With that exclusion, coupling during snoring dropped
+   instead of rising.
+
+The revision itself contained a mistake. The agent kept the per-event mean-cos metric after excluding a fixed window
+of the breathing cycle, which made clean coupling *negative*, an impossible result for a correct analysis. Excluding
+part of the cycle makes the phase occupancy non-uniform, so only occupancy-normalised measures are valid. The fix was
+switching to rate-based resultants and the Poisson GLMM. The lesson is now a guardrail in `CLAUDE.md`.
+
+## Mistakes, and what changed in the environment
+
+| Mistake | How it was caught | Change |
+|---|---|---|
+| A unit test for the CircStat port used reference values that were not computed by CircStat | review of the test file | tests now derive expected values from formulas or simulations with known ground truth; a MATLAB parity script against real CircStat output was prepared (not yet run); `CLAUDE.md` rule "never invent reference values" |
+| A DOI was guessed instead of taken from the paper | review | removed; citations now come only from the processed papers (`literature/index.json`) |
+| Whole-night reference phase estimated from the same clean events used as controls (circularity) | the clean-vs-clean negative control showed a "loss" of coupling | odd/even split of clean events; negative controls are mandatory (`CLAUDE.md`) |
+| Rayleigh test on per-subject phase differences used to test "rotation" | the clean-vs-clean control was highly "significant" | replaced by a test of mean rotation ≠ 0 and the GLMM orthogonal component |
+| Parametric null for phase change assumed independent events | anti-conservative for spindles and complexes in the control | calibrated against each subject's own clean-vs-clean result |
+| Watson–Williams test (my suggestion) is invalid at the low concentrations here | the agent's applicability check and the control (28–67 % of subjects flagged) | common median test |
+| Huber regression gave p ≈ 0 driven by one leverage subject (z = 4.3) | comparison with OLS-HC3 (p = 0.17) | rank regression |
+| `complexes.py` crashed on channels without events | reproducibility rerun in the new pixi environment | empty event tables handled |
+
+: Mistakes and method problems found during the project {.striped}
+
+All of these were caught because the environment contained checks that could fail: negative controls, parity scripts,
+tests, plots I looked at, and a dry run of the pipeline. None of them was caught by the agent's own confidence in its
+output.
+
+::: {.callout-tip title="Side example (another project): arousals after memory cues"}
+In my BreathTMR study I asked the agent for a MATLAB script, in my lab's style, that detects arousals and tests
+whether memory cues evoke them. It had to use EEG only, because those recordings have no chin EMG.
+
+- **Inspect.** I ran the script, and the PETH was flat at zero before cue onset, then rose.
+- **Verify.** Given access to run MATLAB, the agent traced the zeros to its own design. It had excluded every cue with
+  an arousal in the preceding 10 s, which makes pre-cue arousals impossible by construction. A second problem
+  (topoplots not appearing in subplots) came from a FieldTrip default that opens a new figure.
+- **Revise.** The exclusion now applies only to the proportion measure, the null became an exact stage-matched
+  average, and the topoplots use `cfg.figure = 'gca'`.
+
+The lesson: the agent's code ran without errors, and only looking at the figure showed it was wrong.
+:::
+
+## Limitations of the agentic workflow
+
+- **Analysis multiplicity.** The agent makes trying another model cheap. Steps 3b–3d and 5 together fit many models
+  (families × conditions × stage sets × exclusion levels), so primaries had to be chosen on clean data and results
+  reported as confirmatory-style rather than pre-registered.
+- **Decisions after seeing data.** Several choices (snore-evoked exclusion windows, pooled complexes) were made after
+  seeing earlier results. The reports state this.
+- **Sandbox limits.** The agent could not run MATLAB inside its sandbox (no license server), so parity checks were run
+  by me. Network access was restricted to what each task needed.
+- **Confident prose.** The step reports read equally fluently whether the evidence is strong or weak, so their
+  numbers and labels ("trend-level", "inconclusive") need checking against the output tables and figures.
+
+# Limitations and next steps
+
+**Scientific limitations:**
+
+- **No ground truth for snoring.** Thresholds (10 dB, phasic 2×, 3 breaths) were not tuned, and quieter snoring stays
+  in "clean".
+- **Arousals.** The detector finds about one third of the clinical arousal index, so residual arousals remain in
+  "clean" and "snoring".
+- **Snoring loss** depends on exclusion windows derived from the same data.
+- **Complexes:** most are chance pairings.
+- **Phase shifts** are event-weighted population effects across many models; per-subject estimates are too noisy to
+  confirm them.
+- **Scoring rules:** the DREAMT hypopnea rule (3 % vs 4 %) is unknown and apnea labels were added retrospectively.
+  Severe-OSA patients contribute little clean N2.
+
+**Next steps:**
+
+1. A sensitivity sweep of the snore-evoked exclusion windows, specified before looking at the result.
+2. A stricter definition of "true" complexes (above-chance SO–spindle nesting).
+3. Replication of the snoring and spindle phase-shift effects in an independent PSG dataset with snoring labels.
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
