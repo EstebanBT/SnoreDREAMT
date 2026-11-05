@@ -191,8 +191,8 @@ Key decisions:
 - The phase for condition contrasts is the abdominal belt (ABDOMEN), using a breath-gated Hilbert phase of a narrow
   band-pass around the subject's respiratory peak (±0.05 Hz). The Step 2 replication is shown with both FLOW and
   ABDOMEN.
-- Arousals are detected with the rule-based method of @FernandezVarela2017, validated in @AlvarezEstevez2019, extended
-  to recover candidates that the original rules reject (Section [-@sec-arousal-det]).
+- Arousals are detected with the rule-based method of @FernandezVarela2017, validated in @AlvarezEstevez2019, with
+  two modifications (Section [-@sec-arousal-det]).
 
 # Results and interpretation
 
@@ -282,23 +282,21 @@ Without baseline coupling, Step 3 would be meaningless.
 ### Arousal detection {#sec-arousal-det}
 
 Arousals had to be detected, because DREAMT does not label them. The detector is a Python port of the
-Fernández-Varela / Alvarez-Estevez rule-based method (C4-M1 and chin EMG; `snoredreamt/arousals.py`), used in an
-**extended** form (`arousals_extended` rule). It keeps the arousals of the original rules and adds two groups of
-candidates that the original rules reject but that are probably arousals:
+Fernández-Varela / Alvarez-Estevez rule-based method, using C4-M1 and chin EMG (`snoredreamt/arousals.py`, rule
+`arousals_extended`). It has two modifications to the published rules:
 
-- alpha-band candidates in N2/N3 rejected only because chin-EMG activity was missing (clinical rules require an EMG
-  increase only for arousals in REM);
-- candidates that start in sleep and end in an epoch scored as wake.
+- alpha-band arousals in N2/N3 are accepted without a chin-EMG increase, because clinical rules require an EMG
+  increase only for arousals in REM;
+- candidates that start in sleep and end in an epoch scored as wake are kept.
 
-Compared with the clinical arousal index of the 98 subjects, the extended detection ranks subjects reasonably well
-(Spearman ρ = 0.67) but still detects fewer arousals: median 20 against 28 per hour (Bland–Altman bias −15/h, 95 %
-limits −51 to +21/h; ICC for absolute agreement 0.47, for consistency 0.59). The log–log slopes in the two directions
-(0.41 and 0.92) are both below 1, so the undercount is relatively larger in subjects with many arousals. The clinical
-index's scoring rules and denominator are not reported. Detected arousals ±5 s are excluded from every analysis
-window. The detected index is used only as a ranking. Section [-@sec-agent] describes how the extended detection
-replaced the original rules.
+Compared with the clinical arousal index of the 98 subjects, the detection ranks subjects reasonably well (Spearman
+ρ = 0.67) but detects fewer arousals: median 20 against 28 per hour (Bland–Altman bias −15/h, 95 % limits −51 to
++21/h; ICC for absolute agreement 0.47, for consistency 0.59). The log–log slopes in the two directions (0.41 and
+0.92) are both below 1, so the undercount is relatively larger in subjects with many arousals. The clinical index's
+scoring rules and denominator are not reported. Detected arousals ±5 s are excluded from every analysis window, and
+the detected index is used only as a ranking.
 
-![Detected vs clinical arousal index for the extended detection used in all analyses and for the original detector (Section [-@sec-agent]). Left: log–log scatter with the identity line; right: Bland–Altman plot.](../figures/report/fig15_arousal_agreement.png){#fig-arousal-val}
+![Detected vs clinical arousal index. Left: log–log scatter with the identity line; right: Bland–Altman plot.](../figures/report/fig15_arousal_agreement.png){#fig-arousal-val}
 
 ### Coupling in clean NREM
 
@@ -512,8 +510,7 @@ breathing split into alternating 10-min blocks (clean_odd vs clean_even).
   and the population of per-subject mean differences does not differ from 0 (all p ≥ 0.07).
 - **Per event (GLMM, controls flat at −8° to +1°):** spindles rotate **+45° [+1, +94]** during hypopneas (p = 0.003),
   **+40°** during pooled respiratory events (p = 0.002), and **−40° [−88, −2]** during snoring (−74° with evoked events
-  excluded; p = 0.027–0.054). SOs show no significant rotation. With the original arousal detection, these spindle
-  shifts also survived dropping the 5–10 subjects with the most events.
+  excluded; p = 0.027–0.054). SOs show no significant rotation.
 
 ![Shift of the preferred phase per condition, pooled over events (GLMM; 95 % interval). The clean-vs-clean control is flat. Spindles shift later during hypopneas and respiratory events and earlier during snoring.](../figures/report/fig11_rotation.png){#fig-step5}
 
@@ -590,7 +587,8 @@ subject → group statistics and GLMMs → figures. Each box in @fig-dag is one 
 | 4 | `severity`, `step4_group`, `step4_glmm`, `step4_spearman` | `derivatives/step4/` |
 | 5 | `step5_phase`, `step5_circstat` | `derivatives/step5/{N2,N2N3}/` |
 | 6 | `step6_phase_severity`, `step6_glmm` | `derivatives/step6/{N2,N2N3}/` |
-| arousals | `arousals` (original rules), `arousals_extended` (used in all analyses), `arousal_agreement`; comparison with the original detection: `coupling_step3b_arv`, `step3b_group_arv`, `step3b_glmm_arv`, `arousal_sensitivity` | `derivatives/arousals/`, `derivatives/step3b_arousal_primary/`, `derivatives/arousal_sensitivity/` |
+| arousals | `arousals_extended`, `arousal_agreement` | `derivatives/arousals/` |
+| agent example (Section [-@sec-arousal-cycle]) | `arousals`, `coupling_step3b_arv`, `step3b_group_arv`, `step3b_glmm_arv`, `arousal_sensitivity` | `derivatives/step3b_arousal_primary/`, `derivatives/arousal_sensitivity/` |
 | report | `snore_evoked_events`, `snoring_validation_figure`, `report_figures` | `figures/report/` (figures of this report, redrawn from the step tables) |
 
 : Snakemake rules per step {.striped}
@@ -609,8 +607,7 @@ pixi run report               # renders this report
 
 ## Reproducibility check
 
-Before submission, and before the switch to the extended arousal detection, the pipeline was run again in the
-new pixi environment. This check itself followed the agentic
+Before submission, an earlier version of the pipeline was run again in the new pixi environment. This check itself followed the agentic
 cycle:
 
 - **Inspect.** The dry run listed 300 jobs instead of none.
@@ -713,8 +710,10 @@ proposal. None of them was caught by the agent's own confidence in its output.
    was wrong: the clean-data rule re-selected a different spindle set under the new exclusion. The number of subjects
    *rose* (46 → 61) although more data was excluded, which gave it away. The event sets are now fixed in
    `config.yaml`. With that fixed, nothing changed beyond the confidence intervals (@fig-arousal-sens).
-5. **Revise.** The extended detection agrees better with the clinical index (ICC 0.47, bias −15/h instead of −24/h),
-   so it replaced the original rules in all analyses, and the whole pipeline was rerun.
+5. **Revise.** The extended detection agrees better with the clinical index (ICC 0.47, bias −15/h instead of −24/h;
+   @fig-arousal-cmp), so it replaced the original rules in all analyses, and the whole pipeline was rerun.
+
+![Agreement with the clinical arousal index: original rules vs the extended detection used in this report.](../figures/report/fig17_arousal_agreement_comparison.png){#fig-arousal-cmp}
 
 ![Step 3b/3c contrasts with the original vs the extended arousal detection (N2; mean and 95 % CI; dotted = complete loss). Squares: snoring with snore-evoked events excluded.](../figures/report/fig14_arousal_sensitivity.png){#fig-arousal-sens}
 
@@ -770,9 +769,8 @@ The lesson: the agent's code ran without errors, and only looking at the figure 
 
 - **No ground truth for snoring.** Thresholds (10 dB, phasic 2×, 3 breaths) were not tuned, and quieter snoring stays
   in "clean".
-- **Arousals.** The detection still undercounts (median 20 vs 28/h clinically), so residual arousals remain in
-  "clean" and "snoring". Recovering ~4400 rejected candidates changed no conclusion (Section [-@sec-arousal-cycle]),
-  which suggests the remaining ones matter little too.
+- **Arousals.** The detection undercounts (median 20 vs 28/h clinically), so residual arousals remain in "clean" and
+  "snoring".
 - **Snoring loss** depends on exclusion windows derived from the same data.
 - **Complexes:** most are chance pairings.
 - **Phase shifts** are event-weighted population effects across many models; per-subject estimates are too noisy to

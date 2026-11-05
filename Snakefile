@@ -515,6 +515,7 @@ rule arousal_agreement:
         table = f"{DER}/arousals/agreement.csv",
         subjects = f"{DER}/arousals/agreement_subjects.csv",
         fig = f"{config['paths']['figures']}/report/fig15_arousal_agreement.png",
+        fig_comparison = f"{config['paths']['figures']}/report/fig17_arousal_agreement_comparison.png",
     script: "scripts/rules/arousal_agreement.py"
 
 

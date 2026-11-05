@@ -77,28 +77,37 @@ with pd.option_context('display.width', 200):
 
 COL = {'primary': '#0072B2', 'liberal': '#999999', 'extended': '#E69F00'}
 LABEL = {'primary': 'original rules', 'liberal': 'liberal', 'extended': 'extended (used)'}
-fig, axs = plt.subplots(1, 2, figsize=(12, 4.8))
-for variant in ['primary', 'extended']:
-    d = S[S.variant == variant]
-    x, y = d.clinical.to_numpy(float), d.detected.to_numpy(float)
-    r = T[T.variant == variant].iloc[0]
-    axs[0].scatter(x, y, s=16, alpha=.6, color=COL[variant],
-                   label=f'{LABEL[variant]}: ICC = {r.icc_agreement:.2f}, ρ = {r.spearman:.2f}')
-    m, dd = (x + y) / 2, y - x
-    axs[1].scatter(m, dd, s=16, alpha=.6, color=COL[variant], label=f'{LABEL[variant]}: bias {r.bias:+.1f}/h')
-    axs[1].axhline(r.bias, color=COL[variant], lw=1.5)
-    for v in (r.loa_lo, r.loa_hi):
-        axs[1].axhline(v, color=COL[variant], lw=1, ls='--')
-lim = [1, S.clinical.max() * 1.2]
-axs[0].plot(lim, lim, 'k--', lw=1, label='identity')
-axs[0].set_xscale('log')
-axs[0].set_yscale('log')
-axs[0].set_xlabel('clinical arousal index (/h)')
-axs[0].set_ylabel('detected arousal index (/h)')
-axs[0].legend(fontsize=10)
-axs[1].axhline(0, color='grey', lw=.8)
-axs[1].set_xlabel('mean of detected and clinical (/h)')
-axs[1].set_ylabel('detected − clinical (/h)')
-axs[1].set_title('Bland–Altman (solid = bias, dashed = 95 % limits)', fontsize=12)
-axs[1].legend(fontsize=10, loc='lower left')
-fig.savefig(out.fig)
+
+
+def agreement_figure(variants, path):
+    fig, axs = plt.subplots(1, 2, figsize=(12, 4.8))
+    for variant in variants:
+        d = S[S.variant == variant]
+        x, y = d.clinical.to_numpy(float), d.detected.to_numpy(float)
+        r = T[T.variant == variant].iloc[0]
+        lab = f'{LABEL[variant]}: ' if len(variants) > 1 else ''
+        axs[0].scatter(x, y, s=16, alpha=.6, color=COL[variant],
+                       label=f'{lab}ICC = {r.icc_agreement:.2f}, ρ = {r.spearman:.2f}')
+        m, dd = (x + y) / 2, y - x
+        axs[1].scatter(m, dd, s=16, alpha=.6, color=COL[variant], label=f'{lab}bias {r.bias:+.1f}/h')
+        axs[1].axhline(r.bias, color=COL[variant], lw=1.5)
+        for v in (r.loa_lo, r.loa_hi):
+            axs[1].axhline(v, color=COL[variant], lw=1, ls='--')
+    lim = [1, S.clinical.max() * 1.2]
+    axs[0].plot(lim, lim, 'k--', lw=1, label='identity')
+    axs[0].set_xscale('log')
+    axs[0].set_yscale('log')
+    axs[0].set_xlabel('clinical arousal index (/h)')
+    axs[0].set_ylabel('detected arousal index (/h)')
+    axs[0].legend(fontsize=10)
+    axs[1].axhline(0, color='grey', lw=.8)
+    axs[1].set_xlabel('mean of detected and clinical (/h)')
+    axs[1].set_ylabel('detected − clinical (/h)')
+    axs[1].set_title('Bland–Altman (solid = bias, dashed = 95 % limits)', fontsize=12)
+    axs[1].legend(fontsize=10, loc='lower left')
+    fig.savefig(path)
+    plt.close(fig)
+
+
+agreement_figure([cfg['arousals']['exclusion']], out.fig)                 # detection used in the analyses
+agreement_figure(['primary', 'extended'], out.fig_comparison)             # agentic-cycle example: original vs extended
