@@ -2233,7 +2233,13 @@ vertical-align: -.125em;
   <ul class="collapse">
   <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">1.1</span> Background</a></li>
   <li><a href="#questions-and-expected-outputs" id="toc-questions-and-expected-outputs" class="nav-link" data-scroll-target="#questions-and-expected-outputs"><span class="header-section-number">1.2</span> Questions and expected outputs</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">1.3</span> Data</a></li>
+  <li><a href="#data-the-dreamt-dataset" id="toc-data-the-dreamt-dataset" class="nav-link" data-scroll-target="#data-the-dreamt-dataset"><span class="header-section-number">1.3</span> Data: the DREAMT dataset</a>
+  <ul class="collapse">
+  <li><a href="#cohort-and-recording" id="toc-cohort-and-recording" class="nav-link" data-scroll-target="#cohort-and-recording"><span class="header-section-number">1.3.1</span> Cohort and recording</a></li>
+  <li><a href="#channels" id="toc-channels" class="nav-link" data-scroll-target="#channels"><span class="header-section-number">1.3.2</span> Channels</a></li>
+  <li><a href="#annotations" id="toc-annotations" class="nav-link" data-scroll-target="#annotations"><span class="header-section-number">1.3.3</span> Annotations</a></li>
+  <li><a href="#data-properties-and-how-they-were-handled" id="toc-data-properties-and-how-they-were-handled" class="nav-link" data-scroll-target="#data-properties-and-how-they-were-handled"><span class="header-section-number">1.3.4</span> Data properties and how they were handled</a></li>
+  </ul></li>
   <li><a href="#approach" id="toc-approach" class="nav-link" data-scroll-target="#approach"><span class="header-section-number">1.4</span> Approach</a></li>
   </ul></li>
   <li><a href="#results-and-interpretation" id="toc-results-and-interpretation" class="nav-link" data-scroll-target="#results-and-interpretation"><span class="header-section-number">2</span> Results and interpretation</a>
@@ -2354,9 +2360,228 @@ vertical-align: -.125em;
 <li><strong>(iii) Severity:</strong> does coupling relate to the apnea–hypopnea index (AHI) and other severity markers? Output: per-subject regressions and correlations with FDR control.</li>
 </ul>
 </section>
-<section id="data" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="data"><span class="header-section-number">1.3</span> Data</h2>
-<p>DREAMT <span class="citation" data-cites="Wang2024">(<a href="#ref-Wang2024" role="doc-biblioref">Wang et al. 2024</a>)</span>: 100 sleep-clinic patients, overnight PSG at 100 Hz with six EEG derivations, EOG, chin and leg EMG, FLOW, PTAF, THORAX and ABDOMEN belts, ECG, SNORE and SaO2. Respiratory events and sleep stages are expert scored; arousals and snoring are <strong>not</strong> labelled.</p>
+<section id="data-the-dreamt-dataset" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="data-the-dreamt-dataset"><span class="header-section-number">1.3</span> Data: the DREAMT dataset</h2>
+<section id="cohort-and-recording" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="cohort-and-recording"><span class="header-section-number">1.3.1</span> Cohort and recording</h3>
+<p>DREAMT (<em>Dataset for Real-time sleep stage EstimAtion using Multisensor wearable Technology</em>; <span class="citation" data-cites="Wang2024">Wang et al. (<a href="#ref-Wang2024" role="doc-biblioref">2024</a>)</span>) was collected to develop wearable sleep trackers for people with sleep disorders. It contains one night of clinical polysomnography (PSG) from each of 100 adults referred to the Duke Sleep Disorders Center for a diagnostic sleep study (May–September 2022). During the same night they also wore an Empatica E4 wristband.</p>
+<ul>
+<li><strong>Inclusion:</strong> there were no selection criteria beyond attending the clinic; the cohort is a typical sleep-clinic population, mostly suspected of sleep apnea.</li>
+<li><strong>Recording:</strong> the Nihon Kohden Polysmith system, in single rooms of the sleep lab, roughly from 10 PM to 6 AM.</li>
+<li><strong>Release format:</strong> one file per participant, with all PSG and wearable signals resampled to a common 100 Hz grid. The dataset is hosted on PhysioNet under a credentialed licence.</li>
+</ul>
+<table class="table-striped caption-top table">
+<caption>Characteristics of the analysed cohort (clinical values from <code>participant_info.csv</code>; stage minutes from the hypnograms).</caption>
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Analysed cohort (N = 98)</th>
+<th>Median [IQR] or count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Age (years)</td>
+<td>58.7 [42.6, 69.8], range 21–87</td>
+</tr>
+<tr class="even">
+<td>Sex</td>
+<td>53 female, 45 male</td>
+</tr>
+<tr class="odd">
+<td>BMI (kg/m²)</td>
+<td>32.0 [29.0, 37.8]</td>
+</tr>
+<tr class="even">
+<td>AHI (events/h)</td>
+<td>13.5 [4.0, 29.0], range 0–182</td>
+</tr>
+<tr class="odd">
+<td>AHI category: &lt; 5 (normal) / 5–15 (mild) / 15–30 (moderate) / ≥ 30 (severe)</td>
+<td>30 / 22 / 24 / 22</td>
+</tr>
+<tr class="even">
+<td>Clinical arousal index (events/h)</td>
+<td>28 [20, 49]</td>
+</tr>
+<tr class="odd">
+<td>Mean SaO2 (%)</td>
+<td>95, range 77–99</td>
+</tr>
+<tr class="even">
+<td>Recording length (h)</td>
+<td>6.4, range 4.5–7.8</td>
+</tr>
+<tr class="odd">
+<td>Median minutes per stage: W / N1 / N2 / N3 / REM</td>
+<td>60 / 35 / 208 / 0.25 / 40</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="channels" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="channels"><span class="header-section-number">1.3.2</span> Channels</h3>
+<p>The PSG files contain the following columns. Labels follow the international 10–20 electrode system: F = frontal, C = central, O = occipital, T = temporal, Fp = frontopolar, Z = midline. Odd numbers are on the left, even numbers on the right, and M1 is the left mastoid (the bone behind the ear), used as reference.</p>
+<table class="table-striped caption-top table">
+<caption>PSG and wearable columns of the DREAMT 100 Hz files</caption>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Signal</th>
+<th>What it measures</th>
+<th>Use in this project</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>C4-M1</code></td>
+<td>EEG</td>
+<td>right central scalp vs left mastoid</td>
+<td>spindle detection (primary); arousal detection</td>
+</tr>
+<tr class="even">
+<td><code>F4-M1</code></td>
+<td>EEG</td>
+<td>right frontal scalp vs left mastoid; SOs are largest frontally</td>
+<td>SO and complex detection (primary)</td>
+</tr>
+<tr class="odd">
+<td><code>O2-M1</code></td>
+<td>EEG</td>
+<td>right occipital scalp vs left mastoid</td>
+<td>multichannel consensus SOs and spindles (Step 3b–3d)</td>
+</tr>
+<tr class="even">
+<td><code>T3 - CZ</code>, <code>CZ - T4</code></td>
+<td>EEG (bipolar)</td>
+<td>left temporal vs vertex; vertex vs right temporal; no mastoid reference</td>
+<td>consensus spindles, pooled complexes; check against mastoid/ECG artefact</td>
+</tr>
+<tr class="odd">
+<td><code>Fp1-O2</code></td>
+<td>EEG (bipolar)</td>
+<td>left frontopolar vs right occipital; unusual derivation, close to the eyes</td>
+<td>not used</td>
+</tr>
+<tr class="even">
+<td><code>E1</code>, <code>E2</code></td>
+<td>EOG</td>
+<td>left and right eye movements</td>
+<td>not used (stages were scored by technicians)</td>
+</tr>
+<tr class="odd">
+<td><code>CHIN</code></td>
+<td>EMG</td>
+<td>submental (chin) muscle tone</td>
+<td>arousal detection (EMG criterion)</td>
+</tr>
+<tr class="even">
+<td><code>LAT</code>, <code>RAT</code></td>
+<td>EMG</td>
+<td>left and right anterior tibialis (leg movements)</td>
+<td>not used</td>
+</tr>
+<tr class="odd">
+<td><code>ECG</code></td>
+<td>ECG</td>
+<td>heart’s electrical activity</td>
+<td>R-peaks: respiratory polarity check (heart rate rises in inspiration) and artefact checks</td>
+</tr>
+<tr class="even">
+<td><code>FLOW</code></td>
+<td>airflow (thermal)</td>
+<td>oronasal thermistor: temperature change of the breathed air</td>
+<td>respiratory phase (Step 2 replication; <code>BEST</code> phase)</td>
+</tr>
+<tr class="odd">
+<td><code>PTAF</code></td>
+<td>airflow (pressure)</td>
+<td>nasal pressure transducer</td>
+<td>validation of snoring (airflow flutter); saturates in many subjects</td>
+</tr>
+<tr class="even">
+<td><code>THORAX</code>, <code>ABDOMEN</code></td>
+<td>respiratory effort</td>
+<td>inductance belts around chest and abdomen; they keep moving during obstructive apneas</td>
+<td><code>ABDOMEN</code> phase: primary for all condition contrasts; <code>THORAX</code> for polarity</td>
+</tr>
+<tr class="odd">
+<td><code>SNORE</code></td>
+<td>sound</td>
+<td>snore sensor (physical type not documented)</td>
+<td>snoring detection (20–45 Hz energy per breath)</td>
+</tr>
+<tr class="even">
+<td><code>SAO2</code></td>
+<td>oximetry</td>
+<td>blood oxygen saturation (%)</td>
+<td>oxygen desaturation index, T90, hypoxic burden (Step 4)</td>
+</tr>
+<tr class="odd">
+<td><code>BVP</code>, <code>ACC_X/Y/Z</code>, <code>TEMP</code>, <code>EDA</code>, <code>HR</code>, <code>IBI</code></td>
+<td>wearable (E4)</td>
+<td>blood volume pulse, wrist acceleration, skin temperature, electrodermal activity, heart rate, inter-beat interval</td>
+<td>not used</td>
+</tr>
+<tr class="even">
+<td><code>TIMESTAMP</code></td>
+<td>–</td>
+<td>seconds since recording start</td>
+<td>time axis</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="annotations" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" class="anchored" data-anchor-id="annotations"><span class="header-section-number">1.3.3</span> Annotations</h3>
+<ul>
+<li><strong><code>Sleep_Stage</code>:</strong> 30-s epochs scored by the clinic’s technicians: P (preparation, before the PSG starts), W, N1, N2, N3, R (REM) and Missing. P and Missing epochs are excluded.</li>
+<li><strong><code>Obstructive_Apnea</code>, <code>Central_Apnea</code>, <code>Hypopnea</code>:</strong> sample-wise 0/1 labels of respiratory events, added retrospectively by expert technicians.
+<ul>
+<li>An <strong>apnea</strong> is a near-complete stop of airflow. It is <strong>obstructive</strong> when breathing effort continues against a closed airway, and <strong>central</strong> when the effort stops too.</li>
+<li>A <strong>hypopnea</strong> is a partial reduction of airflow, usually with an oxygen desaturation or an arousal.</li>
+<li>The exact scoring rules used in DREAMT (for example 3 % vs 4 % desaturation for hypopneas) are not reported.</li>
+</ul></li>
+<li><strong><code>Multiple_Events</code>:</strong> documented in the metadata as <em>mixed apnea</em> (central at the start, then obstructive). It never overlaps the other labels and is treated as mixed apnea.</li>
+<li><strong><code>participant_info.csv</code>:</strong> age, sex, BMI, AHI, obstructive AHI (OAHI), mean SaO2, clinical arousal index, and the most common comorbidities and sleep disorders.</li>
+</ul>
+<p><strong>Not labelled</strong>, and therefore detected in this project:</p>
+<ul>
+<li><strong>Arousals:</strong> brief awakenings, i.e. abrupt shifts of the EEG to faster activity lasting at least 3 s.</li>
+<li><strong>Snoring:</strong> vibration of the upper airway during inspiration, heard as noise.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Severity measures used in the report">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Severity measures used in the report
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>AHI:</strong> apnea–hypopnea index, the number of apneas plus hypopneas per hour of sleep. Clinically &lt; 5 is normal, 5–15 mild, 15–30 moderate and ≥ 30 severe sleep apnea.</li>
+<li><strong>OAHI:</strong> the same, counting only obstructive events.</li>
+<li><strong>ODI3:</strong> oxygen desaturations of ≥ 3 % per hour.</li>
+<li><strong>T90:</strong> percentage of sleep with SaO2 below 90 %.</li>
+<li><strong>Hypoxic burden:</strong> area of the desaturations following respiratory events, per hour.</li>
+<li><strong>Snore index:</strong> percentage of N2 breaths classified as snoring.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="data-properties-and-how-they-were-handled" class="level3" data-number="1.3.4">
+<h3 data-number="1.3.4" class="anchored" data-anchor-id="data-properties-and-how-they-were-handled"><span class="header-section-number">1.3.4</span> Data properties and how they were handled</h3>
 <table class="table-striped caption-top table">
 <caption>Data integrity and how it was handled</caption>
 <colgroup>
@@ -2371,7 +2596,7 @@ vertical-align: -.125em;
 </thead>
 <tbody>
 <tr class="odd">
-<td>EEG stored in volts</td>
+<td>EEG stored in volts, although the metadata says µV</td>
 <td>rescaled to µV</td>
 </tr>
 <tr class="even">
@@ -2387,16 +2612,17 @@ vertical-align: -.125em;
 <td>used only where not clipped</td>
 </tr>
 <tr class="odd">
-<td>Respiratory polarity and FLOW–belt lag differ between subjects</td>
+<td>Respiratory polarity (whether inspiration goes up or down) and FLOW–belt lag differ between subjects</td>
 <td>per-subject polarity calibration</td>
 </tr>
 <tr class="even">
-<td>US recording (60 Hz mains) at 100 Hz</td>
+<td>US recording (60 Hz mains) resampled to 100 Hz</td>
 <td>checked for a 40 Hz alias before using &gt; 16 Hz power</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Feasibility</strong> (from all files, N2/N3): clean NREM ≥ 60 min in 90 subjects; hypopneas ≥ 20 events in 47; obstructive apneas ≥ 20 events in 13; central apnea ≥ 10 min in 6; mixed apnea (<code>Multiple_Events</code>) ≥ 10 events in 3. N3 is scarce (median 0.5 min; none in 49 nights), so all analyses are effectively N2. AHI is unrelated to age (ρ = 0.01) and weakly related to BMI (ρ = 0.21) and to the clinical arousal index (ρ = 0.44).</p>
+<p><strong>Feasibility</strong> (from all files, N2/N3): clean NREM ≥ 60 min in 90 subjects; hypopneas ≥ 20 events in 47; obstructive apneas ≥ 20 events in 13; central apnea ≥ 10 min in 6; mixed apnea ≥ 10 events in 3. N3 is scarce (median 0.25 min; none in 49 nights), so all analyses are effectively N2. AHI is unrelated to age (ρ = 0.01) and weakly related to BMI (ρ = 0.21) and to the clinical arousal index (ρ = 0.44).</p>
+</section>
 </section>
 <section id="approach" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="approach"><span class="header-section-number">1.4</span> Approach</h2>
@@ -2456,6 +2682,19 @@ vertical-align: -.125em;
 <h1 data-number="2"><span class="header-section-number">2</span> Results and interpretation</h1>
 <section id="step-0-data-quality-and-literature" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="step-0-data-quality-and-literature"><span class="header-section-number">2.1</span> Step 0 — Data quality and literature</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make the raw recordings trustworthy and quick to use before any analysis. We wanted to find the data problems (wrong units, broken recordings, sensors that fall off during the night) before they could contaminate results, and to have the methods of the key papers in a form the agent could follow exactly.</p>
+</div>
+</div>
 <ul>
 <li><strong>Cache.</strong> Each subject is loaded once into float32 µV arrays with the stage vector (<code>P</code> and <code>Missing</code> excluded) and event masks.</li>
 <li><strong>Quality masks</strong> per channel and 30 s epoch: flat, saturated, or amplitude below 10 % of the subject’s typical level. For EEG, additionally robust-z outliers of amplitude, &lt; 0.5 Hz power (sweat) and 20–40 Hz power, padded ±1 s. Every analysis uses a sample only if all channels it depends on are valid.</li>
@@ -2465,6 +2704,19 @@ vertical-align: -.125em;
 </section>
 <section id="step-1-so-spindle-and-complex-detection" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="step-1-so-spindle-and-complex-detection"><span class="header-section-number">2.2</span> Step 1 — SO, spindle and complex detection</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Detect SOs, spindles and SO–spindle complexes exactly as in our previous work on healthy sleepers, so that any difference to those studies comes from the cohort and not from the method. We wanted to verify that the Python detectors are identical to the MATLAB originals, and that they are specific: they should find many events in NREM and few in REM and wake.</p>
+</div>
+</div>
 <p>The MATLAB <code>+slythm</code> detectors were ported to Python (<code>snoredreamt/detectors.py</code>).</p>
 <ul>
 <li><strong>SOs:</strong> F4-M1, Butterworth 0.3–1.5 Hz, negative-to-positive cycles of 0.8–2 s. Both trough and peak-to-peak must exceed 2.5 × the median of in-stage, artifact-free candidates.</li>
@@ -2521,6 +2773,26 @@ Figure 1: Detector densities by stage and channel.
 </section>
 <section id="step-2-respiratory-phase-and-replication" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="step-2-respiratory-phase-and-replication"><span class="header-section-number">2.3</span> Step 2 — Respiratory phase and replication</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Establish that the effect we want to perturb exists in this cohort. Before asking whether disordered breathing changes the coupling, we had to:</p>
+<ol type="1">
+<li>obtain a reliable respiratory phase for each subject, despite varying sensors and signal polarity;</li>
+<li>replicate the coupling of SOs, spindles and complexes to breathing during undisturbed NREM sleep;</li>
+<li>show with negative controls (arousals, SO-like events in REM) that the coupling is not an artefact;</li>
+<li>build an arousal detector, because arousals had to be excluded from all later comparisons.</li>
+</ol>
+<p>Without baseline coupling, Step 3 would be meaningless.</p>
+</div>
+</div>
 <section id="respiratory-phase" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="respiratory-phase"><span class="header-section-number">2.3.1</span> Respiratory phase</h3>
 <ul>
@@ -2711,6 +2983,20 @@ Figure 6: PETH of events around inspiration peaks.
 </section>
 <section id="step-3-coupling-strength-per-breathing-condition" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="step-3-coupling-strength-per-breathing-condition"><span class="header-section-number">2.4</span> Step 3 — Coupling strength per breathing condition</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The main question: <strong>does coupling weaken when breathing is disturbed?</strong> Each condition (obstructive, central and mixed apnea, hypopnea, the recovery period after an event, and snoring) was compared within each subject with clean breathing.</p>
+<p>Our hypothesis was that coupling depends on a regular breathing rhythm, or on airflow through the nose. It should then weaken when airflow stops (apneas), drops (hypopneas) or becomes turbulent (snoring). Central apneas, with no breathing movement at all, would be the strongest test, but few subjects have enough of them.</p>
+</div>
+</div>
 <section id="conditions-and-controls" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="conditions-and-controls"><span class="header-section-number">2.4.1</span> Conditions and controls</h3>
 <ul>
@@ -2766,6 +3052,19 @@ Figure 9: Step 3 forest plot (N2, ABDOMEN gated, matched controls).
 </section>
 <section id="step-3b-more-statistical-power" class="level3" data-number="2.4.3">
 <h3 data-number="2.4.3" class="anchored" data-anchor-id="step-3b-more-statistical-power"><span class="header-section-number">2.4.3</span> Step 3b — more statistical power</h3>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Step 3 could not distinguish “no change” from “too little data to tell”. This step aimed to increase power enough to quantify <strong>how much loss of coupling can be ruled out</strong>, using stronger events, fewer and broader comparisons, and a hierarchical model.</p>
+</div>
+</div>
 <ul>
 <li><strong>More signal per event:</strong> large SOs (≥ the subject’s median amplitude); multichannel consensus events; and a combined <code>BEST</code> phase (FLOW gated where available, otherwise ABDOMEN gated rotated by the subject’s FLOW–ABDOMEN offset). The primary sets were chosen on clean data only: <strong>large SOs × BEST</strong> (clean coupling 0.041 per event) and <strong>consensus spindles × ABDOMEN</strong> (0.024 per event).</li>
 <li><strong>Fewer, bigger questions:</strong> apneas and hypopneas pooled into one respiratory-event condition, and a per-breath dose–response analysis.</li>
@@ -2775,6 +3074,19 @@ Figure 9: Step 3 forest plot (N2, ABDOMEN gated, matched controls).
 </section>
 <section id="step-3c-snore-evoked-events" class="level3" data-number="2.4.4">
 <h3 data-number="2.4.4" class="anchored" data-anchor-id="step-3c-snore-evoked-events"><span class="header-section-number">2.4.4</span> Step 3c — snore-evoked events</h3>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Explain the unexpected <em>increase</em> of SO coupling during snoring. Sounds during sleep evoke K-complexes (large SOs) and spindles, and snore bursts happen at a fixed point of inspiration. We wanted to test whether the “coupling” during snoring is just evoked responses timed by the snore, and what remains once those are removed.</p>
+</div>
+</div>
 <p>Snore bursts evoke K-complexes and spindles. Large-SO troughs show an excess 0.5–1.5 s after snore-burst peaks (p = 1e-4, N = 38), and spindle onsets an excess 0.25–1.0 s after them. Because bursts are inspiration-locked, these evoked events create apparent coupling. They were excluded in phase-matched windows after real bursts and after pseudo-bursts in quiet breaths. The excluded time was also removed from phase occupancy, and only occupancy-normalised measures were used.</p>
 <div id="fig-evoked" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -2820,6 +3132,19 @@ Figure 10: Event rates around snore-burst peaks.
 </section>
 <section id="step-3d-complexes-pooled-over-channels" class="level3" data-number="2.4.5">
 <h3 data-number="2.4.5" class="anchored" data-anchor-id="step-3d-complexes-pooled-over-channels"><span class="header-section-number">2.4.5</span> Step 3d — complexes pooled over channels</h3>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Resolve the open concern from Step 2: complexes were barely coupled to breathing. Was this because there were too few complexes per subject, or because SOs and spindles are genuinely rarely nested in this cohort?</p>
+</div>
+</div>
 <p>SO troughs from F4, C4 and O2 were merged within ±0.3 s, followed within 1.5 s by a spindle on any of five channels. This gives about 10× more complexes (median ~145 per subject in clean N2).</p>
 <ul>
 <li><strong>Clean coupling</strong> is now significant: large pooled complexes × ABDOMEN, N = 70, R = 0.28, Rayleigh p = 0.004, V-test p = 0.0008.</li>
@@ -2840,6 +3165,19 @@ Figure 11: Step 3b–3d contrasts and GLMM estimates (N2).
 </section>
 <section id="step-4-coupling-strength-vs-severity" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="step-4-coupling-strength-vs-severity"><span class="header-section-number">2.5</span> Step 4 — Coupling strength vs severity</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ask whether coupling is a <strong>trait</strong> that scales with disease severity. Repeated hypoxia and fragmented sleep could damage the mechanism that links breathing and sleep oscillations, so patients with more severe sleep apnea would show weaker coupling even during their undisturbed breathing.</p>
+</div>
+</div>
 <ul>
 <li><strong>Coupling per subject:</strong> occupancy-normalised clean-N2 coupling projected on the leave-one-subject-out group phase, for the three primary families.</li>
 <li><strong>Primary test:</strong> robust regression on z(log1p AHI), adjusted for age, sex and BMI; BH-FDR over the three families.</li>
@@ -2921,6 +3259,19 @@ Figure 13: Spearman correlations of coupling with severity markers.
 </section>
 <section id="step-5-does-the-preferred-phase-change" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="step-5-does-the-preferred-phase-change"><span class="header-section-number">2.6</span> Step 5 — Does the preferred phase change?</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Step 3 measured coupling strength along the preferred phase of clean breathing. If events simply move to another part of the breathing cycle during a condition, that measure drops although the coupling is intact. This step asked whether the <strong>preferred phase</strong> shifts during apneas, hypopneas and snoring, both within individual participants and pooled over all events.</p>
+</div>
+</div>
 <p>Within-subject phase differences do not depend on polarity, so all subjects were used. The control condition is clean breathing split into alternating 10-min blocks (clean_odd vs clean_even).</p>
 <ul>
 <li><strong>Per participant:</strong> each subject’s condition events against their clean events (≥ 10 per group). 5a (any change): |Δφ| against a null calibrated with each subject’s own clean-vs-clean comparison, plus the CircStat common median test (<code>circ_cmtest</code>). 5b (consistent rotation): a test of mean rotation ≠ 0 on the signed per-subject Δφ, plus <code>circ_mtest</code> and <code>circ_medtest</code> against 0. The CircStat functions were ported to Python (<code>snoredreamt/circstat.py</code>).</li>
@@ -2954,6 +3305,19 @@ Figure 15: Step 5 CircStat per-subject tests (N2).
 </section>
 <section id="step-6-phase-effects-vs-severity" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="step-6-phase-effects-vs-severity"><span class="header-section-number">2.7</span> Step 6 — Phase effects vs severity</h2>
+<div class="callout callout-style-default callout-important callout-titled" title="Objective">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Objective
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Complete the severity question for phase. Do more severe patients have a different preferred phase in clean breathing, or a larger phase shift during disordered breathing? This also followed up a Step 4 hint that SO modulation strength, regardless of phase, increases with oxygen desaturation.</p>
+</div>
+</div>
 <ul>
 <li><strong>6a:</strong> the signed per-subject phase change (circular–linear correlation) and its size (Spearman and rank regression adjusted for age, sex and BMI) against seven severity markers; BH-FDR over 315 tests. Smallest FDR p = 0.79 (N2) and 0.99 (N2+N3).</li>
 <li><strong>6b:</strong> log AHI vs clean preferred phase: SOs ρ = 0.18 (p = 0.23), spindles ρ = 0.23 (p = 0.15), complexes ρ = 0.11 (p = 0.66). The only nominal result, an SO Watson–Williams test across AHI groups (p = 0.0045), is non-monotonic and not supported by the common median test (p = 0.13).</li>

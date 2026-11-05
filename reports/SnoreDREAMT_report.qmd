@@ -67,27 +67,110 @@ breathing perturbs the breathing rhythm naturally: airflow stops (apnea), drops 
 - **(iii) Severity:** does coupling relate to the apnea–hypopnea index (AHI) and other severity markers? Output:
   per-subject regressions and correlations with FDR control.
 
-## Data
+## Data: the DREAMT dataset
 
-DREAMT [@Wang2024]: 100 sleep-clinic patients, overnight PSG at 100 Hz with six EEG derivations, EOG, chin and leg
-EMG, FLOW, PTAF, THORAX and ABDOMEN belts, ECG, SNORE and SaO2. Respiratory events and sleep stages are expert scored;
-arousals and snoring are **not** labelled.
+### Cohort and recording
+
+DREAMT (*Dataset for Real-time sleep stage EstimAtion using Multisensor wearable Technology*; @Wang2024) was
+collected to develop wearable sleep trackers for people with sleep disorders. It contains one night of clinical
+polysomnography (PSG) from each of 100 adults referred to the Duke Sleep Disorders Center for a diagnostic sleep study
+(May–September 2022). During the same night they also wore an Empatica E4 wristband.
+
+- **Inclusion:** there were no selection criteria beyond attending the clinic; the cohort is a typical sleep-clinic
+  population, mostly suspected of sleep apnea.
+- **Recording:** the Nihon Kohden Polysmith system, in single rooms of the sleep lab, roughly from 10 PM to 6 AM.
+- **Release format:** one file per participant, with all PSG and wearable signals resampled to a common 100 Hz grid.
+  The dataset is hosted on PhysioNet under a credentialed licence.
+
+| Analysed cohort (N = 98) | Median [IQR] or count |
+|---|---|
+| Age (years) | 58.7 [42.6, 69.8], range 21–87 |
+| Sex | 53 female, 45 male |
+| BMI (kg/m²) | 32.0 [29.0, 37.8] |
+| AHI (events/h) | 13.5 [4.0, 29.0], range 0–182 |
+| AHI category: < 5 (normal) / 5–15 (mild) / 15–30 (moderate) / ≥ 30 (severe) | 30 / 22 / 24 / 22 |
+| Clinical arousal index (events/h) | 28 [20, 49] |
+| Mean SaO2 (%) | 95, range 77–99 |
+| Recording length (h) | 6.4, range 4.5–7.8 |
+| Median minutes per stage: W / N1 / N2 / N3 / REM | 60 / 35 / 208 / 0.25 / 40 |
+
+: Characteristics of the analysed cohort (clinical values from `participant_info.csv`; stage minutes from the
+  hypnograms). {.striped}
+
+### Channels
+
+The PSG files contain the following columns. Labels follow the international 10–20 electrode system: F = frontal,
+C = central, O = occipital, T = temporal, Fp = frontopolar, Z = midline. Odd numbers are on the left, even numbers on
+the right, and M1 is the left mastoid (the bone behind the ear), used as reference.
+
+| Column | Signal | What it measures | Use in this project |
+|---|---|---|---|
+| `C4-M1` | EEG | right central scalp vs left mastoid | spindle detection (primary); arousal detection |
+| `F4-M1` | EEG | right frontal scalp vs left mastoid; SOs are largest frontally | SO and complex detection (primary) |
+| `O2-M1` | EEG | right occipital scalp vs left mastoid | multichannel consensus SOs and spindles (Step 3b–3d) |
+| `T3 - CZ`, `CZ - T4` | EEG (bipolar) | left temporal vs vertex; vertex vs right temporal; no mastoid reference | consensus spindles, pooled complexes; check against mastoid/ECG artefact |
+| `Fp1-O2` | EEG (bipolar) | left frontopolar vs right occipital; unusual derivation, close to the eyes | not used |
+| `E1`, `E2` | EOG | left and right eye movements | not used (stages were scored by technicians) |
+| `CHIN` | EMG | submental (chin) muscle tone | arousal detection (EMG criterion) |
+| `LAT`, `RAT` | EMG | left and right anterior tibialis (leg movements) | not used |
+| `ECG` | ECG | heart's electrical activity | R-peaks: respiratory polarity check (heart rate rises in inspiration) and artefact checks |
+| `FLOW` | airflow (thermal) | oronasal thermistor: temperature change of the breathed air | respiratory phase (Step 2 replication; `BEST` phase) |
+| `PTAF` | airflow (pressure) | nasal pressure transducer | validation of snoring (airflow flutter); saturates in many subjects |
+| `THORAX`, `ABDOMEN` | respiratory effort | inductance belts around chest and abdomen; they keep moving during obstructive apneas | `ABDOMEN` phase: primary for all condition contrasts; `THORAX` for polarity |
+| `SNORE` | sound | snore sensor (physical type not documented) | snoring detection (20–45 Hz energy per breath) |
+| `SAO2` | oximetry | blood oxygen saturation (%) | oxygen desaturation index, T90, hypoxic burden (Step 4) |
+| `BVP`, `ACC_X/Y/Z`, `TEMP`, `EDA`, `HR`, `IBI` | wearable (E4) | blood volume pulse, wrist acceleration, skin temperature, electrodermal activity, heart rate, inter-beat interval | not used |
+| `TIMESTAMP` | – | seconds since recording start | time axis |
+
+: PSG and wearable columns of the DREAMT 100 Hz files {.striped}
+
+### Annotations
+
+- **`Sleep_Stage`:** 30-s epochs scored by the clinic's technicians: P (preparation, before the PSG starts), W, N1,
+  N2, N3, R (REM) and Missing. P and Missing epochs are excluded.
+- **`Obstructive_Apnea`, `Central_Apnea`, `Hypopnea`:** sample-wise 0/1 labels of respiratory events, added
+  retrospectively by expert technicians.
+  - An **apnea** is a near-complete stop of airflow. It is **obstructive** when breathing effort continues against a
+    closed airway, and **central** when the effort stops too.
+  - A **hypopnea** is a partial reduction of airflow, usually with an oxygen desaturation or an arousal.
+  - The exact scoring rules used in DREAMT (for example 3 % vs 4 % desaturation for hypopneas) are not reported.
+- **`Multiple_Events`:** documented in the metadata as *mixed apnea* (central at the start, then obstructive). It never
+  overlaps the other labels and is treated as mixed apnea.
+- **`participant_info.csv`:** age, sex, BMI, AHI, obstructive AHI (OAHI), mean SaO2, clinical arousal index, and the
+  most common comorbidities and sleep disorders.
+
+**Not labelled**, and therefore detected in this project:
+
+- **Arousals:** brief awakenings, i.e. abrupt shifts of the EEG to faster activity lasting at least 3 s.
+- **Snoring:** vibration of the upper airway during inspiration, heard as noise.
+
+::: {.callout-note title="Severity measures used in the report"}
+- **AHI:** apnea–hypopnea index, the number of apneas plus hypopneas per hour of sleep. Clinically < 5 is normal,
+  5–15 mild, 15–30 moderate and ≥ 30 severe sleep apnea.
+- **OAHI:** the same, counting only obstructive events.
+- **ODI3:** oxygen desaturations of ≥ 3 % per hour.
+- **T90:** percentage of sleep with SaO2 below 90 %.
+- **Hypoxic burden:** area of the desaturations following respiratory events, per hour.
+- **Snore index:** percentage of N2 breaths classified as snoring.
+:::
+
+### Data properties and how they were handled
 
 | Data property | Handling |
 |---|---|
-| EEG stored in volts | rescaled to µV |
+| EEG stored in volts, although the metadata says µV | rescaled to µV |
 | S097 (EEG and respiration flat), S077 (zeros / 1e18 values) | excluded → 98 subjects |
 | FLOW near zero for half the night (S016, S102); flat FLOW epochs in ~10 subjects | per-epoch validity masks |
 | PTAF saturates at ±3.2 mV | used only where not clipped |
-| Respiratory polarity and FLOW–belt lag differ between subjects | per-subject polarity calibration |
-| US recording (60 Hz mains) at 100 Hz | checked for a 40 Hz alias before using > 16 Hz power |
+| Respiratory polarity (whether inspiration goes up or down) and FLOW–belt lag differ between subjects | per-subject polarity calibration |
+| US recording (60 Hz mains) resampled to 100 Hz | checked for a 40 Hz alias before using > 16 Hz power |
 
 : Data integrity and how it was handled {.striped}
 
 **Feasibility** (from all files, N2/N3): clean NREM ≥ 60 min in 90 subjects; hypopneas ≥ 20 events in 47; obstructive
-apneas ≥ 20 events in 13; central apnea ≥ 10 min in 6; mixed apnea (`Multiple_Events`) ≥ 10 events in 3. N3 is scarce
-(median 0.5 min; none in 49 nights), so all analyses are effectively N2. AHI is unrelated to age (ρ = 0.01) and weakly
-related to BMI (ρ = 0.21) and to the clinical arousal index (ρ = 0.44).
+apneas ≥ 20 events in 13; central apnea ≥ 10 min in 6; mixed apnea ≥ 10 events in 3. N3 is scarce (median 0.25 min;
+none in 49 nights), so all analyses are effectively N2. AHI is unrelated to age (ρ = 0.01) and weakly related to BMI
+(ρ = 0.21) and to the clinical arousal index (ρ = 0.44).
 
 ## Approach
 
@@ -117,6 +200,12 @@ Key decisions:
 
 ## Step 0 — Data quality and literature
 
+::: {.callout-important title="Objective"}
+Make the raw recordings trustworthy and quick to use before any analysis. We wanted to find the data problems (wrong
+units, broken recordings, sensors that fall off during the night) before they could contaminate results, and to have
+the methods of the key papers in a form the agent could follow exactly.
+:::
+
 - **Cache.** Each subject is loaded once into float32 µV arrays with the stage vector (`P` and `Missing` excluded) and
   event masks.
 - **Quality masks** per channel and 30 s epoch: flat, saturated, or amplitude below 10 % of the subject's typical
@@ -126,6 +215,13 @@ Key decisions:
 - **Literature** was processed into structured notes with a reusable agent Skill (Section [-@sec-agent-ready]).
 
 ## Step 1 — SO, spindle and complex detection
+
+::: {.callout-important title="Objective"}
+Detect SOs, spindles and SO–spindle complexes exactly as in our previous work on healthy sleepers, so that any
+difference to those studies comes from the cohort and not from the method. We wanted to verify that the Python
+detectors are identical to the MATLAB originals, and that they are specific: they should find many events in NREM
+and few in REM and wake.
+:::
 
 The MATLAB `+slythm` detectors were ported to Python (`snoredreamt/detectors.py`).
 
@@ -152,6 +248,18 @@ matched within ±2 samples, with identical thresholds.
 ![Detector densities by stage and channel.](../figures/step1_detector_densities.png){#fig-step1}
 
 ## Step 2 — Respiratory phase and replication
+
+::: {.callout-important title="Objective"}
+Establish that the effect we want to perturb exists in this cohort. Before asking whether disordered breathing changes
+the coupling, we had to:
+
+1. obtain a reliable respiratory phase for each subject, despite varying sensors and signal polarity;
+2. replicate the coupling of SOs, spindles and complexes to breathing during undisturbed NREM sleep;
+3. show with negative controls (arousals, SO-like events in REM) that the coupling is not an artefact;
+4. build an arousal detector, because arousals had to be excluded from all later comparisons.
+
+Without baseline coupling, Step 3 would be meaningless.
+:::
 
 ### Respiratory phase
 
@@ -212,6 +320,16 @@ preferred phase reflects the lag between airflow and belt.
 
 ## Step 3 — Coupling strength per breathing condition
 
+::: {.callout-important title="Objective"}
+The main question: **does coupling weaken when breathing is disturbed?** Each condition (obstructive, central and
+mixed apnea, hypopnea, the recovery period after an event, and snoring) was compared within each subject with clean
+breathing.
+
+Our hypothesis was that coupling depends on a regular breathing rhythm, or on airflow through the nose. It should
+then weaken when airflow stops (apneas), drops (hypopneas) or becomes turbulent (snoring). Central apneas, with no
+breathing movement at all, would be the strongest test, but few subjects have enough of them.
+:::
+
 ### Conditions and controls
 
 - **Post-event window, set from the data.** SO rate is 1.6× and arousal rate 13× the clean rate within 0–4 s after an
@@ -245,6 +363,12 @@ p = 0.02–0.07, FDR 0.23–0.43).
 
 ### Step 3b — more statistical power
 
+::: {.callout-important title="Objective"}
+Step 3 could not distinguish "no change" from "too little data to tell". This step aimed to increase power enough to
+quantify **how much loss of coupling can be ruled out**, using stronger events, fewer and broader comparisons, and a
+hierarchical model.
+:::
+
 - **More signal per event:** large SOs (≥ the subject's median amplitude); multichannel consensus events; and a
   combined `BEST` phase (FLOW gated where available, otherwise ABDOMEN gated rotated by the subject's FLOW–ABDOMEN
   offset). The primary sets were chosen on clean data only: **large SOs × BEST** (clean coupling 0.041 per event) and
@@ -259,6 +383,12 @@ unlikely (P ≈ 2–5 %), for both large SOs and spindles. Louder snoring was as
 (β = +0.022 per SD, p = 1e-4).
 
 ### Step 3c — snore-evoked events
+
+::: {.callout-important title="Objective"}
+Explain the unexpected *increase* of SO coupling during snoring. Sounds during sleep evoke K-complexes (large SOs) and
+spindles, and snore bursts happen at a fixed point of inspiration. We wanted to test whether the "coupling" during
+snoring is just evoked responses timed by the snore, and what remains once those are removed.
+:::
 
 Snore bursts evoke K-complexes and spindles. Large-SO troughs show an excess 0.5–1.5 s after snore-burst peaks
 (p = 1e-4, N = 38), and spindle onsets an excess 0.25–1.0 s after them. Because bursts are inspiration-locked, these
@@ -277,6 +407,11 @@ occupancy-normalised measures were used.
 
 ### Step 3d — complexes pooled over channels
 
+::: {.callout-important title="Objective"}
+Resolve the open concern from Step 2: complexes were barely coupled to breathing. Was this because there were too few
+complexes per subject, or because SOs and spindles are genuinely rarely nested in this cohort?
+:::
+
 SO troughs from F4, C4 and O2 were merged within ±0.3 s, followed within 1.5 s by a spindle on any of five channels.
 This gives about 10× more complexes (median ~145 per subject in clean N2).
 
@@ -290,6 +425,12 @@ This gives about 10× more complexes (median ~145 per subject in clean N2).
 ![Step 3b–3d contrasts and GLMM estimates (N2).](../figures/step3b_power_N2.png){#fig-power}
 
 ## Step 4 — Coupling strength vs severity
+
+::: {.callout-important title="Objective"}
+Ask whether coupling is a **trait** that scales with disease severity. Repeated hypoxia and fragmented sleep could
+damage the mechanism that links breathing and sleep oscillations, so patients with more severe sleep apnea would show
+weaker coupling even during their undisturbed breathing.
+:::
 
 - **Coupling per subject:** occupancy-normalised clean-N2 coupling projected on the leave-one-subject-out group phase,
   for the three primary families.
@@ -320,6 +461,13 @@ does not, and nothing survives FDR over 72 correlations.
 
 ## Step 5 — Does the preferred phase change?
 
+::: {.callout-important title="Objective"}
+Step 3 measured coupling strength along the preferred phase of clean breathing. If events simply move to another part
+of the breathing cycle during a condition, that measure drops although the coupling is intact. This step asked
+whether the **preferred phase** shifts during apneas, hypopneas and snoring, both within individual participants and
+pooled over all events.
+:::
+
 Within-subject phase differences do not depend on polarity, so all subjects were used. The control condition is clean
 breathing split into alternating 10-min blocks (clean_odd vs clean_even).
 
@@ -344,6 +492,12 @@ breathing split into alternating 10-min blocks (clean_odd vs clean_even).
 ![Step 5 CircStat per-subject tests (N2).](../figures/step5_circstat_N2.png){#fig-step5cs}
 
 ## Step 6 — Phase effects vs severity
+
+::: {.callout-important title="Objective"}
+Complete the severity question for phase. Do more severe patients have a different preferred phase in clean
+breathing, or a larger phase shift during disordered breathing? This also followed up a Step 4 hint that SO
+modulation strength, regardless of phase, increases with oxygen desaturation.
+:::
 
 - **6a:** the signed per-subject phase change (circular–linear correlation) and its size (Spearman and rank regression
   adjusted for age, sex and BMI) against seven severity markers; BH-FDR over 315 tests. Smallest FDR p = 0.79 (N2)
