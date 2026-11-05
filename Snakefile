@@ -27,6 +27,8 @@ rule all:
         expand(f"{DER}/step5/{{ss}}/circstat_group.csv", ss=["N2", "N2N3"]),
         expand(f"{DER}/step6/{{ss}}/glmm_ahi.csv", ss=["N2", "N2N3"]),
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
+        f"{config['paths']['figures']}/report/fig01_density.png",
+        f"{config['paths']['figures']}/step3_snoring_validation.png",
 
 
 # ---------------------------------------------------------------- Step 0: data
@@ -367,3 +369,58 @@ rule detector_summary:
         table = f"{DER}/step1/detector_summary.csv",
         fig = f"{config['paths']['figures']}/step1_detector_densities.png",
     script: "scripts/rules/detector_summary.py"
+
+
+# ---------------------------------------------------------------- scripts that were run by hand, now rules
+rule snore_evoked_events:
+    """Step 3c: event rates around snore-burst peaks vs the same moment of quiet breaths (chooses exclusion windows)."""
+    input:
+        summary = f"{DER}/step3/conditions_summary.csv",
+        events = expand(f"{DER}/step3b/{{sid}}/events.parquet", sid=SUBJECTS),
+        spindles = expand(f"{DER}/events/{{sid}}/spindles_C4.parquet", sid=SUBJECTS),
+    output:
+        table = f"{DER}/step3b/snore_evoked_events.parquet",
+        fig = f"{config['paths']['figures']}/step3b_snore_evoked_events.png",
+    shell: "python scripts/snore_evoked_events.py"
+
+
+rule snoring_validation_figure:
+    """Step 3: visual check of the breath-by-breath snoring labels (two subjects)."""
+    input:
+        cache = expand(f"{DER}/cache/{{sid}}.npz", sid=["S022", "S046"]),
+        breaths = expand(f"{DER}/step3/{{sid}}/snore_breaths_primary.parquet", sid=["S022", "S046"]),
+    output: f"{config['paths']['figures']}/step3_snoring_validation.png"
+    shell: "python scripts/snoring_validation_figure.py"
+
+
+# ---------------------------------------------------------------- report figures
+REPORT_FIGS = dict(density="fig01_density", phase_example="fig02_phase_example", polar_flow="fig03_polar_flow",
+                   polar_abd="fig04_polar_abdomen", phase_rates="fig05_phase_rates", locked="fig06_event_locked",
+                   contrasts="fig07_contrasts", glmm="fig08_glmm_change", snore_evoked="fig09_snore_evoked",
+                   severity="fig10_severity", rotation="fig11_rotation", circstat="fig12_circstat",
+                   step6="fig13_phase_vs_ahi")
+
+rule report_figures:
+    """Compact, readable figures of the primary analyses for the Quarto report (redrawn from saved tables)."""
+    input:
+        detector = f"{DER}/step1/detector_summary.csv",
+        example_cache = f"{DER}/cache/S047.npz",
+        example_phase = f"{DER}/resp/S047_phase.npz",
+        example_info = f"{DER}/resp/S047_resp_info.json",
+        step2_summary = expand(f"{DER}/step2/{{sid}}/summary.parquet", sid=SUBJECTS),
+        step2_rates = expand(f"{DER}/step2/{{sid}}/phase_rates.parquet", sid=SUBJECTS),
+        step2_group = f"{DER}/step2/group_stats.csv",
+        resp_summary = f"{DER}/step2/resp_summary.csv",
+        locked = f"{DER}/step3/event_locked_rates.parquet",
+        clean_signal = f"{DER}/step3b/N2/clean_signal.csv",
+        contrasts = f"{DER}/step3b/N2/contrasts_occupancy.csv",
+        glmm = f"{DER}/step3b/N2/glmm.csv",
+        snore_evoked = f"{DER}/step3b/snore_evoked_events.parquet",
+        subject_coupling = f"{DER}/step3b/N2/subject_coupling.csv",
+        step4 = f"{DER}/step4/severity_vs_coupling.csv",
+        step5 = f"{DER}/step5/N2/group_phase_shifts.csv",
+        circstat = f"{DER}/step5/N2/circstat_group.csv",
+        events = expand(f"{DER}/step3b/{{sid}}/events.parquet", sid=SUBJECTS),
+        step6 = f"{DER}/step6/N2/6b_clean_phase_vs_severity.csv",
+    output: **{k: f"{config['paths']['figures']}/report/{v}.png" for k, v in REPORT_FIGS.items()}
+    script: "scripts/rules/report_figures.py"

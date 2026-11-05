@@ -245,7 +245,7 @@ matched within ±2 samples, with identical thresholds.
 : Median event density (events/min) per stage. REM and wake were detected with N2 thresholds as a specificity check.
   N3 SO densities are low because N3 is scarce and uses its own threshold where ≥ 10 min exist. {.striped}
 
-![Detector densities by stage and channel.](../figures/step1_detector_densities.png){#fig-step1}
+![Event density per sleep stage. Each dot is a subject; only stages with ≥ 5 min are shown. SOs and spindles are most frequent in N2. Low REM densities show that the NREM thresholds are specific.](../figures/report/fig01_density.png){#fig-step1}
 
 ## Step 2 — Respiratory phase and replication
 
@@ -268,8 +268,10 @@ Without baseline coupling, Step 3 would be meaningless.
   expiration, heart-rate rise during inspiration, and SNORE bursts. Unresolved polarity: 19 of 98 subjects for
   ABDOMEN, 3 for FLOW. Group phase tests use polarity-unambiguous subjects; within-subject contrasts are polarity-free.
 - **Phase methods:**
-  - **Hilbert:** subject peak frequency ±0.05 Hz, two-pass Butterworth, `angle(hilbert)`. Its occupancy is uniform
-    (R ≈ 0.002).
+  - **Hilbert:** for each participant and each sensor (FLOW and ABDOMEN), the breathing frequency f0 was taken as the
+    peak of the mean Welch spectrum of 60-s segments of clean NREM (0.1–0.6 Hz; f0 = 0.15–0.42 Hz, median 0.25 Hz).
+    The whole night was then band-passed at f0 ± 0.05 Hz (Butterworth, order 4, forward and backward) and the phase
+    taken as `angle(hilbert)`. Its occupancy is uniform (R ≈ 0.002).
   - **Gated Hilbert:** the same phase, set to NaN where no breath is detected in the raw signal. This removes filter
     ringing through apneas.
   - **Cycle-based:** linear interpolation between detected peaks and troughs. It over-represents expiration
@@ -277,7 +279,7 @@ Without baseline coupling, Step 3 would be meaningless.
 - **Clean NREM** = N2/N3, valid channels, ≥ 5 s before and ≥ 15 s after any respiratory event, not snoring, and not
   within ±5 s of a detected arousal.
 
-![Example of the respiratory phase signals.](../figures/step2_phase_example.png){#fig-phase}
+![Example of an obstructive apnea (subject S047). Airflow (thermistor) stops while the abdominal belt keeps moving. The breath-gated FLOW phase is therefore undefined during the apnea, whereas the ABDOMEN phase continues. In many scored obstructive apneas the thermistor still oscillates slightly; this example was chosen because airflow clearly stops.](../figures/report/fig02_phase_example.png){#fig-phase}
 
 ### Arousal detection
 
@@ -310,13 +312,11 @@ phases: Rayleigh for non-uniformity, and a V-test against 0°, where 0° is the 
 About 27–31 % of subjects show individually significant SO or spindle coupling. The FLOW–ABDOMEN difference in
 preferred phase reflects the lag between airflow and belt.
 
-::: {layout-ncol=2}
-![Subject preferred phases.](../figures/step2_polar.png){#fig-polar}
+![Preferred phase of each subject in clean NREM, FLOW Hilbert phase. SOs and spindles cluster near inspiration; arousals and REM pseudo-SOs (negative controls) do not.](../figures/report/fig03_polar_flow.png){#fig-polar}
 
-![Event rate per phase bin, normalised by phase occupancy.](../figures/step2_phase_rates.png){#fig-rates}
-:::
+![The same with the ABDOMEN gated phase, the phase used for all condition contrasts. Airflow and belt movement are not in phase, so the preferred phases are rotated relative to FLOW.](../figures/report/fig04_polar_abdomen.png){#fig-polar-abd}
 
-![PETH of events around inspiration peaks.](../figures/step2_peth.png){#fig-peth}
+![Event rate across the breathing cycle (occupancy-normalised, % of the subject's mean rate; mean ± SEM). The modulation is a few percent of the rate, which is why within-subject effects are small.](../figures/report/fig05_phase_rates.png){#fig-rates}
 
 ## Step 3 — Coupling strength per breathing condition
 
@@ -346,11 +346,9 @@ breathing movement at all, would be the strongest test, but few subjects have en
   leave-one-subject-out group phase. Subject preferred phases proved unreliable: split-half agreement within 45° was
   30 % for SOs against 25 % chance.
 
-::: {layout-ncol=2}
-![Event-locked SO, spindle and arousal rates around respiratory events.](../figures/step3_event_locked_rates.png){#fig-locked}
+![Event rates around respiratory events (mean ± SEM over subjects). SOs and spindles drop at event onset. SOs and arousals peak at event end and return to baseline within ~10 s, which set the 15 s recovery window.](../figures/report/fig06_event_locked.png){#fig-locked}
 
-![Snoring detection validation.](../figures/step3_snoring_validation.png){#fig-snore}
-:::
+![Snoring detection in two subjects. Top: SNORE signal; middle: abdominal belt; orange = breaths labelled as snoring. Bottom: per-breath snore loudness against airflow flutter in the nasal pressure signal; snoring breaths carry more flutter.](../figures/step3_snoring_validation.png){#fig-snore}
 
 ### Primary result: inconclusive
 
@@ -359,7 +357,6 @@ Within-subject coupling is tiny (about 0.01–0.02 per event), whereas the small
 is about 0.065. One trend went *against* the hypothesis: SO coupling was higher during snoring (Δ ≈ +0.04,
 p = 0.02–0.07, FDR 0.23–0.43).
 
-![Step 3 forest plot (N2, ABDOMEN gated, matched controls).](../figures/step3_forest.png){#fig-forest}
 
 ### Step 3b — more statistical power
 
@@ -396,7 +393,7 @@ evoked events create apparent coupling. They were excluded in phase-matched wind
 pseudo-bursts in quiet breaths. The excluded time was also removed from phase occupancy, and only
 occupancy-normalised measures were used.
 
-![Event rates around snore-burst peaks.](../figures/step3b_snore_evoked_events.png){#fig-evoked}
+![Large SOs and spindles are evoked by snore bursts: their rate rises 0.5–1.5 s (SOs) and 0.25–1.0 s (spindle onsets) after the snore-burst peak, compared with the same moment of quiet breaths. Shaded: windows excluded in Step 3c.](../figures/report/fig09_snore_evoked.png){#fig-evoked}
 
 | Snoring vs clean (N2) | All events | Snore-evoked excluded | GLMM relative change (excluded) |
 |---|---|---|---|
@@ -422,7 +419,9 @@ This gives about 10× more complexes (median ~145 per subject in clean N2).
 - **Snoring with evoked events excluded (N2+N3 GLMM):** large SOs −65 % (p_loss = 0.033), spindles −83 %
   (p_loss = 0.027), complexes −144 % (p_loss = 0.023). Apneas and hypopneas show no change.
 
-![Step 3b–3d contrasts and GLMM estimates (N2).](../figures/step3b_power_N2.png){#fig-power}
+![Coupling strength per breathing condition relative to clean breathing (N2). Dotted line: the value that would mean a complete loss of coupling. With snore-evoked events excluded (purple), coupling during snoring drops; apneas and hypopneas show no loss.](../figures/report/fig07_contrasts.png){#fig-power}
+
+![Poisson GLMM: relative change of the respiratory modulation per condition (median and 95 % simulation interval). A complete loss (−100 %) is excluded for respiratory events and hypopneas for SOs and spindles.](../figures/report/fig08_glmm_change.png){#fig-glmm}
 
 ## Step 4 — Coupling strength vs severity
 
@@ -453,11 +452,7 @@ A follow-up with plain Spearman correlations found that **direction-free** SO mo
 ODI3 (ρ = 0.30, p = 0.003), the snore index and the detected arousal index. The projected (phase-aligned) coupling
 does not, and nothing survives FDR over 72 correlations.
 
-::: {layout-ncol=2}
-![Severity vs coupling (robust regression).](../figures/step4_severity.png){#fig-sev}
-
-![Spearman correlations of coupling with severity markers.](../figures/step4_spearman.png){#fig-spear}
-:::
+![Clean-breathing coupling vs AHI for each subject. Lines: least-squares fit for display; β and p from the robust regression adjusted for age, sex and BMI.](../figures/report/fig10_severity.png){#fig-sev}
 
 ## Step 5 — Does the preferred phase change?
 
@@ -487,9 +482,9 @@ breathing split into alternating 10-min blocks (clean_odd vs clean_even).
   excluded; p = 0.014–0.032). These shifts survive dropping the 5–10 subjects with the most events. SOs show no
   significant rotation.
 
-![Step 5 GLMM rotation estimates (N2).](../figures/step5_phase_N2.png){#fig-step5}
+![Shift of the preferred phase per condition, pooled over events (GLMM; 95 % interval). The clean-vs-clean control is flat. Spindles shift later during hypopneas and respiratory events and earlier during snoring.](../figures/report/fig11_rotation.png){#fig-step5}
 
-![Step 5 CircStat per-subject tests (N2).](../figures/step5_circstat_N2.png){#fig-step5cs}
+![Per participant: percentage of subjects whose median phase differs between condition and clean breathing (CircStat common median test, p < .05). Conditions reach 0–15 % against 3–4 % in the clean-vs-clean control; only SOs during recovery differ nominally from the control (p = 0.03), so there is no reliable excess.](../figures/report/fig12_circstat.png){#fig-step5cs}
 
 ## Step 6 — Phase effects vs severity
 
@@ -507,7 +502,7 @@ modulation strength, regardless of phase, increases with oxygen desaturation.
   not supported by the common median test (p = 0.13).
 - **GLMM:** AHI moderates neither the clean modulation (p ≥ 0.07) nor the condition-related rotation (p ≥ 0.12).
 
-![Step 6: clean preferred phase vs AHI, and circular–linear p values of phase shifts vs severity markers (N2).](../figures/step6_N2.png){#fig-step6}
+![Clean-breathing preferred phase of each subject vs AHI. No relation for any event type.](../figures/report/fig13_phase_vs_ahi.png){#fig-step6}
 
 ## Interpretation
 
@@ -563,6 +558,7 @@ subject → group statistics and GLMMs → figures. Each box in @fig-dag is one 
 | 4 | `severity`, `step4_group`, `step4_glmm` | `derivatives/step4/` |
 | 5 | `step5_phase`, `step5_circstat` | `derivatives/step5/{N2,N2N3}/` |
 | 6 | `step6_phase_severity`, `step6_glmm` | `derivatives/step6/{N2,N2N3}/` |
+| report | `snore_evoked_events`, `snoring_validation_figure`, `report_figures` | `figures/report/` (figures of this report, redrawn from the step tables) |
 
 : Snakemake rules per step {.striped}
 

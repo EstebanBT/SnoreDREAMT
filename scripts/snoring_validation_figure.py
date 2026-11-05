@@ -1,5 +1,6 @@
 """Visual validation of breath-by-breath snoring labels: for 4 subjects, a 40 s N2 snippet with SNORE, ABDOMEN and
-the breath labels, plus per-breath snore loudness vs PTAF flutter (event-free NREM breaths)."""
+the breath labels, plus per-breath snore loudness vs PTAF flutter (event-free NREM breaths). Two subjects, large
+fonts (used in the report)."""
 import matplotlib
 import numpy as np
 import pandas as pd
@@ -13,8 +14,9 @@ from snoredreamt.io import load_config, load_subject  # noqa: E402
 cfg = load_config()
 fs = cfg['fs']
 DER = cfg['paths']['derivatives']
-sids = ['S022', 'S094', 'S046', 'S070']
-fig, axs = plt.subplots(3, len(sids), figsize=(20, 9))
+plt.rcParams.update({'font.size': 12, 'axes.titlesize': 12})
+sids = ['S022', 'S046']
+fig, axs = plt.subplots(3, len(sids), figsize=(11, 9))
 for j, sid in enumerate(sids):
     d = load_subject(sid, cfg)
     br = pd.read_parquet(f'{DER}/step3/{sid}/snore_breaths_primary.parquet')
@@ -28,9 +30,9 @@ for j, sid in enumerate(sids):
     t = np.arange(40 * fs) / fs
     ab = resp.highpass(resp.lowpass(d['ABDOMEN'], fs), fs)[sl]
     axs[0, j].plot(t, d['SNORE'][sl], 'k', lw=.3)
-    axs[0, j].set_title(f'{sid}: SNORE (shaded = snoring breaths)', fontsize=9)
+    axs[0, j].set_title(f'{sid}: SNORE (shaded = snoring breaths)')
     axs[1, j].plot(t, ab, 'k', lw=.8)
-    axs[1, j].set_title('ABDOMEN', fontsize=9)
+    axs[1, j].set_title('ABDOMEN belt')
     for _, b in br[(br.start >= sl.start) & (br.end <= sl.stop)].iterrows():
         for ax in axs[:2, j]:
             if b.snore:
@@ -39,10 +41,12 @@ for j, sid in enumerate(sids):
     ax = axs[2, j]
     ok = x.ptaf_flutter > 0
     ax.scatter(x.snore_db[ok], np.log10(x.ptaf_flutter[ok]), s=2, c=np.where(x.snore[ok], 'orange', 'grey'), alpha=.4)
-    ax.set_xlabel('breath snore loudness (dB re quiet reference)')
-    ax.set_ylabel('log10 PTAF 20-45 Hz flutter')
+    ax.set_xlabel('snore loudness per breath (dB above quiet)')
+    ax.set_ylabel('log10 airflow flutter (PTAF)')
     ax.axvline(cfg['snoring']['min_db'], color='r', lw=.6)
-    ax.set_title(f'N2 breaths: {x.snore.mean():.0%} snoring', fontsize=9)
-fig.suptitle('Snoring detection check: orange = labelled snoring (>= 10 dB, phasic >= 2, >= 3 breaths)', fontsize=10)
+    ax.set_title(f'N2 breaths: {x.snore.mean():.0%} labelled snoring')
+for ax in axs[:2].ravel():
+    ax.set_xlabel('time (s)')
+fig.suptitle('Snoring detection: orange = breaths labelled as snoring (≥ 10 dB, phasic, ≥ 3 breaths in a row)')
 fig.tight_layout()
-fig.savefig(f"{cfg['paths']['figures']}/step3_snoring_validation.png", dpi=70)
+fig.savefig(f"{cfg['paths']['figures']}/step3_snoring_validation.png", dpi=150)
