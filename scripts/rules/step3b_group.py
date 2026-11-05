@@ -76,7 +76,8 @@ for s in SETS:
                           event_level_mean=y.mean()))
 A = pd.DataFrame(rowsA).sort_values('z', ascending=False)
 cover = A[A.variant.isin(['BEST_hilbertgated', 'ABDOMEN_hilbertgated'])]
-PRIMARIES = {fam: tuple(g.iloc[0][['event_set', 'variant']]) for fam, g in cover.groupby('family')}
+print('clean-data selection rule would pick:', {fam: tuple(g.iloc[0][['event_set', 'variant']]) for fam, g in cover.groupby('family')})
+PRIMARIES = {fam: tuple(v) for fam, v in cfg['step3b']['primary_sets'].items()}   # fixed (config)
 A['primary'] = [(s_, v_) in PRIMARIES.values() for s_, v_ in zip(A.event_set, A.variant)]
 A.to_csv(out.clean_signal, index=False)
 print('Clean-N2 coupling signal:\n', A.round(4).to_string(index=False))

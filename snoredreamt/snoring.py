@@ -39,7 +39,7 @@ def breath_features(snore, peaks, troughs, fs, band=(20, 45), ptaf=None):
     return df
 
 
-def burst_references(sid, cfg, labels_variant='primary', stage=2, min_breaths=50, default_relpos=None):
+def burst_references(sid, cfg, labels_variant=None, stage=2, min_breaths=50, default_relpos=None):
     """Snore-burst peaks of snoring breaths and phase-matched pseudo-burst moments of quiet clean breaths.
 
     burst: sample of the snore-envelope maximum within each snoring breath (label 1, given stage);
@@ -51,6 +51,7 @@ def burst_references(sid, cfg, labels_variant='primary', stage=2, min_breaths=50
     from snoredreamt.io import load_subject
     der = cfg['paths']['derivatives']
     fs = cfg['fs']
+    labels_variant = labels_variant or cfg['arousals']['exclusion']
     lab = np.load(f'{der}/step3/{sid}/conditions_{labels_variant}.npz')['labels']
     st = np.load(f'{der}/step3/{sid}/conditions_{labels_variant}.npz')['stage']
     br = pd.read_parquet(f'{der}/step3/{sid}/snore_breaths_{labels_variant}.parquet')

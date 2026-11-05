@@ -110,8 +110,9 @@ arousals:
     primary: {}                          # faithful port (detects ~0.38x clinical ArI)
     liberal: {power_beta_threshold: 1.5} # sensitivity (~0.47x clinical ArI)
   exclude_pad_s: [5.0, 5.0]              # excluded from analysis windows: [start - 5 s, end + 5 s]
-  extended:                              # arousal-exclusion sensitivity (rule arousals_extended, Step 3b rerun)
-    base: primary                        # primary arousals + recovered rejected candidates:
+  exclusion: extended                    # detection used for all analyses (arousal windows and arousal events)
+  extended:                              # rule arousals_extended (adopted 2026-11-05 after the adversarial review)
+    base: primary                        # faithful-port arousals + recovered rejected candidates:
     no_emg_stages: [2, 3]                #   alpha rejected only for missing chin EMG, onset in N2/N3
     awake_onset_stages: [1, 2, 3, 5]     #   rejected by the awake rule although the onset is in sleep
 
@@ -156,6 +157,10 @@ step3b:
     SO: {primary: F4, others: [C4, O2], max_lag_s: 0.3}            # mastoid-referenced channels share SO polarity
     spindle: {primary: C4, others: [F4, O2, T3CZ, CZT4]}           # any temporal overlap
   phase_variants: [BEST_hilbertgated, ABDOMEN_hilbertgated, FLOW_hilbertgated]   # primary first
+  primary_sets:                        # fixed 2026-10-26 by the clean-data rule (max clean z, apnea-covering phase)
+    SO: [SO_large, BEST_hilbertgated]
+    spindle: [spindle_cons, ABDOMEN_hilbertgated]
+    complex: [complex_pooled_large, ABDOMEN_hilbertgated]
   pooled_event_codes: [2, 3, 4, 5]     # hypopnea, obstructive, central, mixed
   stage_sets: {N2: [2], N2N3: [2, 3]}
   n_bins: 12

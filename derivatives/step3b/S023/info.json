@@ -1,7 +1,7 @@
 {
  "sid": "S023",
- "flow_abd_offset_rad": 1.0508514415115426,
- "flow_abd_offset_consistency_R": 0.8097100224871645,
+ "flow_abd_offset_rad": 1.051742491506776,
+ "flow_abd_offset_consistency_R": 0.8193121730594637,
  "n_events": {
   "complex_pooled": 895,
   "complex_pooled_large": 445,
@@ -15,7 +15,7 @@
   "spindle": 2159,
   "spindle_cons": 2001
  },
- "n_burst_refs": 430,
- "n_pseudo_refs": 3784,
+ "n_burst_refs": 416,
+ "n_pseudo_refs": 3382,
  "best_phase_from_flow_frac_nrem": 0.9645711805555556
 }

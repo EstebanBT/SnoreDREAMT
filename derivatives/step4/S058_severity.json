@@ -6,9 +6,9 @@
  "hypoxic_burden": 271.6724543938952,
  "event_index": 57.22007722007722,
  "mean_event_duration_s": 24.63157894736842,
- "arousal_index_detected": 13.204633204633206,
+ "arousal_index_detected": 24.092664092664094,
  "snore_breath_frac": 0.047653429602888084,
- "snore_time_frac_n2": 0.007114992721979622,
+ "snore_time_frac_n2": 0.005544395924308588,
  "mean_sao2": 93.46286715085043,
  "sao2_valid_frac": 1.0
 }

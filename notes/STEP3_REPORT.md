@@ -244,3 +244,9 @@ Rules `arousals_extended`, `coupling_step3b_arv`, `step3b_group_arv` (primary ev
   Conclusions do not depend on missed arousals.
 - Pitfall: step3b_group.py re-selects the primary event set from the clean data; with the extended exclusion it would
   pick all spindles × BEST instead of consensus spindles × ABDOMEN. The sensitivity run holds the primary sets fixed.
+- **Adopted 2026-11-05:** the extended detection replaced the original rules in all analyses (`arousals.exclusion:
+  extended` in config.yaml; Step 3b primary event sets fixed in `step3b.primary_sets`). Full rerun. No conclusion
+  changed; three nominal side results disappeared (Step 4 detected-arousal-index correlation, Step 5 CircStat SO
+  recovery, Step 6 SO Watson–Williams across AHI groups). Snoring loss (evoked excluded, N2 GLMM): SOs −60 %
+  (p_loss 0.073), spindles −73 % (0.052). The original-detection run is kept as the comparison
+  (`derivatives/step3b_arousal_primary/`, rule `arousal_sensitivity`).

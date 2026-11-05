@@ -76,15 +76,16 @@ with pd.option_context('display.width', 200):
     print(T.round(3).to_string(index=False))
 
 COL = {'primary': '#0072B2', 'liberal': '#999999', 'extended': '#E69F00'}
+LABEL = {'primary': 'original rules', 'liberal': 'liberal', 'extended': 'extended (used)'}
 fig, axs = plt.subplots(1, 2, figsize=(12, 4.8))
 for variant in ['primary', 'extended']:
     d = S[S.variant == variant]
     x, y = d.clinical.to_numpy(float), d.detected.to_numpy(float)
     r = T[T.variant == variant].iloc[0]
     axs[0].scatter(x, y, s=16, alpha=.6, color=COL[variant],
-                   label=f'{variant}: ICC = {r.icc_agreement:.2f}, ρ = {r.spearman:.2f}')
+                   label=f'{LABEL[variant]}: ICC = {r.icc_agreement:.2f}, ρ = {r.spearman:.2f}')
     m, dd = (x + y) / 2, y - x
-    axs[1].scatter(m, dd, s=16, alpha=.6, color=COL[variant], label=f'{variant}: bias {r.bias:+.1f}/h')
+    axs[1].scatter(m, dd, s=16, alpha=.6, color=COL[variant], label=f'{LABEL[variant]}: bias {r.bias:+.1f}/h')
     axs[1].axhline(r.bias, color=COL[variant], lw=1.5)
     for v in (r.loa_lo, r.loa_hi):
         axs[1].axhline(v, color=COL[variant], lw=1, ls='--')

@@ -20,7 +20,7 @@ rows = []
 for sid in snakemake.params.subjects:  # noqa: F821
     d = load_subject(sid, cfg)
     st = d['stage']
-    ar = pd.read_parquet(f'{DER}/arousals/{sid}_primary.parquet')
+    ar = pd.read_parquet(f"{DER}/arousals/{sid}_{cfg['arousals']['exclusion']}.parquet")
     sos = pd.read_parquet(f'{DER}/events/{sid}/sos_F4.parquet')
     spi = pd.read_parquet(f'{DER}/events/{sid}/spindles_C4.parquet')
     times = {'SO': sos.trough[sos.nrem_event].to_numpy(), 'spindle': spi.start[spi.nrem_event].to_numpy(),

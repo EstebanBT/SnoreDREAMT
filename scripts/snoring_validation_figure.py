@@ -19,7 +19,7 @@ sids = ['S022', 'S046']
 fig, axs = plt.subplots(3, len(sids), figsize=(11, 9))
 for j, sid in enumerate(sids):
     d = load_subject(sid, cfg)
-    br = pd.read_parquet(f'{DER}/step3/{sid}/snore_breaths_primary.parquet')
+    br = pd.read_parquet(f"{DER}/step3/{sid}/snore_breaths_{cfg['arousals']['exclusion']}.parquet")
     st = d['stage']
     # snippet: a 40 s N2 window containing both snoring and non-snoring breaths if possible
     br['n2'] = st[br.start.to_numpy()] == 2

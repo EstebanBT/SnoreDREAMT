@@ -1,6 +1,6 @@
 """Snakemake rule `step3_group`: group statistics and figures for coupling per breathing condition.
 
-Primary analysis: N2, matched clean controls, ABDOMEN_hilbertgated phase, primary arousal detector.
+Primary analysis: N2, matched clean controls, ABDOMEN_hilbertgated phase, main arousal exclusion (config).
 Per (condition, event): subjects with >= min_events on both sides. Tests:
   - Wilcoxon signed-rank on projected coupling PC (condition vs matched control), median difference with bootstrap
     95 % CI, matched-pairs rank-biserial r; BH-FDR across conditions x events of the primary family;
@@ -26,7 +26,8 @@ EVENTS = ['SO', 'SO_large', 'spindle', 'complex']
 rng = np.random.default_rng(0)
 
 frames = []
-for arv, files in [('primary', inp.primary), ('liberal', inp.liberal)]:
+MAIN = cfg['arousals']['exclusion']
+for arv, files in [(MAIN, inp.main), ('liberal', inp.liberal)]:
     for f in files:
         frames.append(pd.read_parquet(f).assign(arousal_variant=arv))
 D = pd.concat(frames)
@@ -128,7 +129,7 @@ for metric in ['pc', 'pcg']:
                          density_wilcoxon_p=stats.wilcoxon(g.density_condition - g.density_control).pvalue,
                          amp_ratio_median=np.nanmedian(g.amp_median_condition / g.amp_median_control)))
 T = pd.DataFrame(rows)
-prim = (T.arousal_variant == 'primary') & (T.stage_set == 'N2') & (T.control == 'matched') & \
+prim = (T.arousal_variant == MAIN) & (T.stage_set == 'N2') & (T.control == 'matched') & \
        (T.variant == 'ABDOMEN_hilbertgated') & (T.condition != 'clean_split') & T.wilcoxon_p.notna()
 T['primary_family'] = prim
 T['wilcoxon_p_fdr'] = np.nan
@@ -138,7 +139,7 @@ for m in ['pc', 'pcg']:
 
 # ---------------------------------------------------------------- event-level model (group reference)
 import statsmodels.formula.api as smf  # noqa: E402
-E = pd.concat(pd.read_parquet(f) for f in inp.events_primary)
+E = pd.concat(pd.read_parquet(f) for f in inp.events_main)
 E = E[E.variant == 'ABDOMEN_hilbertgated']
 E['polarity_ok'] = ~E.sid.isin(amb['ABDOMEN'])
 E = E[E.polarity_ok]
@@ -165,7 +166,7 @@ T.to_csv(out.table, index=False)
 W.to_parquet(out.wide)
 
 # ---------------------------------------------------------------- figures
-P = T[(T.arousal_variant == 'primary') & (T.stage_set == 'N2') & (T.control == 'matched') &
+P = T[(T.arousal_variant == MAIN) & (T.stage_set == 'N2') & (T.control == 'matched') &
       (T.variant == 'ABDOMEN_hilbertgated')]
 MLAB = {'pc': 'subject reference (mu_ref, own clean data)', 'pcg': 'group reference (LOSO Step 2 phase, polarity-ok)'}
 
@@ -195,7 +196,7 @@ fig.suptitle('Step 3: N2, ABDOMEN gated Hilbert (±0.05 Hz), matched clean contr
 fig.tight_layout()
 fig.savefig(out.forest, dpi=80)
 
-G = W[(W.arousal_variant == 'primary') & (W.stage_set == 'N2') & (W.control == 'matched') &
+G = W[(W.arousal_variant == MAIN) & (W.stage_set == 'N2') & (W.control == 'matched') &
       (W.variant == 'ABDOMEN_hilbertgated') & (W.n_condition >= MIN) & (W.n_control >= MIN) & W.polarity_ok]
 fig, axs = plt.subplots(len(EVENTS), len(COND), figsize=(20, 9), sharey='row')
 for i, ev in enumerate(EVENTS):

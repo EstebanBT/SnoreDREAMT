@@ -85,7 +85,8 @@ for ax, fam in zip(axs, FAM):
                 y = j + dy + (-.1 if excl else 0)
                 ax.errorbar(r.delta, y, xerr=[[r.delta - r.ci_lo], [r.ci_hi - r.delta]], fmt=mk, color=col, ms=6,
                             mfc=col if not excl else 'white', capsize=3,
-                            label=f'{variant} arousal exclusion' + (', snore-evoked excluded' if excl else '')
+                            label={'primary': 'original detector', 'extended': 'extended detection (main)'}[variant]
+                            + (', snore-evoked excluded' if excl else '')
                             if (fam == 'SO' and j == 3) else None)
     clean = R[(R.family == fam) & (R.arousal_exclusion == 'primary')].clean_level.median()
     ax.axvline(0, color='grey', lw=1)
@@ -96,6 +97,6 @@ for ax, fam in zip(axs, FAM):
     ax.set_xlabel('coupling: condition − clean')
 h, lab = axs[0].get_legend_handles_labels()
 fig.legend(h, lab, loc='lower center', ncol=2, bbox_to_anchor=(.5, -.16), frameon=False)
-fig.suptitle('Arousal sensitivity: Step 3b/3c contrasts with the primary vs the extended arousal exclusion (N2)',
+fig.suptitle('Step 3b/3c contrasts with the original vs the extended arousal detection (N2)',
              y=1.02)
 fig.savefig(out.fig)
