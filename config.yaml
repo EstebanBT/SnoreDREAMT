@@ -110,6 +110,10 @@ arousals:
     primary: {}                          # faithful port (detects ~0.38x clinical ArI)
     liberal: {power_beta_threshold: 1.5} # sensitivity (~0.47x clinical ArI)
   exclude_pad_s: [5.0, 5.0]              # excluded from analysis windows: [start - 5 s, end + 5 s]
+  extended:                              # arousal-exclusion sensitivity (rule arousals_extended, Step 3b rerun)
+    base: primary                        # primary arousals + recovered rejected candidates:
+    no_emg_stages: [2, 3]                #   alpha rejected only for missing chin EMG, onset in N2/N3
+    awake_onset_stages: [1, 2, 3, 5]     #   rejected by the awake rule although the onset is in sleep
 
 # Step 2 — clean ("event-free") NREM used for the replication
 clean:

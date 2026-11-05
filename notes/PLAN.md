@@ -6,7 +6,7 @@ Full approved plan: `~/.claude/plans/fuzzy-shimmying-breeze.md`. Reports: `notes
 | 0 | Data cache, quality masks, literature | done |
 | 1 | SO / spindle / complex detection (slythm port, MATLAB parity passed) | done |
 | 2 | Respiratory phase + replication of Schreiner 2023 coupling; arousal–breathing coupling | done |
-| 3 (3b–3d) | Coupling **strength** per breathing condition (apneas, hypopneas, snoring) | done |
+| 3 (3b–3e) | Coupling **strength** per breathing condition (apneas, hypopneas, snoring); 3e: robustness to missed arousals | done |
 | 4 | Coupling strength vs AHI and data-derived severity markers | done |
 | 5 | Coupling **preferred phase** per breathing condition: any change? consistent rotation? | done (`notes/STEP5_REPORT.md`) |
 | 6 | Phase changes vs AHI and severity markers | done (`notes/STEP6_REPORT.md`) |

@@ -226,3 +226,21 @@ recovery: no change. N2+N3 for spindles during snoring (evoked excluded): −83 
 **Summary across event types (snore-evoked excluded, GLMM, N2+N3):** snoring reduces respiration coupling of large
 SOs (−65 %, p_loss = 0.033), consensus spindles (−83 %, p_loss = 0.027) and pooled complexes (−144 %, p_loss = 0.023);
 apneas/hypopneas do not. Consistent direction, trend-to-nominal significance, wide intervals.
+
+---
+
+# Step 3e — arousal-exclusion sensitivity (2026-11-05)
+Rules `arousals_extended`, `coupling_step3b_arv`, `step3b_group_arv` (primary event sets held fixed), `step3b_glmm_arv`,
+`arousal_sensitivity`, `arousal_agreement`; numbers in `derivatives/arousal_sensitivity/` and
+`derivatives/arousals/agreement.csv`.
+
+- Agreement of the primary detector with the clinical index: median 11 vs 28/h, bias −24/h (LoA −61 to +13), ICC(A,1)
+  0.32, ICC(C,1) 0.55, ρ 0.65; log–log slopes 0.59 / 1.36 bracket 1 (no proportional undercount; the earlier
+  "ratio falls with clinical index" argument was regression to the mean — adversarial review).
+- Extended exclusion = primary + 3735 N2/N3 alpha candidates rejected only for missing EMG + 664 candidates starting in
+  sleep and ending in wake (detected median 20/h, ICC 0.47). Removes 4.7 % of clean N2 and 4.0 % of snoring N2.
+- Step 3b/3c with the extended exclusion: apneas/hypopneas unchanged (complete loss still excluded, P ≤ 0.012); snoring
+  with snore-evoked events excluded: SOs Δ −0.044 → −0.050 (GLMM −68 % → −60 %), spindles GLMM −68 % → −73 %.
+  Conclusions do not depend on missed arousals.
+- Pitfall: step3b_group.py re-selects the primary event set from the clean data; with the extended exclusion it would
+  pick all spindles × BEST instead of consensus spindles × ABDOMEN. The sensitivity run holds the primary sets fixed.

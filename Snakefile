@@ -28,6 +28,8 @@ rule all:
         expand(f"{DER}/step6/{{ss}}/glmm_ahi.csv", ss=["N2", "N2N3"]),
         expand(f"{config['paths']['figures']}/qc_polarity/{{sid}}.png", sid=SUBJECTS),
         f"{config['paths']['figures']}/report/fig01_density.png",
+        f"{DER}/arousal_sensitivity/N2_comparison.csv",
+        f"{DER}/arousals/agreement.csv",
         f"{config['paths']['figures']}/step3_snoring_validation.png",
 
 
@@ -424,3 +426,91 @@ rule report_figures:
         step6 = f"{DER}/step6/N2/6b_clean_phase_vs_severity.csv",
     output: **{k: f"{config['paths']['figures']}/report/{v}.png" for k, v in REPORT_FIGS.items()}
     script: "scripts/rules/report_figures.py"
+
+
+# ---------------------------------------------------------------- arousal sensitivity (adversarial review 2026-11-05)
+rule arousals_extended:
+    """Extended arousal exclusion: primary arousals + recovered no-EMG NREM alpha and sleep-onset 'awake' rejects."""
+    input:
+        cache = f"{DER}/cache/{{sid}}.npz",
+        quality = f"{DER}/quality/{{sid}}.npz",
+    output: f"{DER}/arousals/{{sid}}_extended.parquet"
+    script: "scripts/rules/arousals_extended.py"
+
+
+rule coupling_step3b_arv:
+    """Step 3b event data with an alternative arousal exclusion (same code as coupling_step3b, via a wrapper)."""
+    input:
+        labels = f"{DER}/step3/{{sid}}/conditions_{{arv}}.npz",
+        breaths = f"{DER}/step3/{{sid}}/snore_breaths_{{arv}}.parquet",
+        phase = f"{DER}/resp/{{sid}}_phase.npz",
+        cache = f"{DER}/cache/{{sid}}.npz",
+        events = expand(f"{DER}/events/{{{{sid}}}}/{{kind}}_{{ch}}.parquet", kind=["sos", "spindles"],
+                        ch=config["event_channels"]),
+        snore_breaths = f"{DER}/step3/{{sid}}/snore_breaths_{{arv}}.parquet",
+    output:
+        events = f"{DER}/step3b_arousal_{{arv}}/{{sid}}/events.parquet",
+        bins = f"{DER}/step3b_arousal_{{arv}}/{{sid}}/phase_bins.parquet",
+        info = f"{DER}/step3b_arousal_{{arv}}/{{sid}}/info.json",
+    wildcard_constraints: arv = "extended"
+    script: "scripts/rules/coupling_step3b_variant.py"
+
+
+rule step3b_group_arv:
+    """Step 3b/3c group analysis with an alternative arousal exclusion (primary event sets held fixed)."""
+    input:
+        events = expand(f"{DER}/step3b_arousal_{{{{arv}}}}/{{sid}}/events.parquet", sid=SUBJECTS),
+        bins = expand(f"{DER}/step3b_arousal_{{{{arv}}}}/{{sid}}/phase_bins.parquet", sid=SUBJECTS),
+        resp_summary = f"{DER}/step2/resp_summary.csv",
+        fixed_primaries = f"{DER}/step3b/{{ss}}/clean_signal.csv",
+    output:
+        clean_signal = f"{DER}/step3b_arousal_{{arv}}/{{ss}}/clean_signal.csv",
+        contrasts = f"{DER}/step3b_arousal_{{arv}}/{{ss}}/contrasts.csv",
+        dose = f"{DER}/step3b_arousal_{{arv}}/{{ss}}/dose_response.csv",
+        snoring_diag = f"{DER}/step3b_arousal_{{arv}}/{{ss}}/snoring_diagnostics.csv",
+        contrasts_occ = f"{DER}/step3b_arousal_{{arv}}/{{ss}}/contrasts_occupancy.csv",
+        subjects = f"{DER}/step3b_arousal_{{arv}}/{{ss}}/subject_coupling.csv",
+        bins_export = f"{DER}/step3b_arousal_{{arv}}/{{ss}}/phase_bins.csv",
+        fig = f"{config['paths']['figures']}/step3b_power_{{ss}}_arousal_{{arv}}.png",
+    wildcard_constraints: ss = "N2|N2N3", arv = "extended"
+    script: "scripts/rules/step3b_group_variant.py"
+
+
+rule step3b_glmm_arv:
+    input: f"{DER}/step3b_arousal_{{arv}}/{{ss}}/phase_bins.csv"
+    output: f"{DER}/step3b_arousal_{{arv}}/{{ss}}/glmm.csv"
+    wildcard_constraints: ss = "N2|N2N3", arv = "extended"
+    shell: "Rscript scripts/rules/step3b_glmm.R {input} {output}"
+
+
+rule arousal_sensitivity:
+    """Primary vs extended arousal exclusion: Step 3b/3c contrasts and GLMM (N2), extra excluded time."""
+    input:
+        info_primary = expand(f"{DER}/step3/{{sid}}/conditions_primary.json", sid=SUBJECTS),
+        info_extended = expand(f"{DER}/step3/{{sid}}/conditions_extended.json", sid=SUBJECTS),
+        contrasts_primary = f"{DER}/step3b/N2/contrasts_occupancy.csv",
+        glmm_primary = f"{DER}/step3b/N2/glmm.csv",
+        clean_primary = f"{DER}/step3b/N2/clean_signal.csv",
+        contrasts_extended = f"{DER}/step3b_arousal_extended/N2/contrasts_occupancy.csv",
+        glmm_extended = f"{DER}/step3b_arousal_extended/N2/glmm.csv",
+        clean_extended = f"{DER}/step3b_arousal_extended/N2/clean_signal.csv",
+    output:
+        table = f"{DER}/arousal_sensitivity/N2_results.csv",
+        comparison = f"{DER}/arousal_sensitivity/N2_comparison.csv",
+        minutes = f"{DER}/arousal_sensitivity/N2_minutes.csv",
+        fig = f"{config['paths']['figures']}/report/fig14_arousal_sensitivity.png",
+    script: "scripts/rules/arousal_sensitivity.py"
+
+
+rule arousal_agreement:
+    """Detected vs clinical arousal index: ICC, Bland-Altman, log-log slopes (primary, liberal, extended)."""
+    input:
+        cache = expand(f"{DER}/cache/{{sid}}.npz", sid=SUBJECTS),
+        primary = expand(f"{DER}/arousals/{{sid}}_primary.parquet", sid=SUBJECTS),
+        liberal = expand(f"{DER}/arousals/{{sid}}_liberal.parquet", sid=SUBJECTS),
+        extended = expand(f"{DER}/arousals/{{sid}}_extended.parquet", sid=SUBJECTS),
+    output:
+        table = f"{DER}/arousals/agreement.csv",
+        subjects = f"{DER}/arousals/agreement_subjects.csv",
+        fig = f"{config['paths']['figures']}/report/fig15_arousal_agreement.png",
+    script: "scripts/rules/arousal_agreement.py"

@@ -46,6 +46,11 @@ FieldTrip background; the project is in Python + R).
   here (use the common median test / GLMM orthogonal component). Use rank regression rather than Huber when leverage
   points are possible.
 - Report N per comparison and correct for multiple comparisons (BH-FDR within a family).
+- **Sensitivity reruns hold data-driven choices fixed** (e.g. the clean-data selection of primary event sets in
+  step3b_group.py); check that N per comparison matches the primary run.
+- **Do not reason from ratios of two noisy measures** (e.g. detected/clinical arousal index vs clinical index): use
+  agreement statistics (ICC, Bland–Altman) and regressions in both directions.
+- For proposals that change a primary method, ask for an adversarial review (independent agent, read-only) first.
 
 ## Skills
 - `literature-prep` (`.claude/skills/literature-prep/`): rename PDFs to FirstAuthor_Year, convert with docling, write

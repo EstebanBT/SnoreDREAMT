@@ -178,7 +178,7 @@ The work ran in steps; each step ended with a written report and figures that I 
 | 0 | data cache, quality masks, literature notes |
 | 1 | SO, spindle and complex detection (port of my MATLAB `+slythm` detectors) |
 | 2 | respiratory phase; replication of the coupling in clean NREM; arousal detection |
-| 3 (3b–3d) | coupling **strength** per breathing condition |
+| 3 (3b–3e) | coupling **strength** per breathing condition; robustness to missed arousals |
 | 4 | coupling strength vs severity |
 | 5 | coupling **preferred phase** per breathing condition |
 | 6 | phase effects vs severity |
@@ -278,14 +278,16 @@ Without baseline coupling, Step 3 would be meaningless.
 
 ![Example of an obstructive apnea (subject S047). Airflow (thermistor) stops while the abdominal belt keeps moving. The breath-gated FLOW phase is therefore undefined during the apnea, whereas the ABDOMEN phase continues. In many scored obstructive apneas the thermistor still oscillates slightly; this example was chosen because airflow clearly stops.](../figures/report/fig02_phase_example.png){#fig-phase}
 
-### Arousal detection
+### Arousal detection {#sec-arousal-det}
 
-The Python port of the Fernández-Varela / Alvarez-Estevez detector (C4-M1 and chin EMG) was validated against the
-clinical arousal index of 98 subjects: Pearson r = 0.74, Spearman ρ = 0.65 (p < 1e-12). It is conservative, detecting
-about one third of the clinical index (slope 0.33; mean difference −24 events/h). A liberal variant is a sensitivity
-analysis.
+The Python port of the Fernández-Varela / Alvarez-Estevez detector (C4-M1 and chin EMG) was compared with the clinical
+arousal index of the 98 subjects (`arousal_agreement` rule; the clinical index's scoring rules and denominator are not
+reported). It ranks subjects reasonably well (Spearman ρ = 0.65) but detects fewer arousals: median 11 against 28 per
+hour (Bland–Altman bias −24/h, 95 % limits −61 to +13/h; ICC for absolute agreement 0.32, for consistency 0.55).
+The log–log slopes in the two directions (0.59 and 1.36) bracket 1, so the undercount is not proportionally worse in
+subjects with many arousals. The detected index is therefore used only to exclude arousal windows, and as a ranking.
 
-![Detected vs clinical arousal index.](../figures/arousal_validation_all.png){#fig-arousal-val width=70%}
+![Detected vs clinical arousal index for the primary detector and the extended exclusion used as sensitivity analysis (Step 3e). Left: log–log scatter with the identity line; right: Bland–Altman plot.](../figures/report/fig15_arousal_agreement.png){#fig-arousal-val}
 
 ### Coupling in clean NREM
 
@@ -420,6 +422,41 @@ This gives about 10× more complexes (median ~145 per subject in clean N2).
 
 ![Poisson GLMM: relative change of the respiratory modulation per condition (median and 95 % simulation interval). A complete loss (−100 %) is excluded for respiratory events and hypopneas for SOs and spindles.](../figures/report/fig08_glmm_change.png){#fig-glmm}
 
+### Step 3e — do missed arousals change the results? {#sec-arousal-sens}
+
+::: {.callout-important title="Objective"}
+The detector misses many arousals, and missed arousals stay inside the "clean" and "snoring" windows. This step tests
+whether the Step 3b/3c conclusions depend on that, by repeating the analysis with a much larger arousal exclusion.
+:::
+
+An adversarial review of possible detector improvements (Section [-@sec-agent]) found that the detector's rejected
+candidates are mostly genuine wake activity, and that changing the detector would not make it agree better with the
+clinical scoring in a validated way. A direct sensitivity test was preferred.
+
+- **Extended exclusion** (`arousals_extended` rule): the primary arousals plus two groups of rejected candidates, in
+  total 4399 more events than the primary 6701:
+  - 3735 alpha candidates in N2/N3 rejected only because chin-EMG activity was missing (clinical rules require an EMG
+    increase only for REM arousals);
+  - 664 candidates that start in sleep but end in a wake-scored epoch.
+- **Effect on agreement:** this raises the detected index to a median of 20/h (ICC 0.47, bias −15/h).
+- **Effect on the data:** it removes 4.7 % of clean N2 and 4.0 % of snoring N2.
+- **Analysis:** Steps 3b/3c were rerun with the same code and the primary event sets held fixed. The clean-data
+  selection rule would otherwise have chosen a different spindle set.
+
+Results (N2):
+
+- **Apneas, hypopneas, recovery:** unchanged. A complete loss stays excluded for large SOs and spindles during
+  respiratory events (P ≤ 0.012).
+- **Snoring, snore-evoked events excluded:**
+  - large SOs: Δ −0.044 → −0.050 (p_loss 0.050 → 0.028); GLMM −68 % → −60 % (p_loss 0.040 → 0.073);
+  - spindles: GLMM −68 % → −73 % (p_loss 0.069 → 0.052).
+- **Size of the changes:** shifts in the contrasts are ≤ 0.012 for SOs and spindles and up to 0.04 for the sparse
+  complexes, well inside the confidence intervals.
+
+The conclusions do not depend on the missed arousals.
+
+![Primary vs extended arousal exclusion: occupancy-normalised contrasts (condition − clean; mean and 95 % CI; dotted = complete loss). Squares: snoring with snore-evoked events excluded.](../figures/report/fig14_arousal_sensitivity.png){#fig-arousal-sens}
+
 ## Step 4 — Coupling strength vs severity
 
 ::: {.callout-important title="Objective"}
@@ -447,7 +484,8 @@ than ~50 % per SD of log AHI (−12 % [−51, +16]).
 
 A follow-up with plain Spearman correlations found that **direction-free** SO modulation strength (PPC) increases with
 ODI3 (ρ = 0.30, p = 0.003), the snore index and the detected arousal index. The projected (phase-aligned) coupling
-does not, and nothing survives FDR over 72 correlations.
+does not, and nothing survives FDR over 72 correlations. The detected arousal index is not interpreted beyond a
+ranking: the same comparison with the clinical index is null (p = 0.65), and the detector undercounts (Section [-@sec-arousal-det]).
 
 ![Clean-breathing coupling vs AHI for each subject. Lines: least-squares fit for display; β and p from the robust regression adjusted for age, sex and BMI.](../figures/report/fig10_severity.png){#fig-sev}
 
@@ -555,6 +593,7 @@ subject → group statistics and GLMMs → figures. Each box in @fig-dag is one 
 | 4 | `severity`, `step4_group`, `step4_glmm` | `derivatives/step4/` |
 | 5 | `step5_phase`, `step5_circstat` | `derivatives/step5/{N2,N2N3}/` |
 | 6 | `step6_phase_severity`, `step6_glmm` | `derivatives/step6/{N2,N2N3}/` |
+| 3e | `arousals_extended`, `coupling_step3b_arv`, `step3b_group_arv`, `step3b_glmm_arv`, `arousal_sensitivity`, `arousal_agreement` | `derivatives/step3b_arousal_extended/`, `derivatives/arousal_sensitivity/`, `derivatives/arousals/agreement.csv` |
 | report | `snore_evoked_events`, `snoring_validation_figure`, `report_figures` | `figures/report/` (figures of this report, redrawn from the step tables) |
 
 : Snakemake rules per step {.striped}
@@ -607,7 +646,8 @@ cycle:
 | Delegated to the agent | Decided by me | Verified by |
 |---|---|---|
 | Porting my MATLAB detectors (`+slythm`) to Python | detector parameters; spindle threshold 2.0× plus spectral-peak criterion | MATLAB parity, run by me (100 % of events matched, identical thresholds) |
-| Porting the arousal detector from the authors' MATLAB code | which method to use (rule-based, Fernández-Varela 2017) | agreement with the clinical arousal index (ρ = 0.65) |
+| Porting the arousal detector from the authors' MATLAB code | which method to use (rule-based, Fernández-Varela 2017) | agreement with the clinical arousal index (ρ = 0.65, ICC 0.32); extended-exclusion sensitivity analysis |
+| Proposing detector improvements | to have them reviewed by an independent adversarial agent, then which plan to follow | the reviewer re-ran the detector on all subjects and checked the claims against code and papers |
 | Respiratory phase, polarity calibration, condition labels, snoring detection | phase source (ABDOMEN gated Hilbert, ±0.05 Hz, my lab's standard) | example figures I inspected before each step; occupancy checks |
 | Running all statistics and writing step reports | which conditions to keep; which power strategies to try (ideas 2–4 of the agent's list) | negative controls built into every test (clean-vs-clean, REM pseudo-SOs, random-time surrogates) |
 | Proposing explanations for unexpected results | to exclude snore-evoked events; to pool N2+N3 and channels; to add Steps 5–6 | the agent's own follow-up tests, then my review of the figures |
@@ -645,12 +685,26 @@ switching to rate-based resultants and the Poisson GLMM. The lesson is now a gua
 | Watson–Williams test (my suggestion) is invalid at the low concentrations here | the agent's applicability check and the control (28–67 % of subjects flagged) | common median test |
 | Huber regression gave p ≈ 0 driven by one leverage subject (z = 4.3) | comparison with OLS-HC3 (p = 0.17) | rank regression |
 | `complexes.py` crashed on channels without events | reproducibility rerun in the new pixi environment | empty event tables handled |
+| I argued that the arousal detector undercounts more in subjects with many arousals, and proposed six detector changes | an adversarial reviewer agent: the ratio detected/clinical falls with the clinical index but rises with the detected one (regression to the mean), and 91 % of the "awake" rejects start in wake | no detector change; an extended-exclusion sensitivity analysis and proper agreement statistics instead |
+| The first arousal-sensitivity comparison let the clean-data rule re-select the spindle set, so primary and sensitivity runs compared different spindles | the number of subjects *rose* (46 → 61) when more data was excluded | event sets held fixed in the sensitivity run |
 
 : Mistakes and method problems found during the project {.striped}
 
 All of these were caught because the environment contained checks that could fail: negative controls, parity scripts,
-tests, plots I looked at, and a dry run of the pipeline. None of them was caught by the agent's own confidence in its
-output.
+tests, plots I looked at, a dry run of the pipeline, and a second agent whose only task was to attack the first one's
+proposal. None of them was caught by the agent's own confidence in its output.
+
+**An adversarial agent as a check.** When I asked how to make the arousal detector agree better with the clinical
+scoring, the agent proposed six changes, backed by counts of rejected candidates. I then had a separate reviewer agent
+attack the proposal. It had read-only access and was instructed to verify claims against code and papers.
+
+- **What it found:** it re-ran the detector on all subjects (reproducing every count) and showed that two of the
+  agent's arguments did not hold (see the table).
+- **Its verdict:** none of the changes was worth implementing as a new primary. It proposed a cheaper test of what
+  actually matters for this project, the extended-exclusion sensitivity analysis (Section [-@sec-arousal-sens]).
+- **Where it was overcautious:** its prediction ("mostly cosmetic") was right for the conclusions. But its first
+  estimate missed that the clean-data selection rule could change the spindle set, which the subject-count check
+  caught.
 
 ::: {.callout-tip title="Side example (another project): arousals after memory cues"}
 In my BreathTMR study I asked the agent for a MATLAB script, in my lab's style, that detects arousals and tests
@@ -684,8 +738,8 @@ The lesson: the agent's code ran without errors, and only looking at the figure 
 
 - **No ground truth for snoring.** Thresholds (10 dB, phasic 2×, 3 breaths) were not tuned, and quieter snoring stays
   in "clean".
-- **Arousals.** The detector finds about one third of the clinical arousal index, so residual arousals remain in
-  "clean" and "snoring".
+- **Arousals.** The detector undercounts (median 11 vs 28/h clinically), so residual arousals remain in "clean" and
+  "snoring"; a sensitivity analysis with a much larger exclusion leaves the conclusions unchanged (Step 3e).
 - **Snoring loss** depends on exclusion windows derived from the same data.
 - **Complexes:** most are chance pairings.
 - **Phase shifts** are event-weighted population effects across many models; per-subject estimates are too noisy to
