@@ -250,3 +250,7 @@ Rules `arousals_extended`, `coupling_step3b_arv`, `step3b_group_arv` (primary ev
   recovery, Step 6 SO Watson–Williams across AHI groups). Snoring loss (evoked excluded, N2 GLMM): SOs −60 %
   (p_loss 0.073), spindles −73 % (0.052). The original-detection run is kept as the comparison
   (`derivatives/step3b_arousal_primary/`, rule `arousal_sensitivity`).
+- **Recovery window per event type (2026-11-05, rule `event_locked_by_type`):** SO rate back to the clean level 4–8 s
+  and arousals 8–12 s after the end of hypopneas, obstructive and central apneas alike (mixed: 4 subjects, not shown);
+  the 15 s window holds for every type. Arousal rate stays ~1.3x clean up to 30 s after hypopneas (next event) and has
+  a second rise 12–16 s after central apneas; arousal windows are excluded separately.

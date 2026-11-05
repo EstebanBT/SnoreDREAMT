@@ -32,6 +32,7 @@ rule all:
         f"{DER}/arousal_sensitivity/N2_comparison.csv",
         f"{DER}/arousals/agreement.csv",
         f"{DER}/step4/spearman.csv",
+        f"{DER}/step3/event_locked_by_type_summary.csv",
         f"{config['paths']['figures']}/step3_snoring_validation.png",
 
 
@@ -526,3 +527,18 @@ rule step4_spearman:
         table = f"{DER}/step4/spearman.csv",
         fig = f"{config['paths']['figures']}/step4_spearman.png",
     shell: "python scripts/step4_spearman.py"
+
+
+rule event_locked_by_type:
+    """Check of the 15 s recovery window per respiratory-event type (hypopnea, obstructive, central, mixed)."""
+    input:
+        cache = expand(f"{DER}/cache/{{sid}}.npz", sid=SUBJECTS),
+        sos = expand(f"{DER}/events/{{sid}}/sos_F4.parquet", sid=SUBJECTS),
+        spindles = expand(f"{DER}/events/{{sid}}/spindles_C4.parquet", sid=SUBJECTS),
+        arousals = expand(f"{DER}/arousals/{{sid}}_{MAIN}.parquet", sid=SUBJECTS),
+    params: subjects = SUBJECTS
+    output:
+        table = f"{DER}/step3/event_locked_by_type.parquet",
+        summary = f"{DER}/step3/event_locked_by_type_summary.csv",
+        fig = f"{config['paths']['figures']}/report/fig16_event_locked_by_type.png",
+    script: "scripts/rules/event_locked_by_type.py"

@@ -358,6 +358,29 @@ breathing movement at all, would be the strongest test, but few subjects have en
 
 ![Event rates around respiratory events (mean ± SEM over subjects). SOs and spindles drop at event onset. SOs and arousals peak at event end and return to baseline within ~10 s, which set the 15 s recovery window.](../figures/report/fig06_event_locked.png){#fig-locked}
 
+**Check per event type.** The pooled curve is 70 % hypopneas, and obstructive apneas typically end with a stronger
+arousal response than central apneas, so the response was also computed for each type (`event_locked_by_type`
+rule). Mixed apneas (4 subjects) are too few to show.
+
+- **All types:** the SO rate returns to the clean level 4–8 s after the event end, and arousals 8–12 s after it.
+  Spindles are never clearly above the clean level.
+- **The 15 s window therefore holds for all types.** The obstructive result is the same without the subject
+  contributing most obstructive events (S058, 17 %).
+- **Arousal rates beyond the window:** they stay about 1.3× the clean rate up to 30 s after hypopneas and in the pooled
+  curve, and show a second rise 12–16 s after central apneas. This probably reflects the next event following soon.
+  Arousal windows are excluded separately, so this does not contaminate the breathing conditions.
+
+| Event type | Subjects (events) | SOs 0–4 s | SOs 4–8 s | Arousals 0–4 s | Arousals 8–12 s |
+|---|---|---|---|---|---|
+| Hypopnea | 63 (3746) | 1.82 [1.44, 2.20] | 0.96 [0.77, 1.15] | 7.5 [5.6, 9.8] | 1.0 [0.6, 1.5] |
+| Obstructive apnea | 19 (571) | 1.61 [0.98, 2.23] | 0.98 [0.26, 1.70] | 7.9 [5.6, 10.8] | 0.4 [0.1, 0.8] |
+| Central apnea | 21 (519) | 1.25 [0.56, 1.95] | 0.72 [0.41, 1.03] | 4.0 [2.4, 6.4] | 1.1 [0.4, 2.1] |
+| Pooled | 69 (4991) | 1.72 [1.39, 2.05] | 0.94 [0.77, 1.11] | 6.8 [5.3, 8.7] | 0.9 [0.7, 1.3] |
+
+: Event rates after the end of each respiratory-event type, relative to clean NREM (mean and 95 % CI). {.striped}
+
+![Event rates after the end of each respiratory-event type (mean ± SEM; shaded = 15 s recovery window).](../figures/report/fig16_event_locked_by_type.png){#fig-locked-type}
+
 ![Snoring detection in two subjects. Top: SNORE signal; middle: abdominal belt; orange = breaths labelled as snoring. Bottom: per-breath snore loudness against airflow flutter in the nasal pressure signal; snoring breaths carry more flutter.](../figures/step3_snoring_validation.png){#fig-snore}
 
 ### Primary result: inconclusive
@@ -562,7 +585,7 @@ subject → group statistics and GLMMs → figures. Each box in @fig-dag is one 
 | 0 | `cache`, `quality` | per-subject µV cache, validity masks |
 | 1 | `detect_sos`, `detect_spindles`, `complexes`, `detector_summary` | events per channel, `derivatives/step1/` |
 | 2 | `resp_phase`, `resp_summary`, `arousals`, `coupling_step2`, `step2_group` | phase signals, polarity table, `derivatives/step2/` |
-| 3 | `event_locked_rates`, `conditions`, `conditions_summary`, `coupling_step3`, `step3_group` | `derivatives/step3/` |
+| 3 | `event_locked_rates`, `event_locked_by_type`, `conditions`, `conditions_summary`, `coupling_step3`, `step3_group` | `derivatives/step3/` |
 | 3b–3d | `coupling_step3b`, `step3b_group`, `step3b_glmm` | `derivatives/step3b/{N2,N2N3}/` |
 | 4 | `severity`, `step4_group`, `step4_glmm`, `step4_spearman` | `derivatives/step4/` |
 | 5 | `step5_phase`, `step5_circstat` | `derivatives/step5/{N2,N2N3}/` |
