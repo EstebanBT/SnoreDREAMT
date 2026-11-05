@@ -99,19 +99,25 @@ for key, var, sensor in [('polar_flow', 'FLOW_hilbert', 'FLOW'), ('polar_abd', '
     for ax, (ev, lab) in zip(axs, panels):
         d = S[(S.event == ev) & (S.variant == var) & (S.n >= MIN) & ~S.sid.isin(amb)]
         col = C_EV.get(ev.split('_')[0], '#777777')
-        ax.scatter(d['mean'], d.mvl, s=14, color=col, alpha=.6)
+        nbin = 12
+        edges = np.linspace(-np.pi, np.pi, nbin + 1)
+        cnt = np.histogram(np.angle(np.exp(1j * d['mean'])), edges)[0]
+        frac = cnt / max(len(d), 1)
+        ax.bar(edges[:-1] + np.pi / nbin, frac, width=2 * np.pi / nbin, color=col, alpha=.5, edgecolor='white')
+        rmax = max(.4, frac.max() * 1.05)
         z = np.mean(np.exp(1j * d['mean']))
-        rmax = max(.3, d.mvl.quantile(.95) * 1.1) if len(d) else .3
-        ax.annotate('', xy=(np.angle(z), np.abs(z) * rmax), xytext=(0, 0),
-                    arrowprops=dict(arrowstyle='-|>', color='k', lw=2.5))
+        ax.annotate('', xy=(np.angle(z), np.abs(z)), xytext=(0, 0),
+                    arrowprops=dict(arrowstyle='-|>,head_width=.5,head_length=.8', color='k', lw=3))
         ax.set_ylim(0, rmax)
-        ax.set_yticks([])
+        ax.set_yticks([.1, .2, .3], ['0.1', '0.2', '0.3'], fontsize=9, color='#555555')
+        ax.set_rlabel_position(112)
         ax.set_xticks(np.radians([0, 90, 180, 270]), ['0°', '90°', '180°', '−90°'])
         g = G[(G.event == ev) & (G.variant == var)]
         p = g.rayleigh_p.iloc[0] if len(g) else np.nan
         ax.set_title(f'{lab}\nN={len(d)}, R={np.abs(z):.2f}, p={p:.1g}', fontsize=12, pad=12)
-    fig.suptitle(f'Preferred phase of each subject in clean NREM, {sensor} phase (0° = inspiration peak)\n'
-                 f'dot = subject (distance from centre = coupling strength); arrow = group mean', y=1.12)
+    fig.suptitle(f'Preferred phases of the subjects in clean NREM, {sensor} phase (0° = inspiration peak)\n'
+                 f'bars = share of subjects per 30° bin; arrow = group mean direction, length = R '
+                 f'(same radial scale)', y=1.12)
     fig.savefig(out[key])
     plt.close(fig)
 

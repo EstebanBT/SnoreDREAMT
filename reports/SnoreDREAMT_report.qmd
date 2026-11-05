@@ -74,12 +74,12 @@ breathing perturbs the breathing rhythm naturally: airflow stops (apnea), drops 
 DREAMT (*Dataset for Real-time sleep stage EstimAtion using Multisensor wearable Technology*; @Wang2024) was
 collected to develop wearable sleep trackers for people with sleep disorders. It contains one night of clinical
 polysomnography (PSG) from each of 100 adults referred to the Duke Sleep Disorders Center for a diagnostic sleep study
-(May–September 2022). During the same night they also wore an Empatica E4 wristband.
+(May–September 2022).
 
 - **Inclusion:** there were no selection criteria beyond attending the clinic; the cohort is a typical sleep-clinic
   population, mostly suspected of sleep apnea.
 - **Recording:** the Nihon Kohden Polysmith system, in single rooms of the sleep lab, roughly from 10 PM to 6 AM.
-- **Release format:** one file per participant, with all PSG and wearable signals resampled to a common 100 Hz grid.
+- **Release format:** one file per participant, with all PSG signals resampled to a common 100 Hz grid.
   The dataset is hosted on PhysioNet under a credentialed licence.
 
 | Analysed cohort (N = 98) | Median [IQR] or count |
@@ -99,8 +99,8 @@ polysomnography (PSG) from each of 100 adults referred to the Duke Sleep Disorde
 
 ### Channels
 
-The PSG files contain the following columns. Labels follow the international 10–20 electrode system: F = frontal,
-C = central, O = occipital, T = temporal, Fp = frontopolar, Z = midline. Odd numbers are on the left, even numbers on
+The columns used in this project are listed below. Labels follow the international 10–20 electrode system:
+F = frontal, C = central, O = occipital, T = temporal, Z = midline. Odd numbers are on the left, even numbers on
 the right, and M1 is the left mastoid (the bone behind the ear), used as reference.
 
 | Column | Signal | What it measures | Use in this project |
@@ -109,20 +109,16 @@ the right, and M1 is the left mastoid (the bone behind the ear), used as referen
 | `F4-M1` | EEG | right frontal scalp vs left mastoid; SOs are largest frontally | SO and complex detection (primary) |
 | `O2-M1` | EEG | right occipital scalp vs left mastoid | multichannel consensus SOs and spindles (Step 3b–3d) |
 | `T3 - CZ`, `CZ - T4` | EEG (bipolar) | left temporal vs vertex; vertex vs right temporal; no mastoid reference | consensus spindles, pooled complexes; check against mastoid/ECG artefact |
-| `Fp1-O2` | EEG (bipolar) | left frontopolar vs right occipital; unusual derivation, close to the eyes | not used |
-| `E1`, `E2` | EOG | left and right eye movements | not used (stages were scored by technicians) |
 | `CHIN` | EMG | submental (chin) muscle tone | arousal detection (EMG criterion) |
-| `LAT`, `RAT` | EMG | left and right anterior tibialis (leg movements) | not used |
 | `ECG` | ECG | heart's electrical activity | R-peaks: respiratory polarity check (heart rate rises in inspiration) and artefact checks |
 | `FLOW` | airflow (thermal) | oronasal thermistor: temperature change of the breathed air | respiratory phase (Step 2 replication; `BEST` phase) |
 | `PTAF` | airflow (pressure) | nasal pressure transducer | validation of snoring (airflow flutter); saturates in many subjects |
 | `THORAX`, `ABDOMEN` | respiratory effort | inductance belts around chest and abdomen; they keep moving during obstructive apneas | `ABDOMEN` phase: primary for all condition contrasts; `THORAX` for polarity |
 | `SNORE` | sound | snore sensor (physical type not documented) | snoring detection (20–45 Hz energy per breath) |
 | `SAO2` | oximetry | blood oxygen saturation (%) | oxygen desaturation index, T90, hypoxic burden (Step 4) |
-| `BVP`, `ACC_X/Y/Z`, `TEMP`, `EDA`, `HR`, `IBI` | wearable (E4) | blood volume pulse, wrist acceleration, skin temperature, electrodermal activity, heart rate, inter-beat interval | not used |
 | `TIMESTAMP` | – | seconds since recording start | time axis |
 
-: PSG and wearable columns of the DREAMT 100 Hz files {.striped}
+: DREAMT columns used in this project {.striped}
 
 ### Annotations
 
@@ -136,8 +132,9 @@ the right, and M1 is the left mastoid (the bone behind the ear), used as referen
   - The exact scoring rules used in DREAMT (for example 3 % vs 4 % desaturation for hypopneas) are not reported.
 - **`Multiple_Events`:** documented in the metadata as *mixed apnea* (central at the start, then obstructive). It never
   overlaps the other labels and is treated as mixed apnea.
-- **`participant_info.csv`:** age, sex, BMI, AHI, obstructive AHI (OAHI), mean SaO2, clinical arousal index, and the
-  most common comorbidities and sleep disorders.
+- **`participant_info.csv`:** age, sex and BMI (covariates); AHI and obstructive AHI (OAHI; severity); mean SaO2 and
+  the clinical arousal index (to check our own measures); medical history (only to flag depression, a proxy for
+  antidepressant use, in a sensitivity analysis).
 
 **Not labelled**, and therefore detected in this project:
 
@@ -312,7 +309,7 @@ phases: Rayleigh for non-uniformity, and a V-test against 0°, where 0° is the 
 About 27–31 % of subjects show individually significant SO or spindle coupling. The FLOW–ABDOMEN difference in
 preferred phase reflects the lag between airflow and belt.
 
-![Preferred phase of each subject in clean NREM, FLOW Hilbert phase. SOs and spindles cluster near inspiration; arousals and REM pseudo-SOs (negative controls) do not.](../figures/report/fig03_polar_flow.png){#fig-polar}
+![Distribution of the subjects' preferred phases in clean NREM, FLOW Hilbert phase (polar histograms; arrow = group mean, length R). SOs and spindles cluster near inspiration; arousals and REM pseudo-SOs (negative controls) do not.](../figures/report/fig03_polar_flow.png){#fig-polar}
 
 ![The same with the ABDOMEN gated phase, the phase used for all condition contrasts. Airflow and belt movement are not in phase, so the preferred phases are rotated relative to FLOW.](../figures/report/fig04_polar_abdomen.png){#fig-polar-abd}
 
