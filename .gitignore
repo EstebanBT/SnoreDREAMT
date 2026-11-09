@@ -47,3 +47,6 @@ reports/*_files/
 reports/.quarto/
 reports/.claude/
 reports/.mcp.json
+
+# full texts of papers (copyrighted / unpublished); only the structured notes are tracked
+literature/notes/*.fulltext.md
