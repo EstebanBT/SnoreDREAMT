@@ -32,7 +32,7 @@ Approved plan: `~/.claude/plans/fuzzy-shimmying-breeze.md` (Step 3 section). Dec
 - [x] Summary report for Monday
 
 ## Log
-- 2026-10-20: Steps 0–2 committed (79953e2). Step 3 started.
+- 2026-10-20: Steps 0–2 committed (1741406). Step 3 started.
 - 2026-10-20: Step 3 complete — see `notes/STEP3_REPORT.md`. Result: no detectable change (underpowered: baseline
   coupling per event ≈ 0.01–0.02 vs detectable change ≈ 0.065); uncorrected trend of higher SO coupling during
   snoring; fixed whole-night circularity bias; added group-phase metric (subject phases unreliable).
