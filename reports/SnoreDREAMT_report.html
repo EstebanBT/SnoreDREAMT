@@ -2327,6 +2327,7 @@ vertical-align: -.125em;
 <h1 class="unnumbered">Summary</h1>
 <p>Slow oscillations (SOs), sleep spindles and SO–spindle complexes lock to the breathing cycle in healthy sleepers <span class="citation" data-cites="Schreiner2023 BullonTarraso2026">(<a href="#ref-Schreiner2023" role="doc-biblioref">Schreiner et al. 2023</a>; <a href="#ref-BullonTarraso2026" role="doc-biblioref">Bullón Tarrasó et al. 2026</a>)</span>. In this project I asked whether this coupling survives the disordered breathing of a sleep-clinic cohort (DREAMT, 100 overnight PSGs; <span class="citation" data-cites="Wang2024">Wang et al. (<a href="#ref-Wang2024" role="doc-biblioref">2024</a>)</span>), whether it changes during apneas, hypopneas and snoring, and whether it scales with disease severity.</p>
 <p>The analysis was carried out with a coding agent (Claude Code). I set the questions, made the methodological decisions and checked the outputs. The agent wrote the pipeline, ran the analyses and reported back after each step. Section <a href="#sec-workflow" class="quarto-xref">3</a> describes how to rerun everything. Section <a href="#sec-agent" class="quarto-xref">4</a> describes what was delegated, what I decided, how outputs were verified, and the mistakes the agent made along the way.</p>
+<p><strong>Code and pipeline:</strong> <a href="https://github.com/EstebanBT/SnoreDREAMT" class="uri">https://github.com/EstebanBT/SnoreDREAMT</a></p>
 <div class="callout callout-style-default callout-note callout-titled" title="Main findings">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -3510,13 +3511,16 @@ Figure 17: Pipeline DAG (<code>snakemake --rulegraph</code>). Each node is a ru
 </section>
 <section id="how-to-reproduce" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="how-to-reproduce"><span class="header-section-number">3.4</span> How to reproduce</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> install                  <span class="co"># environment from pixi.lock</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run test                 <span class="co"># 34 unit tests</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># set paths.data and paths.participants in config.yaml to your DREAMT download</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run snakemake <span class="at">-n</span>         <span class="co"># dry run: what would be built, and why</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run pipeline             <span class="co"># snakemake -j 8</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run dag                  <span class="co"># figures/pipeline_dag.png</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run report               <span class="co"># renders this report</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The code, pipeline, environment lock file and this report are at <a href="https://github.com/EstebanBT/SnoreDREAMT" class="uri">https://github.com/EstebanBT/SnoreDREAMT</a>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/EstebanBT/SnoreDREAMT.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> SnoreDREAMT</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> install                  <span class="co"># environment from pixi.lock</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run test                 <span class="co"># 34 unit tests</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># set paths.data and paths.participants in config.yaml to your DREAMT download</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run snakemake <span class="at">-n</span>         <span class="co"># dry run: what would be built, and why</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run pipeline             <span class="co"># snakemake -j 8</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run dag                  <span class="co"># figures/pipeline_dag.png</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">pixi</span> run report               <span class="co"># renders this report</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="reproducibility-check" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="reproducibility-check"><span class="header-section-number">3.5</span> Reproducibility check</h2>

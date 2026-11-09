@@ -28,6 +28,8 @@ decisions and checked the outputs. The agent wrote the pipeline, ran the analyse
 Section [-@sec-workflow] describes how to rerun everything. Section [-@sec-agent] describes what was delegated, what I
 decided, how outputs were verified, and the mistakes the agent made along the way.
 
+**Code and pipeline:** <https://github.com/EstebanBT/SnoreDREAMT>
+
 ::: {.callout-note title="Main findings"}
 1. **Replication.** SOs and spindles are coupled to breathing during undisturbed (clean) NREM sleep at the group
    level (FLOW Hilbert phase: SO R = 0.31, spindle R = 0.33, Rayleigh p ≤ 1e-4). Complexes are coupled only once SOs
@@ -595,7 +597,11 @@ subject → group statistics and GLMMs → figures. Each box in @fig-dag is one 
 
 ## How to reproduce
 
+The code, pipeline, environment lock file and this report are at <https://github.com/EstebanBT/SnoreDREAMT>.
+
 ```bash
+git clone https://github.com/EstebanBT/SnoreDREAMT.git
+cd SnoreDREAMT
 pixi install                  # environment from pixi.lock
 pixi run test                 # 34 unit tests
 # set paths.data and paths.participants in config.yaml to your DREAMT download

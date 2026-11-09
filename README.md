@@ -4,6 +4,7 @@ Does the coupling of slow oscillations, sleep spindles and SO–spindle complexe
 apneas, hypopneas and snoring, and does it scale with sleep-disordered-breathing severity?
 Analysis of the DREAMT sleep-clinic cohort (100 overnight PSGs) with a Snakemake pipeline (Steps 0–6).
 
+**Repository:** <https://github.com/EstebanBT/SnoreDREAMT>
 **Report:** `reports/SnoreDREAMT_report.html` (source `reports/SnoreDREAMT_report.qmd`).
 **Progress / decisions:** `notes/PLAN.md` and `notes/STEP*_REPORT.md`.
 
